@@ -10,13 +10,11 @@ public class Model implements MvpContract.Model {
     private EventsRepository repository;
 
     Model() {
-
-
-
-
-
-
         repository=new EventsRepository();
+
+
+
+        //testing efin source tree+github
     }
 
     public void fetchCategories(final MvpContract.fetchCategoriesCallback callback) {
