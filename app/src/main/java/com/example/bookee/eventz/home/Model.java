@@ -10,6 +10,12 @@ public class Model implements MvpContract.Model {
     private EventsRepository repository;
 
     Model() {
+
+
+
+
+
+
         repository=new EventsRepository();
     }
 
