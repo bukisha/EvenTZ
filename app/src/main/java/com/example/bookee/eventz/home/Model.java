@@ -8,22 +8,25 @@ import com.example.bookee.eventz.data.Category;
 import com.example.bookee.eventz.data.EventsRepository;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Model implements MvpContract.Model {
     private static final String TAG = "Model";
     private EventsRepository repository;
+    private HashMap<String,String> nameToCategoryHash;
 
     Model() {
         repository = new EventsRepository();
+        nameToCategoryHash= new HashMap<>();
     }
 
     public void fetchCategoryNames(final FetchCategoryNamesCallback callback) {
         Log.d(TAG, "fetchCategories: fetching of category names starting");
         repository.fetchCategories(new FetchCategoriesCallback() {
             @Override
-            public void onSuccess(List<Category> list) {
-                 callback.onSuccess( extractCategoryNames(list));
+            public void onSuccess(ArrayList<Category> list) {
+                populateHash(list);
+                callback.onSuccess( list );
             }
 
             @Override
@@ -32,15 +35,25 @@ public class Model implements MvpContract.Model {
             }
         });
     }
+    public String getClickedCategoryId(String name) {
+        Log.d(TAG, "getClickedCategoryId: GETTING ID FROM HASH for name "+name);
+        if (nameToCategoryHash.containsKey(name)) {
+            String ret=nameToCategoryHash.get(name);
 
-    private ArrayList<String> extractCategoryNames(List<Category> list) {
-        ArrayList<String> listOfNames = new ArrayList<>();
-        for (Category c: list) {
-            listOfNames.add( c.getName());
+
+            Log.d(TAG, "getClickedCategoryId: ID FOR NAME " + name + " IS " + ret);
+            return nameToCategoryHash.get(name);
         }
-        return listOfNames;
+        return "NULL";
     }
 
+    private void populateHash(ArrayList<Category> list) {
+           for(Category c:list) {
+               Log.i(TAG, "populateHash:  name + "+c.getName()+" id "+c.getId());
+               nameToCategoryHash.put(c.getName(),c.getId());
+           }
 
+
+    }
 }
 

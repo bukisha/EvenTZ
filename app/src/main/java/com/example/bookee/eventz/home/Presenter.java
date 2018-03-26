@@ -1,5 +1,7 @@
 package com.example.bookee.eventz.home;
 
+import com.example.bookee.eventz.data.Category;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,10 +17,23 @@ public class Presenter implements MvpContract.Presenter {
 
     @Override
     public void populateNameList(Serializable serializableExtra) {
-        ArrayList<String> categoryNames= (ArrayList<String>) serializableExtra;
-        view.updateCategories(categoryNames);
+        ArrayList<Category> categoryInfo= (ArrayList<Category>) serializableExtra;
+        view.updateCategories(extractCategoryNames(categoryInfo));
     }
 
+    @Override
+    public void itemClicked(String categoryName) {
+       view.displayListOfEvents(model.getClickedCategoryId(categoryName));
+
+    }
+
+    private ArrayList<String> extractCategoryNames(ArrayList<Category> list) {
+        ArrayList<String> listOfNames = new ArrayList<>();
+        for (Category c: list) {
+            listOfNames.add( c.getName());
+        }
+        return listOfNames;
+    }
 
     private boolean getView() {
         return view != null;

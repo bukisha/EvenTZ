@@ -2,22 +2,22 @@ package com.example.bookee.eventz.data;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class PaginatedCategoryList {
 
     @SerializedName("categories")
-    private List<Category> mCategories;
+    private ArrayList<Category> mCategories;
     @SerializedName("locale")
     private String mLocale;
     @SerializedName("pagination")
     private Pagination mPagination;
 
-    public List<Category> getCategories() {
+    public ArrayList<Category> getCategories() {
         return mCategories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(ArrayList<Category> categories) {
         mCategories = categories;
     }
 

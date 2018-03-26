@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.example.bookee.eventz.data.Category;
 import com.example.bookee.eventz.home.HomeActivity;
+
 import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity implements MvpContract.View{
@@ -21,7 +24,7 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     @Override
-    public void passInitialCategories(ArrayList<String> categoryList) {
+    public void passInitialCategories(ArrayList<Category> categoryList) {
     Intent intent=new Intent(this, HomeActivity.class);
         intent.putExtra(LIST_OF_CATEGORIES_KEY,categoryList);
         startActivity(intent);

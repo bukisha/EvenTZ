@@ -4,8 +4,8 @@ import com.example.bookee.eventz.callbacks.FetchCategoriesCallback;
 import com.example.bookee.eventz.callbacks.FetchCategoryNamesCallback;
 import com.example.bookee.eventz.data.Category;
 import com.example.bookee.eventz.data.EventsRepository;
+
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Model implements MvpContract.Model {
@@ -19,8 +19,9 @@ public class Model implements MvpContract.Model {
     public void fetchInitialCategories(final FetchCategoryNamesCallback callback) {
            repository.fetchCategories(new FetchCategoriesCallback() {
                @Override
-               public void onSuccess(List<Category> list) {
-                   callback.onSuccess(extractCategoryNames(list));
+               public void onSuccess(ArrayList<Category> list) {
+                  // callback.onSuccess(extractCategoryNames(list));
+                   callback.onSuccess(list);
                }
 
                @Override
@@ -29,14 +30,4 @@ public class Model implements MvpContract.Model {
                }
            });
     }
-
-    private ArrayList<String> extractCategoryNames(List<Category> list) {
-        ArrayList<String> listOfNames = new ArrayList<>();
-        for (Category c: list) {
-            listOfNames.add( c.getName());
-        }
-        return listOfNames;
-    }
-
-
 }

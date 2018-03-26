@@ -3,22 +3,22 @@ package com.example.bookee.eventz.data;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 
 public class PaginatedEvents {
 
     @SerializedName("events")
-    private List<Event> mEvents;
+    private ArrayList<Event> mEvents;
     @SerializedName("pagination")
     private Pagination mPagination;
 
-    public List<Event> getEvents() {
+    public ArrayList<Event> getEvents() {
         return mEvents;
     }
 
-    public void setEvents(List<Event> events) {
+    public void setEvents(ArrayList<Event> events) {
         mEvents = events;
     }
 

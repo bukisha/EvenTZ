@@ -19,6 +19,9 @@
         <activity android:name=".home.HomeActivity">
 
         </activity>
+        <activity android:name=".eventlist.EventListActivity">
+
+        </activity>
     </application>
 
 </manifest>

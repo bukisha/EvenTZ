@@ -8,6 +8,6 @@ public interface EventsWebApi {
 
     @GET("categories")
     Call<PaginatedCategoryList> fetchCategories(@Query("token") String token);
-    @GET("events")
-    Call<PaginatedEventList> fetchEventsForCategory(@Query ("categry") String category);
+    @GET("events/search")
+    Call<PaginatedEvents> fetchEventsForCategory(@Query ("categories") String category,@Query("token") String token);
 }

@@ -1,11 +1,10 @@
-
 package com.example.bookee.eventz.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-
-public class Event {
+public class Event implements Serializable{
 
     @SerializedName("capacity")
     private Long mCapacity;

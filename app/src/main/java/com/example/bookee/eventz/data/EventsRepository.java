@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.bookee.eventz.callbacks.FetchCategoriesCallback;
+import com.example.bookee.eventz.callbacks.FetchEventsForCategoryCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,5 +37,23 @@ public class EventsRepository {
                 callback.onFailure(t);
             }
         });
+    }
+
+    public void fetchEventsForCategory(String categoryId,final FetchEventsForCategoryCallback callback) {
+        Log.d(TAG, "fetchEventsForCategory: fetching of events for category "+categoryId);
+        Call<PaginatedEvents> call=api.fetchEventsForCategory(categoryId,RetrofitFactory.getAuthToken());
+
+        call.enqueue(new Callback<PaginatedEvents>() {
+            @Override
+            public void onResponse(Call<PaginatedEvents> call, Response<PaginatedEvents> response) {
+                        callback.onSuccess(response.body().getEvents());
+            }
+
+            @Override
+            public void onFailure(Call<PaginatedEvents> call, Throwable t) {
+                     callback.onFailure(t);
+            }
+        });
+
     }
 }
