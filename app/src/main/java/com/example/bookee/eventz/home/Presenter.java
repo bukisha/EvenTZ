@@ -18,13 +18,13 @@ public class Presenter implements MvpContract.Presenter {
     @Override
     public void populateNameList(Serializable serializableExtra) {
         ArrayList<Category> categoryInfo= (ArrayList<Category>) serializableExtra;
+        model.populateHash(categoryInfo);
         view.updateCategories(extractCategoryNames(categoryInfo));
     }
 
     @Override
     public void itemClicked(String categoryName) {
        view.displayListOfEvents(model.getClickedCategoryId(categoryName));
-
     }
 
     private ArrayList<String> extractCategoryNames(ArrayList<Category> list) {

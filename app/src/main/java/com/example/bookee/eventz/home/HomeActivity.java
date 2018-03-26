@@ -43,8 +43,8 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                presenter.itemClicked((String) listView.getItemAtPosition(i));
+                Log.d(TAG, "onItemClick: item clicked is "+listView.getItemAtPosition(i).toString());
+                presenter.itemClicked(listView.getItemAtPosition(i).toString());
             }
         });
     }
@@ -61,7 +61,6 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         Log.d(TAG, "displayListOfEvents: "+categoryId);
         intent.putExtra(CATEGORY_ID_KEY,categoryId);
         startActivity(intent);
-
     }
 
     @Override
