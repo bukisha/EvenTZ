@@ -1,24 +1,21 @@
 package com.example.bookee.eventz.home;
 
-import com.example.bookee.eventz.data.Category;
-import java.util.List;
+import com.example.bookee.eventz.callbacks.FetchCategoryNamesCallback;
 
-public interface MvpContract {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public interface MvpContract  {
 
     interface Model {
-        void fetchCategories(fetchCategoriesCallback callback);
+       void fetchCategoryNames(FetchCategoryNamesCallback callback);
     }
     interface Presenter {
-        void fetchCategories();
+        void populateNameList(Serializable serializableExtra);
     }
     interface View {
-        void updateCategories(List<Category> categoryList);
+        void updateCategories(ArrayList<String> categoryNamesList);
         void displayErrorMessage(String s);
-    }
-    //callback interface for fetching
-    interface fetchCategoriesCallback {
-        void onSuccess(List<Category> list);
-        void onFailure(Throwable t);
     }
 }
 

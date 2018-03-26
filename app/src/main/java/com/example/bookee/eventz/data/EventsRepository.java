@@ -2,7 +2,9 @@ package com.example.bookee.eventz.data;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import com.example.bookee.eventz.home.MvpContract;
+
+import com.example.bookee.eventz.callbacks.FetchCategoriesCallback;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,7 +20,7 @@ public class EventsRepository {
         api= client.create(EventsWebApi.class);
     }
 
-    public void fetchCategories(final MvpContract.fetchCategoriesCallback callback) {
+    public void fetchCategories(final FetchCategoriesCallback callback) {
         Log.d(TAG, "fetchCategories: fetch starting");
         Call<PaginatedCategoryList> call=  api.fetchCategories(RetrofitFactory.getAuthToken());
         call.enqueue(new Callback<PaginatedCategoryList>() {
@@ -26,6 +28,7 @@ public class EventsRepository {
             public void onResponse(@NonNull Call<PaginatedCategoryList> call, @NonNull Response<PaginatedCategoryList> response) {
                 //noinspection ConstantConditions
                 callback.onSuccess(response.body().getCategories());
+
             }
 
             @Override

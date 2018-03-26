@@ -1,8 +1,7 @@
 package com.example.bookee.eventz.home;
 
-import android.util.Log;
-import com.example.bookee.eventz.data.Category;
-import java.util.List;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
@@ -14,22 +13,12 @@ public class Presenter implements MvpContract.Presenter {
         model=new Model();
     }
 
-    public void fetchCategories() {
-        Log.d(TAG, "fetchCategories: fetch starting");
-        model.fetchCategories(new MvpContract.fetchCategoriesCallback()  {
-            @Override
-            public void onSuccess(List<Category> categoryList) {
-                if(!getView()) return;
-                    view.updateCategories(categoryList);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                if(!getView()) return;
-                view.displayErrorMessage(t.toString());
-            }
-        });
+    @Override
+    public void populateNameList(Serializable serializableExtra) {
+        ArrayList<String> categoryNames= (ArrayList<String>) serializableExtra;
+        view.updateCategories(categoryNames);
     }
+
 
     private boolean getView() {
         return view != null;

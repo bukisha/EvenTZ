@@ -6,10 +6,11 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.example.bookee.eventz.R;
-import com.example.bookee.eventz.data.Category;
+import com.example.bookee.eventz.splash.SplashActivity;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "HomeActivity";
@@ -23,21 +24,19 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         setContentView(R.layout.activity_home);
         listView=findViewById(R.id.category_list);
         presenter=new Presenter(this);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.fetchCategories();
+        presenter.populateNameList(getIntent().getSerializableExtra(SplashActivity.LIST_OF_CATEGORIES_KEY));
+       // presenter.fetchCategories();
     }
 
     @Override
-    public void updateCategories(List<Category> categoryList) {
-        ArrayList<String> categories=new ArrayList<>();
-        for(Category c : categoryList) {
-            categories.add(c.getName());
-        }
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,categories);
+    public void updateCategories(ArrayList<String> categoryNamesList) {
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,categoryNamesList);
         listView.setAdapter(adapter);
     }
 

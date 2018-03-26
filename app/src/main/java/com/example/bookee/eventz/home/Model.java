@@ -1,8 +1,13 @@
 package com.example.bookee.eventz.home;
 
 import android.util.Log;
+
+import com.example.bookee.eventz.callbacks.FetchCategoriesCallback;
+import com.example.bookee.eventz.callbacks.FetchCategoryNamesCallback;
 import com.example.bookee.eventz.data.Category;
 import com.example.bookee.eventz.data.EventsRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Model implements MvpContract.Model {
@@ -10,19 +15,15 @@ public class Model implements MvpContract.Model {
     private EventsRepository repository;
 
     Model() {
-        repository=new EventsRepository();
-
-
-
-        //testing efin source tree+github
+        repository = new EventsRepository();
     }
 
-    public void fetchCategories(final MvpContract.fetchCategoriesCallback callback) {
-        Log.d(TAG, "fetchCategories: fetch starting");
-        repository.fetchCategories(new MvpContract.fetchCategoriesCallback() {
+    public void fetchCategoryNames(final FetchCategoryNamesCallback callback) {
+        Log.d(TAG, "fetchCategories: fetching of category names starting");
+        repository.fetchCategories(new FetchCategoriesCallback() {
             @Override
             public void onSuccess(List<Category> list) {
-                callback.onSuccess(list);
+                 callback.onSuccess( extractCategoryNames(list));
             }
 
             @Override
@@ -31,4 +32,15 @@ public class Model implements MvpContract.Model {
             }
         });
     }
+
+    private ArrayList<String> extractCategoryNames(List<Category> list) {
+        ArrayList<String> listOfNames = new ArrayList<>();
+        for (Category c: list) {
+            listOfNames.add( c.getName());
+        }
+        return listOfNames;
+    }
+
+
 }
+
