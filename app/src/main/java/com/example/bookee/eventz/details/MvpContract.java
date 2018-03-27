@@ -18,6 +18,6 @@ public interface MvpContract {
         void getEventForIndex(int index);
         void updateModelWithNewEvents(ArrayList<Event> newEventsList);
     }
-
+    
     interface View {}
 }
