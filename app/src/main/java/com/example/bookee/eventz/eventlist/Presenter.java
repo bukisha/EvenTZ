@@ -24,7 +24,7 @@ public class Presenter implements MvpContract.Presenter{
         model.fetchEventsForCategory(categoryName, new FetchEventsForCategoryCallback() {
             @Override
             public void onSuccess(ArrayList<Event> events) {
-                view.displayEvents(extractEventNames(events));
+                view.openEventListActivity(extractEventNames(events));
             }
 
             @Override

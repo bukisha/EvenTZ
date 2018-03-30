@@ -32,7 +32,7 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
     }
 
     @Override
-    public void displayEvents(ArrayList<String> eventNames) {
+    public void openEventListActivity(ArrayList<String> eventNames) {
         ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,eventNames);
         listView.setAdapter(adapter);
     }
