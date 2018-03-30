@@ -3,7 +3,6 @@ package com.example.bookee.eventz.eventlist;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,8 +28,6 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
     @Override
     protected void onResume() {
         super.onResume();
-        String s=getIntent().getStringExtra(HomeActivity.CATEGORY_ID_KEY);
-        Log.d(TAG, "onResume: category clicked id is "+s);
         presenter.fetchEventsForCategory(getIntent().getStringExtra(HomeActivity.CATEGORY_ID_KEY));
     }
 
