@@ -64,7 +64,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     }
 
     @Override
-    public void displayErrorMessage(String s) {
-        Toast.makeText(this, "Some error has happened "+s, Toast.LENGTH_LONG).show();
+    public void displayErrorMessage(String errorMessage) {
+        Toast.makeText(this, "Some error has happened "+errorMessage, Toast.LENGTH_LONG).show();
     }
 }

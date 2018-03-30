@@ -18,7 +18,7 @@ public interface MvpContract  {
     interface View {
         void updateCategories(ArrayList<String> categoryNamesList);
         void displayListOfEvents(String categoryId);
-        void displayErrorMessage(String s);
+        void displayErrorMessage(String message);
     }
 }
 
