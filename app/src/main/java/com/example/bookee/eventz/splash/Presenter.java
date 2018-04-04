@@ -10,8 +10,8 @@ public class Presenter implements MvpContract.Presenter {
     private MvpContract.View view;
 
 
-    public Presenter(MvpContract.View view) {
-        model = new Model();
+   public Presenter(MvpContract.View view,Model model) {
+        this.model=model;
         this.view = view;
     }
 
@@ -30,5 +30,4 @@ public class Presenter implements MvpContract.Presenter {
             }
         });
     }
-
 }

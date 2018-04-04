@@ -16,9 +16,9 @@ public class EventsRepository {
 
     private EventsWebApi api;
 
-    public EventsRepository() {
-        Retrofit client = RetrofitFactory.buildRetrofit();
-        api= client.create(EventsWebApi.class);
+    public EventsRepository(Retrofit client) {
+        //api.getClass() mzoda ne treba ovde obrati paznju!
+        this.api= client.create(EventsWebApi.class);
     }
 
     public void fetchCategories(final FetchCategoriesCallback callback) {

@@ -10,9 +10,9 @@ public class Presenter implements MvpContract.Presenter {
     private MvpContract.View view;
     private Model model;
 
-    Presenter(MvpContract.View view) {
+    Presenter(MvpContract.View view,Model model) {
         this.view = view;
-        model=new Model();
+        this.model=model;
     }
 
     @Override

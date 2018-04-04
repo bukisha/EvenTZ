@@ -8,14 +8,14 @@ import com.example.bookee.eventz.data.EventsRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Model implements MvpContract.Model {
+class Model implements MvpContract.Model {
     private static final String TAG = "Model";
     private EventsRepository repository;
     private HashMap<String,String> nameToCategoryHash;
 
-    Model() {
-        repository = new EventsRepository();
-        nameToCategoryHash= new HashMap<>(50);
+    public Model(EventsRepository repository,HashMap<String,String> hashMap) {
+        this.repository=repository;
+        this.nameToCategoryHash=hashMap;
     }
 
     public void fetchCategoryNames(final FetchCategoryNamesCallback callback) {

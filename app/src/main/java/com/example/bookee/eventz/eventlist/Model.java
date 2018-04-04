@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class Model implements MvpContract.Model {
     private EventsRepository repository;
 
-    public Model() {
-        repository = new EventsRepository();
+    public Model(EventsRepository repository) {
+        this.repository=repository;
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.eventlist.EventListActivity;
 import com.example.bookee.eventz.splash.SplashActivity;
@@ -19,16 +20,19 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "HomeActivity";
     public static final String CATEGORY_ID_KEY ="categoryId";
-    private MvpContract.Presenter presenter;
+    private MvpContract.Presenter  presenter;
+    private HomeDiHelper diHelper;
+
     private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: starting");
         setContentView(R.layout.activity_home);
         listView=findViewById(R.id.category_list);
-        presenter=new Presenter(this);
+        diHelper.createModel(EventApp.getHelper().getEventsRepository());
+
+        presenter=new Presenter(this, diHelper.getModel());
         initClickListener();
     }
 

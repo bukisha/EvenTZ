@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.util.Log;
 
+import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.home.HomeActivity;
 
@@ -16,14 +18,18 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
     private static final String TAG = "EventListActivity";
     private ListView listView;
     private MvpContract.Presenter presenter;
+    private EventListDiHelper diHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: ");
         setContentView(R.layout.activity_event_list);
         listView= findViewById(R.id.event_list);
-        presenter=new Presenter(this);
-    }
+
+        diHelper.createModel(EventApp.getHelper().getEventsRepository());
+        presenter=new Presenter(this,diHelper.getModel());
+        }
 
     @Override
     protected void onResume() {

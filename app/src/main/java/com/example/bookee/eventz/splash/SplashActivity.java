@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
+import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.data.Category;
 import com.example.bookee.eventz.home.HomeActivity;
 
@@ -14,12 +14,14 @@ import java.util.ArrayList;
 public class SplashActivity extends AppCompatActivity implements MvpContract.View{
     private static final String TAG = "SplashActivity";
     public static final String LIST_OF_CATEGORIES_KEY ="list of categories";
+    private  MvpContract.Presenter presenter;
+    private  SplashDiHelper diHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: starting");
-        MvpContract.Presenter presenter=new Presenter(this);
+        diHelper.createModel(EventApp.getHelper().getEventsRepository());
+        presenter=new Presenter(this,diHelper.getModel());
         presenter.fetchInitialCategories();
     }
 
