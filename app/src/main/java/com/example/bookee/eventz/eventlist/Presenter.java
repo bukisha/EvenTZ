@@ -12,7 +12,6 @@ public class Presenter implements MvpContract.Presenter{
     private MvpContract.View view;
     private MvpContract.Model model;
 
-
     Presenter(MvpContract.View view,Model model) {
         this.view=view;
         this.model=model;
@@ -28,8 +27,8 @@ public class Presenter implements MvpContract.Presenter{
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                view.displayError(t);
+            public void onFailure() {
+                view.displayError();
             }
         });
     }

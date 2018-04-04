@@ -6,6 +6,7 @@ import com.example.bookee.eventz.data.EventsRepository;
 import java.util.ArrayList;
 
 public class Model implements MvpContract.Model {
+
     private EventsRepository repository;
 
     public Model(EventsRepository repository) {
@@ -21,8 +22,8 @@ public class Model implements MvpContract.Model {
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                callback.onFailure(t);
+            public void onFailure() {
+                callback.onFailure();
             }
         });
 

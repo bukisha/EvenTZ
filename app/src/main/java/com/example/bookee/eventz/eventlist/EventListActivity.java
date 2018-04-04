@@ -44,7 +44,7 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
     }
 
     @Override
-    public void displayError(Throwable t) {
+    public void displayError() {
         Toast.makeText(this, "error happened", Toast.LENGTH_LONG).show();
     }
 }

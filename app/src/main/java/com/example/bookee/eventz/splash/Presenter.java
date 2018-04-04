@@ -1,6 +1,6 @@
 package com.example.bookee.eventz.splash;
 
-import com.example.bookee.eventz.callbacks.FetchCategoryNamesCallback;
+import com.example.bookee.eventz.callbacks.FetchCategoriesCallback;
 import com.example.bookee.eventz.data.Category;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Presenter implements MvpContract.Presenter {
 
     @Override
     public void fetchInitialCategories() {
-        model.fetchInitialCategories(new FetchCategoryNamesCallback() {
+        model.fetchInitialCategories(new FetchCategoriesCallback() {
 
             @Override
             public void onSuccess(ArrayList<Category> list) {
@@ -25,7 +25,7 @@ public class Presenter implements MvpContract.Presenter {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure() {
                 view.showErrorFragment();
             }
         });

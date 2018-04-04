@@ -1,6 +1,6 @@
 package com.example.bookee.eventz.home;
 
-import com.example.bookee.eventz.callbacks.FetchCategoryNamesCallback;
+import com.example.bookee.eventz.callbacks.FetchCategoriesCallback;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface MvpContract  {
 
     interface Model {
-       void fetchCategoryNames(FetchCategoryNamesCallback callback);
+       void fetchCategoryNames(FetchCategoriesCallback callback);
        String getClickedCategoryId(String categoryName);
     }
     interface Presenter {

@@ -8,7 +8,7 @@ public class ApplicationDiHelper {
         private Retrofit retrofit;
         private EventsRepository eventsRepository;
 
-    public ApplicationDiHelper(Retrofit retrofit, EventsRepository eventsRepository) {
+    ApplicationDiHelper(Retrofit retrofit, EventsRepository eventsRepository) {
         this.retrofit = retrofit;
         this.eventsRepository = eventsRepository;
     }

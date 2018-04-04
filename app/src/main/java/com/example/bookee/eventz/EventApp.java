@@ -8,6 +8,7 @@ import com.example.bookee.eventz.data.RetrofitFactory;
 import retrofit2.Retrofit;
 
 public class EventApp extends Application {
+
     private static ApplicationDiHelper helper;
 
     @Override

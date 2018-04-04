@@ -34,7 +34,7 @@ public class EventsRepository {
 
             @Override
             public void onFailure(@NonNull Call<PaginatedCategoryList> call, @NonNull Throwable t) {
-                callback.onFailure(t);
+                callback.onFailure();
             }
         });
     }
@@ -51,7 +51,7 @@ public class EventsRepository {
 
             @Override
             public void onFailure(Call<PaginatedEvents> call, Throwable t) {
-                     callback.onFailure(t);
+                     callback.onFailure();
             }
         });
 

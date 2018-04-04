@@ -16,7 +16,7 @@ public interface MvpContract {
 
     interface View {
         void openEventListActivity(ArrayList<String> eventNames);
-        void displayError(Throwable t);
+        void displayError();
     }
 
 }
