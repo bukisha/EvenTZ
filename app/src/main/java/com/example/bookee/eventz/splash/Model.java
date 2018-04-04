@@ -1,6 +1,6 @@
 package com.example.bookee.eventz.splash;
 
-import com.example.bookee.eventz.callbacks.FetchCategoriesCallback;
+import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
 import com.example.bookee.eventz.data.Category;
 import com.example.bookee.eventz.data.EventsRepository;
 
@@ -15,7 +15,7 @@ public class Model implements MvpContract.Model {
     }
 
     @Override
-    public void fetchInitialCategories(final FetchCategoriesCallback callback) {
+    public void fetchInitialCategories(final MvpContract.FetchCategoriesCallback callback) {
            repository.fetchCategories(new FetchCategoriesCallback() {
                @Override
                public void onSuccess(ArrayList<Category> list) {

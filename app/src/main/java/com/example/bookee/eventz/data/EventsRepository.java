@@ -3,8 +3,8 @@ package com.example.bookee.eventz.data;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.bookee.eventz.callbacks.FetchCategoriesCallback;
-import com.example.bookee.eventz.callbacks.FetchEventsForCategoryCallback;
+import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
+import com.example.bookee.eventz.data.callbacks.FetchEventsForCategoryCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;

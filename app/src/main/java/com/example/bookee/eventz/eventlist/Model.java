@@ -1,6 +1,6 @@
 package com.example.bookee.eventz.eventlist;
 
-import com.example.bookee.eventz.callbacks.FetchEventsForCategoryCallback;
+import com.example.bookee.eventz.data.callbacks.FetchEventsForCategoryCallback;
 import com.example.bookee.eventz.data.Event;
 import com.example.bookee.eventz.data.EventsRepository;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class Model implements MvpContract.Model {
     }
 
     @Override
-    public void fetchEventsForCategory(String categoryId,final FetchEventsForCategoryCallback callback) {
+    public void fetchEventsForCategory(String categoryId,final MvpContract.FetchEventsForCategoryCallback callback) {
         repository.fetchEventsForCategory(categoryId, new FetchEventsForCategoryCallback() {
             @Override
             public void onSuccess(ArrayList<Event> events) {

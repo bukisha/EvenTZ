@@ -2,7 +2,7 @@ package com.example.bookee.eventz.home;
 
 import android.util.Log;
 
-import com.example.bookee.eventz.callbacks.FetchCategoriesCallback;
+import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
 import com.example.bookee.eventz.data.Category;
 import com.example.bookee.eventz.data.EventsRepository;
 
@@ -19,7 +19,7 @@ class Model implements MvpContract.Model {
         this.nameToCategoryHash=hashMap;
     }
 
-    public void fetchCategoryNames(final FetchCategoriesCallback callback) {
+    public void fetchCategoryNames(final MvpContract.FetchCategoriesCallback callback) {
         Log.d(TAG, "fetchCategories: fetching of category names starting");
         repository.fetchCategories(new FetchCategoriesCallback() {
             @Override

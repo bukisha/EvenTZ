@@ -1,7 +1,7 @@
 package com.example.bookee.eventz.details;
 
-import com.example.bookee.eventz.callbacks.GetEventForIndexCallback;
-import com.example.bookee.eventz.callbacks.GetEventListCallback;
+import com.example.bookee.eventz.details.callbacks.GetEventForIndexCallback;
+import com.example.bookee.eventz.details.callbacks.GetEventListCallback;
 import com.example.bookee.eventz.data.Event;
 import java.util.ArrayList;
 

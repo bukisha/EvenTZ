@@ -2,7 +2,6 @@ package com.example.bookee.eventz.eventlist;
 
 import android.util.Log;
 
-import com.example.bookee.eventz.callbacks.FetchEventsForCategoryCallback;
 import com.example.bookee.eventz.data.Event;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class Presenter implements MvpContract.Presenter{
     @Override
     public void fetchEventsForCategory( String categoryName) {
         Log.d(TAG, "fetchEventsForCategory: "+ categoryName);
-        model.fetchEventsForCategory(categoryName, new FetchEventsForCategoryCallback() {
+        model.fetchEventsForCategory(categoryName, new MvpContract.FetchEventsForCategoryCallback() {
             @Override
             public void onSuccess(ArrayList<Event> events) {
                 view.openEventListActivity(extractEventNames(events));
