@@ -11,7 +11,7 @@ public class Presenter implements MvpContract.Presenter{
     private MvpContract.View view;
     private MvpContract.Model model;
 
-    Presenter(MvpContract.View view,Model model) {
+    Presenter(MvpContract.View view,MvpContract.Model model) {
         this.view=view;
         this.model=model;
     }

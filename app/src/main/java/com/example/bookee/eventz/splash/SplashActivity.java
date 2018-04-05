@@ -11,10 +11,10 @@ import com.example.bookee.eventz.home.HomeActivity;
 
 import java.util.ArrayList;
 
-class SplashActivity extends AppCompatActivity implements MvpContract.View{
+public class SplashActivity extends AppCompatActivity implements MvpContract.View{
     private static final String TAG = "SplashActivity";
     public static final String LIST_OF_CATEGORIES_KEY ="list of categories";
-    private Presenter presenter;
+    private MvpContract.Presenter presenter;
 
 
     @Override
@@ -28,7 +28,7 @@ class SplashActivity extends AppCompatActivity implements MvpContract.View{
     @Override
     public void passInitialCategories(ArrayList<Category> categoryList) {
     Intent intent=new Intent(this, HomeActivity.class);
-        intent.putExtra(LIST_OF_CATEGORIES_KEY,categoryList);
+    intent.putExtra(LIST_OF_CATEGORIES_KEY,categoryList);
         startActivity(intent);
     }
 

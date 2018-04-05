@@ -1,23 +1,27 @@
 package com.example.bookee.eventz.home;
 
+import android.util.Log;
+
 import com.example.bookee.eventz.data.Category;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Presenter implements MvpContract.Presenter {
+class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
     private MvpContract.View view;
-    private Model model;
+    private MvpContract.Model model;
 
-    Presenter(MvpContract.View view,Model model) {
+    Presenter(MvpContract.View view,MvpContract.Model model) {
         this.view = view;
         this.model=model;
     }
 
     @Override
     public void populateNameList(Serializable serializableExtra) {
+        Log.d(TAG, "populateNameList: starting");
         ArrayList<Category> categoryInfo= (ArrayList<Category>) serializableExtra;
+        
         model.populateHash(categoryInfo);
         view.updateCategories(extractCategoryNames(categoryInfo));
     }

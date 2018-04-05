@@ -1,8 +1,8 @@
 package com.example.bookee.eventz.splash;
 
 import com.example.bookee.eventz.data.Category;
-import com.example.bookee.eventz.data.RetrofitCategoryRepository;
 import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
+import com.example.bookee.eventz.data.RetrofitCategoryRepository;
 
 import java.util.ArrayList;
 
@@ -27,4 +27,5 @@ class Model implements MvpContract.Model {
                }
            });
     }
+
 }

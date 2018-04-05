@@ -3,10 +3,10 @@ package com.example.bookee.eventz.eventlist;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.util.Log;
 
 import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
@@ -18,7 +18,6 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
     private static final String TAG = "EventListActivity";
     private ListView listView;
     private MvpContract.Presenter presenter;
-    private EventListDiHelper diHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,8 +26,8 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
         setContentView(R.layout.activity_event_list);
         listView= findViewById(R.id.event_list);
 
-        diHelper.createModel(EventApp.getHelper().getEventsRepository());
-        presenter=new Presenter(this,diHelper.getModel());
+        MvpContract.Model model=new Model(EventApp.getRetrofitEventsRepository());
+        presenter=new Presenter(this,model);
         }
 
     @Override

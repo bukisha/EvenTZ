@@ -9,7 +9,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RetrofitEventsRepository {
-    private static final String TAG = "RetrofitEventsRepository";
+    private static final String TAG = "RetrofitEventsRepo";
 
     private EventsWebApi api;
 

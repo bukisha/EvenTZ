@@ -10,12 +10,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RetrofitCategoryRepository {
-    private static final String TAG = "RetrofitCategoryRepository";
+    private static final String TAG = "RetrofitCategoryRepo";
     private CategoryWebApi api;
 
     public RetrofitCategoryRepository(CategoryWebApi api) {
-       // Retrofit client=RetrofitFactory.buildRetrofit();
-        //this.api= client.create(api.getClass());
         this.api=api;
     }
 

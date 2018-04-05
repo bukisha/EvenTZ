@@ -10,6 +10,7 @@ interface MvpContract  {
     interface Model {
        void fetchCategoryNames(FetchCategoriesCallback callback);
        String getClickedCategoryId(String categoryName);
+       void populateHash(ArrayList<Category> list);
     }
     interface Presenter {
         void populateNameList(Serializable serializableExtra);

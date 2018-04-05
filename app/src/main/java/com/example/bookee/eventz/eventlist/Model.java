@@ -5,7 +5,7 @@ import com.example.bookee.eventz.data.Event;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import java.util.ArrayList;
 
-public class Model implements MvpContract.Model {
+class Model implements MvpContract.Model {
 
     private RetrofitEventsRepository repository;
 

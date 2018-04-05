@@ -21,8 +21,6 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     private static final String TAG = "HomeActivity";
     public static final String CATEGORY_ID_KEY ="categoryId";
     private MvpContract.Presenter  presenter;
-    private HomeDiHelper diHelper;
-
     private ListView listView;
 
     @Override
@@ -30,9 +28,9 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         listView=findViewById(R.id.category_list);
-        diHelper.createModel(EventApp.getHelper().getCategoryRepository());
+        MvpContract.Model model=new Model(EventApp.getRetrofitCategoryRepositiry());
+        presenter=new Presenter(this,model);
 
-        presenter=new Presenter(this, diHelper.getModel());
         initClickListener();
     }
 
@@ -40,8 +38,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     protected void onResume() {
         super.onResume();
         presenter.populateNameList(getIntent().getSerializableExtra(SplashActivity.LIST_OF_CATEGORIES_KEY));
-       // presenter.fetchCategories();
-    }
+        }
 
     public void initClickListener() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
