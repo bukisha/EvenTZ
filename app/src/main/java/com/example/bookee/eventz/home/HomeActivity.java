@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         listView=findViewById(R.id.category_list);
-        diHelper.createModel(EventApp.getHelper().getEventsRepository());
+        diHelper.createModel(EventApp.getHelper().getCategoryRepository());
 
         presenter=new Presenter(this, diHelper.getModel());
         initClickListener();

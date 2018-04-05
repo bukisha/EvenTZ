@@ -1,16 +1,15 @@
 package com.example.bookee.eventz.splash;
 
-import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
 import com.example.bookee.eventz.data.Category;
-import com.example.bookee.eventz.data.EventsRepository;
+import com.example.bookee.eventz.data.RetrofitCategoryRepository;
+import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
 
 import java.util.ArrayList;
 
+class Model implements MvpContract.Model {
+    private RetrofitCategoryRepository repository;
 
-public class Model implements MvpContract.Model {
-    private EventsRepository repository;
-
-    public Model(EventsRepository repository) {
+    Model(RetrofitCategoryRepository repository) {
         this.repository=repository;
     }
 
@@ -19,7 +18,6 @@ public class Model implements MvpContract.Model {
            repository.fetchCategories(new FetchCategoriesCallback() {
                @Override
                public void onSuccess(ArrayList<Category> list) {
-                  // callback.onSuccess(extractCategoryNames(list));
                    callback.onSuccess(list);
                }
 

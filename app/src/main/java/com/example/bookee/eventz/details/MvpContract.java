@@ -5,7 +5,7 @@ import com.example.bookee.eventz.details.callbacks.GetEventListCallback;
 import com.example.bookee.eventz.data.Event;
 import java.util.ArrayList;
 
-public interface MvpContract {
+interface MvpContract {
 
     interface Model {
         void getAllEvents(GetEventListCallback callback);

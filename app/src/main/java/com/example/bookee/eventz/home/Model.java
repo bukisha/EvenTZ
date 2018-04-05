@@ -2,19 +2,19 @@ package com.example.bookee.eventz.home;
 
 import android.util.Log;
 
-import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
 import com.example.bookee.eventz.data.Category;
-import com.example.bookee.eventz.data.EventsRepository;
+import com.example.bookee.eventz.data.RetrofitCategoryRepository;
+import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 class Model implements MvpContract.Model {
     private static final String TAG = "Model";
-    private EventsRepository repository;
+    private RetrofitCategoryRepository repository;
     private HashMap<String,String> nameToCategoryHash;
 
-    public Model(EventsRepository repository,HashMap<String,String> hashMap) {
+    public Model(RetrofitCategoryRepository repository, HashMap<String,String> hashMap) {
         this.repository=repository;
         this.nameToCategoryHash=hashMap;
     }

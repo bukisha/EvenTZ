@@ -2,14 +2,14 @@ package com.example.bookee.eventz.eventlist;
 
 import com.example.bookee.eventz.data.callbacks.FetchEventsForCategoryCallback;
 import com.example.bookee.eventz.data.Event;
-import com.example.bookee.eventz.data.EventsRepository;
+import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import java.util.ArrayList;
 
 public class Model implements MvpContract.Model {
 
-    private EventsRepository repository;
+    private RetrofitEventsRepository repository;
 
-    public Model(EventsRepository repository) {
+    public Model(RetrofitEventsRepository repository) {
         this.repository=repository;
     }
 

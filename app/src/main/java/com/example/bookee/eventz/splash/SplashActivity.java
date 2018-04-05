@@ -11,17 +11,17 @@ import com.example.bookee.eventz.home.HomeActivity;
 
 import java.util.ArrayList;
 
-public class SplashActivity extends AppCompatActivity implements MvpContract.View{
+class SplashActivity extends AppCompatActivity implements MvpContract.View{
     private static final String TAG = "SplashActivity";
     public static final String LIST_OF_CATEGORIES_KEY ="list of categories";
-    private  MvpContract.Presenter presenter;
-    private  SplashDiHelper diHelper;
+    private Presenter presenter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        diHelper.createModel(EventApp.getHelper().getEventsRepository());
-        presenter=new Presenter(this,diHelper.getModel());
+        Model model=new Model(EventApp.getRetrofitCategoryRepositiry());
+        presenter = new Presenter(this,model);
         presenter.fetchInitialCategories();
     }
 
