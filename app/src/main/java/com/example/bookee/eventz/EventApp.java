@@ -23,7 +23,7 @@ public class EventApp extends Application {
         retrofitCategoryRepositiry = new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
         }
 
-    public static RetrofitCategoryRepository getRetrofitCategoryRepositiry() {
+    public static RetrofitCategoryRepository getRetrofitCategoryRepository() {
         return retrofitCategoryRepositiry;
     }
 

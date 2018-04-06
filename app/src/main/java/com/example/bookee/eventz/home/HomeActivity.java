@@ -28,7 +28,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         listView=findViewById(R.id.category_list);
-        MvpContract.Model model=new Model(EventApp.getRetrofitCategoryRepositiry());
+        MvpContract.Model model=new Model(EventApp.getRetrofitCategoryRepository());
         presenter=new Presenter(this,model);
 
         initClickListener();

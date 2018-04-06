@@ -2,7 +2,6 @@ package com.example.bookee.eventz.data;
 
 import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -18,35 +17,35 @@ import static org.mockito.Mockito.verify;
 
 public class RetrofitCategoryRepositoryTest {
 
-    private ArrayList tArrayList;
+    private ArrayList<Category> tArrayList;
     @Mock
     private RetrofitCategoryRepository tCategoryRepository;
     @Mock
-    private CategoryWebApi api;
-    @Mock
     private FetchCategoriesCallback tFetchCategoriesCallback;
-
+    @Mock
+    private Category tCategory0;
+    @Mock
+    private Category tCategory1;
+    @Mock
+    private Category tCategory2;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
-       // tCategoryRepository=new RetrofitCategoryRepository(api);
             }
 
-    @After
-    public void tearDown() throws Exception {}
-
+    //A little bit tricky because i should also test what call.enqueue does :D
+    //TODO get back on this when u have more info on mockito framework and when u figure out how to mock retrofit calls
     @Test
     public void shouldFetchCategories() {
         //Given
-        tArrayList=new ArrayList();
-        tArrayList.add("test0");
-        tArrayList.add("test1");
-        tArrayList.add("test2");
+        tArrayList=new ArrayList<>();
+        tArrayList.add(tCategory0);
+        tArrayList.add(tCategory1);
+        tArrayList.add(tCategory2);
 
-        //synchronous answer
-        doAnswer(new Answer() {
+        doAnswer(new Answer<Void>() {
             @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
+            public Void answer(InvocationOnMock invocation) {
                 ((FetchCategoriesCallback)invocation.getArguments()[0]).onSuccess(tArrayList);
                 return null;
             }

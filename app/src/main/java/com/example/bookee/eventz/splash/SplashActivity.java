@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Model model=new Model(EventApp.getRetrofitCategoryRepositiry());
+        Model model=new Model(EventApp.getRetrofitCategoryRepository());
         presenter = new Presenter(this,model);
         presenter.fetchInitialCategories();
     }
