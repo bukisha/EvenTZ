@@ -19,26 +19,28 @@ public class ModelTest {
     private Model mockModel;
     @Mock
     private MvpContract.FetchCategoriesCallback mockFetchCategoriesCallback;
-
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         tList=new ArrayList<>();
         }
-
+    //testing is method onSuccess called
     @Test
     public void shouldFetchInitialCategories() {
-        //given
+        //Given
+        //propagates fetched tList to MvpContract.callback via its onSuccess method
         Mockito.doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation)  {
-                ((MvpContract.FetchCategoriesCallback)invocation.getArguments()[0]).onSuccess(tList);
+                MvpContract.FetchCategoriesCallback callback= (MvpContract.FetchCategoriesCallback) invocation.getArguments()[0];
+                callback.onSuccess(tList);
                 return null;
             }
         }).when(mockModel).fetchInitialCategories(mockFetchCategoriesCallback);
         //when
         mockModel.fetchInitialCategories(mockFetchCategoriesCallback);
-        //than
+        //Than
         Mockito.verify(mockFetchCategoriesCallback,Mockito.times(1)).onSuccess(tList);
     }
+    //TODO how could i test what is passed to onSuccess and is it valid data or not
 }
