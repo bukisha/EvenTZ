@@ -1,31 +1,33 @@
 package com.example.bookee.eventz.splash;
 
 import com.example.bookee.eventz.data.Category;
-import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
 import com.example.bookee.eventz.data.RetrofitCategoryRepository;
+import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
 
 import java.util.ArrayList;
 
 class Model implements MvpContract.Model {
     private RetrofitCategoryRepository repository;
-
+    private MvpContract.FetchCategoriesCallback callbackFromPresenter;
     Model(RetrofitCategoryRepository repository) {
         this.repository=repository;
     }
 
     @Override
-    public void fetchInitialCategories(final MvpContract.FetchCategoriesCallback callback) {
-           repository.fetchCategories(new FetchCategoriesCallback() {
-               @Override
-               public void onSuccess(ArrayList<Category> list) {
-                   callback.onSuccess(list);
-               }
+    public void fetchInitialCategories( MvpContract.FetchCategoriesCallback callback) {
+        callbackFromPresenter=callback;
 
-               @Override
-               public void onFailure() {
-                    callback.onFailure();
-               }
-           });
-    }
+       FetchCategoriesCallback callbackForRepository=new FetchCategoriesCallback() {
+           @Override
+           public void onSuccess(ArrayList<Category> list) {
+            callbackFromPresenter.onSuccess(list);
+           }
+           @Override
+           public void onFailure() {
+            callbackFromPresenter.onFailure();
+           }
+       };
+        repository.fetchCategories(callbackForRepository);
+        }
 
 }

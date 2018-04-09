@@ -2,10 +2,10 @@ package com.example.bookee.eventz;
 
 import android.app.Application;
 
-import com.example.bookee.eventz.data.RetrofitCategoryRepository;
 import com.example.bookee.eventz.data.CategoryWebApi;
-import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.EventsWebApi;
+import com.example.bookee.eventz.data.RetrofitCategoryRepository;
+import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
 
 import retrofit2.Retrofit;
@@ -21,6 +21,7 @@ public class EventApp extends Application {
         Retrofit retrofit= RetrofitFactory.buildRetrofit();
         retrofitEventsRepository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
         retrofitCategoryRepositiry = new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
+
         }
 
     public static RetrofitCategoryRepository getRetrofitCategoryRepository() {
@@ -30,5 +31,4 @@ public class EventApp extends Application {
     public static RetrofitEventsRepository getRetrofitEventsRepository() {
         return retrofitEventsRepository;
     }
-
 }

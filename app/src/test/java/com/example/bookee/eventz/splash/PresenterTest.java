@@ -51,8 +51,8 @@ public class PresenterTest {
         //When
         mockPresenter.fetchInitialCategories();
         //Than
-        Mockito.verify(mockModel,Mockito.times(1)).fetchInitialCategories(mockCallback);
-        Mockito.verify(mockCallback,Mockito.times(1)).onSuccess(tList);
+        Mockito.verify(mockModel).fetchInitialCategories(mockCallback);
+        Mockito.verify(mockCallback).onSuccess(tList);
     }
 }
 

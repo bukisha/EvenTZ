@@ -14,8 +14,10 @@ import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.eventlist.EventListActivity;
 import com.example.bookee.eventz.splash.SplashActivity;
+import com.example.bookee.eventz.utils.HashFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "HomeActivity";
@@ -28,7 +30,9 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         listView=findViewById(R.id.category_list);
-        MvpContract.Model model=new Model(EventApp.getRetrofitCategoryRepository());
+
+        HashMap<String,String> hash= HashFactory.create();
+        MvpContract.Model model=new Model(EventApp.getRetrofitCategoryRepository(),hash);
         presenter=new Presenter(this,model);
 
         initClickListener();
