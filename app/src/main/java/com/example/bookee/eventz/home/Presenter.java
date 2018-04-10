@@ -12,29 +12,29 @@ class Presenter implements MvpContract.Presenter {
     private MvpContract.View view;
     private MvpContract.Model model;
 
-    Presenter(MvpContract.View view,MvpContract.Model model) {
+    Presenter(MvpContract.View view, MvpContract.Model model) {
         this.view = view;
-        this.model=model;
+        this.model = model;
     }
 
     @Override
     public void populateNameList(Serializable serializableExtra) {
         Log.d(TAG, "populateNameList: starting");
-        ArrayList<Category> categoryInfo= (ArrayList<Category>) serializableExtra;
-        
+        ArrayList<Category> categoryInfo = (ArrayList<Category>) serializableExtra;
+
         model.populateHash(categoryInfo);
         view.updateCategories(extractCategoryNames(categoryInfo));
     }
 
     @Override
     public void itemClicked(String categoryName) {
-       view.displayListOfEvents(model.getClickedCategoryId(categoryName));
+        view.displayListOfEvents(model.getClickedCategoryId(categoryName));
     }
 
-    private ArrayList<String> extractCategoryNames(ArrayList<Category> list) {
+    public ArrayList<String> extractCategoryNames(ArrayList<Category> list) {
         ArrayList<String> listOfNames = new ArrayList<>();
-        for (Category c: list) {
-            listOfNames.add( c.getName());
+        for (Category c : list) {
+            listOfNames.add(c.getName());
         }
         return listOfNames;
     }
