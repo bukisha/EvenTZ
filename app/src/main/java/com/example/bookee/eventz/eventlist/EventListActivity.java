@@ -24,11 +24,11 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: ");
         setContentView(R.layout.activity_event_list);
-        listView= findViewById(R.id.event_list);
+        listView = findViewById(R.id.event_list);
 
-        MvpContract.Model model=new Model(EventApp.getRetrofitEventsRepository());
-        presenter=new Presenter(this,model);
-        }
+        MvpContract.Model model = new Model(EventApp.getRetrofitEventsRepository());
+        presenter = new Presenter(this, model);
+    }
 
     @Override
     protected void onResume() {
@@ -37,8 +37,8 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
     }
 
     @Override
-    public void openEventListActivity(ArrayList<String> eventNames) {
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,eventNames);
+    public void populateEventListActivity(ArrayList<String> eventNames) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, eventNames);
         listView.setAdapter(adapter);
     }
 

@@ -6,35 +6,36 @@ import com.example.bookee.eventz.data.Event;
 
 import java.util.ArrayList;
 
-public class Presenter implements MvpContract.Presenter{
+class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
     private MvpContract.View view;
     private MvpContract.Model model;
 
-    Presenter(MvpContract.View view,MvpContract.Model model) {
-        this.view=view;
-        this.model=model;
+    Presenter(MvpContract.View view, MvpContract.Model model) {
+        this.view = view;
+        this.model = model;
     }
 
     @Override
-    public void fetchEventsForCategory( String categoryName) {
-        Log.d(TAG, "fetchEventsForCategory: "+ categoryName);
-        model.fetchEventsForCategory(categoryName, new MvpContract.FetchEventsForCategoryCallback() {
+    public void fetchEventsForCategory(String categoryName) {
+        Log.d(TAG, "fetchEventsForCategory: " + categoryName);
+        MvpContract.FetchEventsForCategoryCallback modelCallback = new MvpContract.FetchEventsForCategoryCallback() {
             @Override
             public void onSuccess(ArrayList<Event> events) {
-                view.openEventListActivity(extractEventNames(events));
+                view.populateEventListActivity(extractEventNames(events));
             }
 
             @Override
             public void onFailure() {
                 view.displayError();
             }
-        });
+        };
+        model.fetchEventsForCategory(categoryName, modelCallback);
     }
 
-    private ArrayList<String> extractEventNames( ArrayList<Event> events) {
+    private ArrayList<String> extractEventNames(ArrayList<Event> events) {
         ArrayList<String> eventNames = new ArrayList<>();
-        for (Event e: events) {
+        for (Event e : events) {
             eventNames.add(e.getName().getText());
         }
         return eventNames;
