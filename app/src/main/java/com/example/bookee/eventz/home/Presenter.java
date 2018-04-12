@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.example.bookee.eventz.data.Category;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 class Presenter implements MvpContract.Presenter {
@@ -18,12 +17,12 @@ class Presenter implements MvpContract.Presenter {
     }
 
     @Override
-    public void populateNameList(Serializable serializableExtra) {
+    public void populateNameList(ArrayList<Category> serializableExtra) {
         Log.d(TAG, "populateNameList: starting");
-        ArrayList<Category> categoryInfo = (ArrayList<Category>) serializableExtra;
 
-        model.populateHash(categoryInfo);
-        view.updateCategories(extractCategoryNames(categoryInfo));
+
+         model.populateHash(serializableExtra);
+        view.updateCategories(extractCategoryNames(serializableExtra));
     }
 
     @Override
@@ -31,7 +30,7 @@ class Presenter implements MvpContract.Presenter {
         view.displayListOfEvents(model.getClickedCategoryId(categoryName));
     }
 
-    public ArrayList<String> extractCategoryNames(ArrayList<Category> list) {
+    private ArrayList<String> extractCategoryNames(ArrayList<Category> list) {
         ArrayList<String> listOfNames = new ArrayList<>();
         for (Category c : list) {
             listOfNames.add(c.getName());
@@ -39,7 +38,7 @@ class Presenter implements MvpContract.Presenter {
         return listOfNames;
     }
 
-    private boolean getView() {
-        return view != null;
-    }
+//    private boolean getView() {
+//        return view != null;
+//    }
 }

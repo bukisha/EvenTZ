@@ -15,7 +15,7 @@ class Model implements MvpContract.Model {
     private HashMap<String, String> nameToCategoryHash;
     private MvpContract.FetchCategoriesCallback callbackForPresenter;
 
-    Model(RetrofitCategoryRepository repository, HashMap hashMap) {
+    Model(RetrofitCategoryRepository repository, HashMap<String,String> hashMap) {
         this.repository = repository;
         this.nameToCategoryHash = hashMap;
     }
