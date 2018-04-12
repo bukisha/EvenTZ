@@ -18,13 +18,10 @@ public class PresenterTest {
     private static final String T_CATEGORY_NAME = "testName";
     private Presenter tPresenter;
     private ArrayList<Event> tList;
-    private ArrayList<String> tNamesList;
     @Mock
     private MvpContract.View viewMock;
     @Mock
     private MvpContract.Model modelMock;
-    @Mock
-    private MvpContract.FetchEventsForCategoryCallback modelCallbackMock;
     @Spy
     private MvpContract.FetchEventsForCategoryCallback modelCallbackSpy;
 
@@ -33,8 +30,6 @@ public class PresenterTest {
         MockitoAnnotations.initMocks(this);
         tPresenter = new Presenter(viewMock, modelMock);
         tList = new ArrayList<>();
-        tNamesList = new ArrayList<>();
-
     }
 
     @Test

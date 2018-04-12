@@ -26,8 +26,6 @@ public class ModelTest {
     @Mock
     private RetrofitCategoryRepository retrofitCategoryRepositoryMock;
     @Mock
-    private FetchCategoriesCallback fetchCategoriesCallbackMock;
-    @Mock
     private MvpContract.FetchCategoriesCallback MvpFetchCategoriesCallbackMock;
     @Captor
     private ArgumentCaptor<ArrayList<Category>> listArgumentCaptor;
@@ -55,7 +53,7 @@ public class ModelTest {
             tList.add(new Category());
         Mockito.doAnswer(new Answer<Void>() {
             @Override
-            public Void answer(InvocationOnMock invocation) throws Throwable {
+            public Void answer(InvocationOnMock invocation) {
                 FetchCategoriesCallback callback=invocation.getArgument(0);
                 callback.onSuccess(tList);
                 return null;

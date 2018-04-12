@@ -9,15 +9,14 @@ public class Presenter implements MvpContract.Presenter {
     private MvpContract.View view;
 
 
-   public Presenter(MvpContract.View view,Model model) {
-        this.model=model;
+    public Presenter(MvpContract.View view, Model model) {
+        this.model = model;
         this.view = view;
     }
 
     @Override
     public void fetchInitialCategories() {
-        model.fetchInitialCategories(new MvpContract.FetchCategoriesCallback() {
-
+        MvpContract.FetchCategoriesCallback presenterCallback = new MvpContract.FetchCategoriesCallback() {
             @Override
             public void onSuccess(ArrayList<Category> list) {
                 view.passInitialCategories(list);
@@ -25,8 +24,11 @@ public class Presenter implements MvpContract.Presenter {
 
             @Override
             public void onFailure() {
-                view.showErrorFragment();
+                {
+                    view.showErrorFragment();
+                }
             }
-        });
+        };
+        model.fetchInitialCategories(presenterCallback);
     }
 }

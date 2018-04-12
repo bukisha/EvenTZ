@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -14,45 +15,56 @@ import java.util.ArrayList;
 
 public class PresenterTest {
 
+    private Presenter tPresenter;
+    private ArrayList<Category> tList;
     @Mock
-    private Presenter mockPresenter;
+    private Model modelMock;
     @Mock
-    private Model mockModel;
-    @Mock
-    private MvpContract.View mockView;
-    @Mock
-    private MvpContract.FetchCategoriesCallback mockCallback;
+    private MvpContract.View viewMock;
+    @Spy
+    private MvpContract.FetchCategoriesCallback fetchCategoriesCallbackSpy;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        }
+        tPresenter = new Presenter(viewMock, modelMock);
+        tList = new ArrayList<>();
+    }
+
     @Test
     public void shouldFetchInitialCategoriesFromModel() {
         //Given
-        final ArrayList<Category> tList=new ArrayList<>();
-
-        Mockito.doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) {
-                mockModel.fetchInitialCategories(mockCallback);
-                return null;
-            }
-        }).when(mockPresenter).fetchInitialCategories();
-
         Mockito.doAnswer(new Answer<Void>() {
             @Override
-            public Void answer(InvocationOnMock invocation)  {
-                MvpContract.FetchCategoriesCallback callback=invocation.getArgument(0);
+            public Void answer(InvocationOnMock invocation) {
+                MvpContract.FetchCategoriesCallback callback = invocation.getArgument(0);
                 callback.onSuccess(tList);
                 return null;
             }
-        }).when(mockModel).fetchInitialCategories(mockCallback);
+        }).when(modelMock).fetchInitialCategories(Mockito.any(MvpContract.FetchCategoriesCallback.class));
         //When
-        mockPresenter.fetchInitialCategories();
+        tPresenter.fetchInitialCategories();
         //Than
-        Mockito.verify(mockModel).fetchInitialCategories(mockCallback);
-        Mockito.verify(mockCallback).onSuccess(tList);
+        Mockito.verify(modelMock).fetchInitialCategories(Mockito.any(MvpContract.FetchCategoriesCallback.class));
+    }
+
+    @Test
+    public void shouldPassInitialListToView() {
+        //Given
+        Mockito.doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) {
+                MvpContract.FetchCategoriesCallback callback = invocation.getArgument(0);
+                fetchCategoriesCallbackSpy = Mockito.spy(callback);
+                fetchCategoriesCallbackSpy.onSuccess(tList);
+                return null;
+            }
+        }).when(modelMock).fetchInitialCategories(Mockito.any(MvpContract.FetchCategoriesCallback.class));
+        //When
+        tPresenter.fetchInitialCategories();
+        //Then
+        Mockito.verify(fetchCategoriesCallbackSpy).onSuccess(Mockito.any(ArrayList.class));
+
     }
 }
 
