@@ -32,6 +32,11 @@ dependencies {
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //design
+    implementation 'com.android.support:design:26.1.0'
+    //retrofit mock web server for testing
+    implementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
+    implementation 'com.squareup.retrofit2:retrofit-mock:2.4.0'
     //mockito
     testImplementation 'org.mockito:mockito-core:2.17.0'
     //Junit
@@ -39,6 +44,6 @@ dependencies {
     //Espresso
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
-    implementation 'com.squareup.retrofit2:retrofit-mock:2.4.0'
+
+
 }

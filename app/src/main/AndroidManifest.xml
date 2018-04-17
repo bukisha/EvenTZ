@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".home.HomeActivity"/>
         <activity android:name=".eventlist.EventListActivity"/>
-        <activity android:name=".details.DetailsActivity"/>
+        <activity android:name=".details.DetailsActivity"
+                  android:theme="@style/DetailsTheme" />
     </application>
 
 </manifest>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EvenTZ</string>
+    <string name="test_title">This is my title</string>
 </resources>

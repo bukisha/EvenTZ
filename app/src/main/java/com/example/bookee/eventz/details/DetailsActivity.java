@@ -4,33 +4,44 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+
 import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.Event;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 
 public class DetailsActivity extends AppCompatActivity implements MvpContract.View {
-
+    private static final String TAG = "DetailsActivity";
     private Presenter presenter;
     private static String idOfEvent;
-    private TextView textView;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
-        textView = findViewById(R.id.eventName);
+        initGui();
         RetrofitEventsRepository repository = EventApp.getRetrofitEventsRepository();
         Model model = new Model(repository);
         presenter = new Presenter(model, this);
     }
 
+    private void initGui() {
+        collapsingToolbarLayout=findViewById(R.id.collapsing_toolbar_layout);
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if(toolbar!=null) {
+           getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+           }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        textView.setText(idOfEvent);
         presenter.fetchEventForId(idOfEvent);
     }
 
@@ -42,11 +53,14 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
 
     @Override
     public void displayEvent(Event event) {
-        textView.setText(event.getStart().getTimezone());
+        Log.d(TAG, "displayEvent: "+event.getName().getText());
+        String s= (String) getSupportActionBar().getTitle();
+        Log.d(TAG, "displayEvent: tittle is"+s);
+        collapsingToolbarLayout.setTitle(event.getName().getText());
         }
 
     @Override
     public void displayError() {
-        //TODO make errorDisplaying fragment
+        //TODO make error displaying fragment
     }
 }
