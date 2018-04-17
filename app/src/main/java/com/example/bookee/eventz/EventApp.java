@@ -13,19 +13,19 @@ import retrofit2.Retrofit;
 public class EventApp extends Application {
 
     private static RetrofitEventsRepository retrofitEventsRepository;
-    private static RetrofitCategoryRepository retrofitCategoryRepositiry;
+    private static RetrofitCategoryRepository retrofitCategoryRepository;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Retrofit retrofit= RetrofitFactory.buildRetrofit();
         retrofitEventsRepository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
-        retrofitCategoryRepositiry = new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
+        retrofitCategoryRepository = new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
 
         }
 
     public static RetrofitCategoryRepository getRetrofitCategoryRepository() {
-        return retrofitCategoryRepositiry;
+        return retrofitCategoryRepository;
     }
 
     public static RetrofitEventsRepository getRetrofitEventsRepository() {

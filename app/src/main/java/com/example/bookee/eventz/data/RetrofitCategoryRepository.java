@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

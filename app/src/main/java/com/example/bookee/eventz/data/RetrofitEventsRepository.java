@@ -1,12 +1,15 @@
 package com.example.bookee.eventz.data;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
 import com.example.bookee.eventz.data.callbacks.FetchEventsForCategoryCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class RetrofitEventsRepository {
     private static final String TAG = "RetrofitEventsRepo";
@@ -23,15 +26,34 @@ public class RetrofitEventsRepository {
 
         call.enqueue(new Callback<PaginatedEvents>() {
             @Override
-            public void onResponse(Call<PaginatedEvents> call, Response<PaginatedEvents> response) {
-                        callback.onSuccess(response.body().getEvents());
+            public void onResponse(@NonNull Call<PaginatedEvents> call, @NonNull Response<PaginatedEvents> response) {
+                if (response.body() != null) {
+                    callback.onSuccess(response.body().getEvents());
+                }
             }
 
             @Override
-            public void onFailure(Call<PaginatedEvents> call, Throwable t) {
+            public void onFailure(@NonNull Call<PaginatedEvents> call, @NonNull Throwable t) {
                      callback.onFailure();
             }
         });
+        }
 
+        public void fetchEventForId(String eventId, final FetchEventForIdCallback modelCallback) {
+
+            Call<Event> call=api.fetchEventForId(eventId,RetrofitFactory.getAuthToken());
+            Callback<Event> callback=new Callback<Event>() {
+                @Override
+                public void onResponse(@NonNull Call<Event> call, Response<Event> response) {
+                    modelCallback.onSuccess(response.body());
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
+                    modelCallback.onFailure();
+                }
+            };
+
+            call.enqueue(callback);
     }
 }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class HashFactory {
 
-    public static HashMap<String,String> create() {
+    public static HashMap<String,String> createStringToString() {
 
         return new HashMap<>(50);
     }

@@ -1,5 +1,6 @@
 package com.example.bookee.eventz.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,8 @@ import android.widget.Toast;
 
 import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
+import com.example.bookee.eventz.data.Category;
 import com.example.bookee.eventz.eventlist.EventListActivity;
-import com.example.bookee.eventz.splash.SplashActivity;
 import com.example.bookee.eventz.utils.HashFactory;
 
 import java.util.ArrayList;
@@ -25,13 +26,15 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     private MvpContract.Presenter presenter;
     private ListView listView;
 
+    private static ArrayList<Category> initialCategoryList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         listView = findViewById(R.id.category_list);
 
-        HashMap<String, String> hash = HashFactory.create();
+        HashMap<String, String> hash = HashFactory.createStringToString();
         MvpContract.Model model = new Model(EventApp.getRetrofitCategoryRepository(), hash);
         presenter = new Presenter(this, model);
 
@@ -41,7 +44,13 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.populateNameList(getIntent().getSerializableExtra(SplashActivity.LIST_OF_CATEGORIES_KEY));
+        presenter.populateNameList(initialCategoryList);
+    }
+
+    public static void launch(ArrayList<Category> list, Context context) {
+        Intent intent=new Intent(context,HomeActivity.class);
+         initialCategoryList=list;
+        context.startActivity(intent);
     }
 
     public void initClickListener() {

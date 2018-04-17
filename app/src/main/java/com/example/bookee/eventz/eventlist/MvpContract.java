@@ -8,10 +8,12 @@ interface MvpContract {
 
     interface Model {
         void fetchEventsForCategory(String categoryName, FetchEventsForCategoryCallback callback);
+        String getIdForName(String eventName);
     }
 
     interface Presenter {
         void fetchEventsForCategory(String categoryName);
+        String getIdOfClickedItem(String eventName);
     }
 
     interface View {
@@ -23,5 +25,4 @@ interface MvpContract {
         void onSuccess(ArrayList<Event> events);
         void onFailure();
     }
-
 }

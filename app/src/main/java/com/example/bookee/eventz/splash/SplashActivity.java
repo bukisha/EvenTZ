@@ -1,6 +1,5 @@
 package com.example.bookee.eventz.splash;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -27,13 +26,11 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
 
     @Override
     public void passInitialCategories(ArrayList<Category> categoryList) {
-        Intent intent = new Intent(this, HomeActivity.class);
-        intent.putExtra(LIST_OF_CATEGORIES_KEY, categoryList);
-        startActivity(intent);
-    }
+        HomeActivity.launch(categoryList,this);
+        }
 
     @Override
     public void showErrorFragment() {
-        //TODO create and show error fragment
+        //TODO createStringToString and show error fragment
     }
 }

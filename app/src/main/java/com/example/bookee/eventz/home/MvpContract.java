@@ -18,7 +18,7 @@ interface MvpContract  {
     interface View {
         void updateCategories(ArrayList<String> categoryNamesList);
         void displayListOfEvents(String categoryId);
-       // void displayErrorMessage(String message);
+        void displayErrorMessage(String message);
     }
     interface FetchCategoriesCallback {
         void onSuccess(ArrayList<Category> list);

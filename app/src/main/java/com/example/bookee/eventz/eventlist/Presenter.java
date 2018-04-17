@@ -33,6 +33,13 @@ class Presenter implements MvpContract.Presenter {
         model.fetchEventsForCategory(categoryName, modelCallback);
     }
 
+    @Override
+    public String getIdOfClickedItem(String eventName) {
+
+         return  model.getIdForName(eventName);
+    }
+
+
     private ArrayList<String> extractEventNames(ArrayList<Event> events) {
         ArrayList<String> eventNames = new ArrayList<>();
         for (Event e : events) {

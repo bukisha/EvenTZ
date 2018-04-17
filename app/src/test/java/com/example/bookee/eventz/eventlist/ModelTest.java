@@ -3,6 +3,7 @@ package com.example.bookee.eventz.eventlist;
 import com.example.bookee.eventz.data.Event;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.callbacks.FetchEventsForCategoryCallback;
+import com.example.bookee.eventz.utils.HashFactory;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class ModelTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tModel = new Model(eventsRepositoryMock);
+        tModel = new Model(eventsRepositoryMock, HashFactory.createStringToString());
     }
 
     @Test
