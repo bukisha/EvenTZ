@@ -35,13 +35,13 @@ public class PresenterTest {
         tList = createTestCategoryList();
         ArrayList<String> tStringList = createTestNameList();
         Mockito.doNothing().when(modelMock).populateHash(tList);
-        Mockito.doNothing().when(viewMock).updateCategories(tStringList);
+        Mockito.doNothing().when(viewMock).updateCategories(tList);
         InOrder verifyOrder = Mockito.inOrder(modelMock, viewMock);
         //When
         tPresenter.populateNameList(tList);
         //Then
         verifyOrder.verify(modelMock).populateHash(tList);
-        verifyOrder.verify(viewMock).updateCategories(tStringList);
+        verifyOrder.verify(viewMock).updateCategories(tList);
     }
 
     @Test

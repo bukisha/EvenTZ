@@ -13,7 +13,6 @@ class Presenter implements MvpContract.Presenter {
 
     @Override
     public void fetchEventForId(String id) {
-
         MvpContract.FetchEventForIdCallback modelCallback = new MvpContract.FetchEventForIdCallback() {
             @Override
             public void onSuccess(Event event) {
@@ -23,7 +22,7 @@ class Presenter implements MvpContract.Presenter {
 
             @Override
             public void onFailure() {
-                if(notViewExists()) return;
+               if(notViewExists()) return;
                 view.displayError();
             }
         };
@@ -33,7 +32,6 @@ class Presenter implements MvpContract.Presenter {
     private boolean notViewExists() {
         return this.view == null;
     }
-
 
     private String getDate(Event event) {
         String date= event.getStart().getLocal();

@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.bookee.eventz.EventApp;
@@ -24,7 +22,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     private static final String TAG = "HomeActivity";
     public static final String CATEGORY_ID_KEY = "categoryId";
     private MvpContract.Presenter presenter;
-    private ListView listView;
+    private RecyclerView recyclerView;
 
     private static ArrayList<Category> initialCategoryList;
 
@@ -32,15 +30,20 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        listView = findViewById(R.id.category_list);
-
+        recyclerView = findViewById(R.id.category_recycler_list);
+        setupRecyclerView(recyclerView);
         HashMap<String, String> hash = HashFactory.createStringToString();
         MvpContract.Model model = new Model(EventApp.getRetrofitCategoryRepository(), hash);
-        if(savedInstanceState==null) {
+        if (savedInstanceState == null) {
             Log.d(TAG, "onCreate: creating home presenter");
             presenter = new Presenter(this, model);
         }
-        initClickListener();
+        //initClickListener();
+    }
+
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -57,25 +60,28 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     }
 
     public static void launch(ArrayList<Category> list, Context context) {
-        Intent intent=new Intent(context,HomeActivity.class);
-         initialCategoryList=list;
+        Intent intent = new Intent(context, HomeActivity.class);
+        initialCategoryList = list;
         context.startActivity(intent);
     }
 
     public void initClickListener() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d(TAG, "onItemClick: item clicked is " + listView.getItemAtPosition(i).toString());
-                presenter.itemClicked(listView.getItemAtPosition(i).toString());
-            }
-        });
+//        recyclerView.setOnClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Log.d(TAG, "onItemClick: item clicked is " + recyclerView.getItemAtPosition(i).toString());
+//                presenter.itemClicked(recyclerView.getItemAtPosition(i).toString());
+//            }
+//        });
     }
 
     @Override
-    public void updateCategories(ArrayList<String> categoryNamesList) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categoryNamesList);
-        listView.setAdapter(adapter);
+    public void updateCategories(ArrayList<Category> categoryList) {
+        MyAdapter adapter=new MyAdapter(categoryList,this);
+        recyclerView.setAdapter(adapter);
+
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categoryNamesList);
+//        recyclerView.setAdapter(adapter);
     }
 
     @Override

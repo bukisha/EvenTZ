@@ -5,4 +5,5 @@
     <dimen name="smallProgressbarHeight">50dp</dimen>
     <dimen name="smallProgressBarWidth">50dp</dimen>
     <dimen name="DetailsImageViewFadingEdge">40dp</dimen>
+    <dimen name="recycler_text_size">15sp</dimen>
 </resources>

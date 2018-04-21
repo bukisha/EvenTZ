@@ -18,7 +18,7 @@ interface MvpContract  {
         void detachView();
     }
     interface View {
-        void updateCategories(ArrayList<String> categoryNamesList);
+        void updateCategories(ArrayList<Category> categoryList);
         void displayListOfEvents(String categoryId);
         void displayErrorMessage(String message);
     }

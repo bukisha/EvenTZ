@@ -21,7 +21,7 @@ class Presenter implements MvpContract.Presenter {
         Log.d(TAG, "populateNameList: starting");
         model.populateHash(serializableExtra);
         if(notViewExists()) return;
-        view.updateCategories(extractCategoryNames(serializableExtra));
+        view.updateCategories(serializableExtra);
     }
 
     private boolean notViewExists() {
@@ -50,8 +50,4 @@ class Presenter implements MvpContract.Presenter {
         }
         return listOfNames;
     }
-
-//    private boolean getView() {
-//        return view != null;
-//    }
 }
