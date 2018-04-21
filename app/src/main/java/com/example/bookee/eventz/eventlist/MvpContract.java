@@ -14,6 +14,8 @@ interface MvpContract {
     interface Presenter {
         void fetchEventsForCategory(String categoryName);
         String getIdOfClickedItem(String eventName);
+        void attachView(EventListActivity eventListActivity);
+        void detachView();
     }
 
     interface View {

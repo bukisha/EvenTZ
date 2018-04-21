@@ -36,15 +36,23 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
         HashMap<String, String> hash = HashFactory.createStringToString();
         MvpContract.Model model = new Model(EventApp.getRetrofitCategoryRepository(), hash);
-        presenter = new Presenter(this, model);
-
+        if(savedInstanceState==null) {
+            presenter = new Presenter(this, model);
+        }
         initClickListener();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        presenter.attachView(this);
         presenter.populateNameList(initialCategoryList);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenter.detachView();
     }
 
     public static void launch(ArrayList<Category> list, Context context) {

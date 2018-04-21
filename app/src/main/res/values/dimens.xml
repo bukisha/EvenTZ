@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="detailsInfoTopMargin">5dp</dimen>
+    <dimen name="detailsPadding">5dp</dimen>
+    <dimen name="smallProgressbarHeight">50dp</dimen>
+    <dimen name="smallProgressBarWidth">50dp</dimen>
+    <dimen name="DetailsImageViewFadingEdge">40dp</dimen>
+</resources>

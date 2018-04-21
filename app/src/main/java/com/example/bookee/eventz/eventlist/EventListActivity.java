@@ -33,10 +33,12 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
         setContentView(R.layout.activity_event_list);
         listView = findViewById(R.id.event_list);
         context=this;
-        HashMap<String,String> hashMap= HashFactory.createStringToString();
-        MvpContract.Model model = new Model(EventApp.getRetrofitEventsRepository(),hashMap);
-        presenter = new Presenter(this, model);
+        HashMap<String, String> hashMap = HashFactory.createStringToString();
+        MvpContract.Model model = new Model(EventApp.getRetrofitEventsRepository(), hashMap);
+        if(savedInstanceState==null) {
 
+            presenter = new Presenter(this, model);
+        }
         initOnClickListener();
     }
 
@@ -53,7 +55,14 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
     @Override
     protected void onResume() {
         super.onResume();
+        presenter.attachView(this);
         presenter.fetchEventsForCategory(getIntent().getStringExtra(HomeActivity.CATEGORY_ID_KEY));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenter.detachView();
     }
 
     @Override

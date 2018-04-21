@@ -10,11 +10,13 @@ interface MvpContract {
 
     interface Presenter {
         void fetchEventForId(String id);
+        void attachView(DetailsActivity detailsActivity);
+        void detachView();
     }
 
     interface View {
         void displayError();
-        void displayEvent(Event event);
+        void displayEvent(String title,String name,String date,String description,String logoUrl);
     }
 
     interface FetchEventForIdCallback {

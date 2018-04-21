@@ -19,15 +19,28 @@ class Presenter implements MvpContract.Presenter {
     @Override
     public void populateNameList(ArrayList<Category> serializableExtra) {
         Log.d(TAG, "populateNameList: starting");
-
-
-         model.populateHash(serializableExtra);
+        model.populateHash(serializableExtra);
+        if(notViewExists()) return;
         view.updateCategories(extractCategoryNames(serializableExtra));
+    }
+
+    private boolean notViewExists() {
+        return this.view!=null;
     }
 
     @Override
     public void itemClicked(String categoryName) {
         view.displayListOfEvents(model.getClickedCategoryId(categoryName));
+    }
+
+    @Override
+    public void attachView(HomeActivity activity) {
+        this.view=activity;
+    }
+
+    @Override
+    public void detachView() {
+        this.view=null;
     }
 
     private ArrayList<String> extractCategoryNames(ArrayList<Category> list) {

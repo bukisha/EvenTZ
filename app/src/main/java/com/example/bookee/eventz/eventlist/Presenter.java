@@ -22,21 +22,36 @@ class Presenter implements MvpContract.Presenter {
         MvpContract.FetchEventsForCategoryCallback modelCallback = new MvpContract.FetchEventsForCategoryCallback() {
             @Override
             public void onSuccess(ArrayList<Event> events) {
+                if (notViewExists()) return;
                 view.populateEventListActivity(extractEventNames(events));
             }
 
             @Override
             public void onFailure() {
+                if (notViewExists()) return;
                 view.displayError();
             }
         };
         model.fetchEventsForCategory(categoryName, modelCallback);
     }
 
+    private boolean notViewExists() {
+       return this.view!=null;
+    }
+
     @Override
     public String getIdOfClickedItem(String eventName) {
+        return model.getIdForName(eventName);
+    }
 
-         return  model.getIdForName(eventName);
+    @Override
+    public void attachView(EventListActivity eventListActivity) {
+        this.view = eventListActivity;
+    }
+
+    @Override
+    public void detachView() {
+        this.view = null;
     }
 
 

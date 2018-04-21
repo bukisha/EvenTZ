@@ -15,7 +15,6 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
     public static final String LIST_OF_CATEGORIES_KEY = "list of categories";
     private MvpContract.Presenter presenter;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +26,7 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
     @Override
     public void passInitialCategories(ArrayList<Category> categoryList) {
         HomeActivity.launch(categoryList,this);
+        finish();
         }
 
     @Override
