@@ -31,7 +31,7 @@ class Presenter implements MvpContract.Presenter {
     }
 
     private boolean notViewExists() {
-        return this.view != null;
+        return this.view == null;
     }
 
 

@@ -25,7 +25,7 @@ class Presenter implements MvpContract.Presenter {
     }
 
     private boolean notViewExists() {
-        return this.view!=null;
+        return this.view==null;
     }
 
     @Override
@@ -34,8 +34,8 @@ class Presenter implements MvpContract.Presenter {
     }
 
     @Override
-    public void attachView(HomeActivity activity) {
-        this.view=activity;
+    public void attachView(MvpContract.View view) {
+        this.view=view;
     }
 
     @Override

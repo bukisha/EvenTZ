@@ -35,8 +35,8 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
         context=this;
         HashMap<String, String> hashMap = HashFactory.createStringToString();
         MvpContract.Model model = new Model(EventApp.getRetrofitEventsRepository(), hashMap);
-        if(savedInstanceState==null) {
 
+        if(savedInstanceState==null) {
             presenter = new Presenter(this, model);
         }
         initOnClickListener();

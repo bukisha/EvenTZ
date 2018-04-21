@@ -37,6 +37,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         HashMap<String, String> hash = HashFactory.createStringToString();
         MvpContract.Model model = new Model(EventApp.getRetrofitCategoryRepository(), hash);
         if(savedInstanceState==null) {
+            Log.d(TAG, "onCreate: creating home presenter");
             presenter = new Presenter(this, model);
         }
         initClickListener();

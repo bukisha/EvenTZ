@@ -14,7 +14,7 @@ interface MvpContract  {
     interface Presenter {
         void populateNameList(ArrayList<Category> serializableExtra);
         void itemClicked(String categoryName);
-        void attachView(HomeActivity activity);
+        void attachView(MvpContract.View view);
         void detachView();
     }
     interface View {
