@@ -14,7 +14,6 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:alpha="0.7"
             android:layout_margin="5dp"
             android:scaleType="fitXY"
             android:id="@+id/category_item_image"
