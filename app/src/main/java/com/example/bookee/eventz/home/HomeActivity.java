@@ -73,15 +73,13 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 //                presenter.itemClicked(recyclerView.getItemAtPosition(i).toString());
 //            }
 //        });
+
     }
 
     @Override
     public void updateCategories(ArrayList<Category> categoryList) {
         CategoryCardsAdapter adapter=new CategoryCardsAdapter(categoryList,this);
         recyclerView.setAdapter(adapter);
-
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categoryNamesList);
-//        recyclerView.setAdapter(adapter);
     }
 
     @Override

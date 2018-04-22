@@ -33,8 +33,12 @@ public class CategoryCardsAdapter extends RecyclerView.Adapter<CategoryCardsAdap
 
     @Override
     public void onBindViewHolder(CategoryNameViewHolder holder, int position) {
-            Glide.with(context).load(getHomeItemLogo(categoryList.get(position).getName())).centerCrop().into(holder.categoryLogo);
+            Glide.with(context)
+                    .load(getHomeItemLogo(categoryList.get(position).getName()))
+                    .centerCrop()
+                    .into(holder.categoryLogo);
             holder.categoryName.setText(categoryList.get(position).getName());
+            holder.currentCategory=categoryList.get(position);
     }
 
     @Override
@@ -46,13 +50,20 @@ public class CategoryCardsAdapter extends RecyclerView.Adapter<CategoryCardsAdap
          CardView categoryCard;
          ImageView categoryLogo;
          TextView categoryName;
-
+         Category currentCategory;
 
         public CategoryNameViewHolder(View itemView) {
             super(itemView);
             categoryCard=itemView.findViewById(R.id.card_view);
             categoryLogo=itemView.findViewById(R.id.category_item_image);
             categoryName=itemView.findViewById(R.id.category_item_name);
+
+            categoryCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
     }
     public int getHomeItemLogo(String itemName) {
