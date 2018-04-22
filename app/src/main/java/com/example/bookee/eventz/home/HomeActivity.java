@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     public static final String CATEGORY_ID_KEY = "categoryId";
     private MvpContract.Presenter presenter;
     private RecyclerView recyclerView;
-
+    private RecyclerViewItemOnClickListener recyclerViewItemOnClickListener;
     private static ArrayList<Category> initialCategoryList;
 
     @Override
@@ -38,7 +38,12 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
             Log.d(TAG, "onCreate: creating home presenter");
             presenter = new Presenter(this, model);
         }
-        initClickListener();
+        recyclerViewItemOnClickListener= new RecyclerViewItemOnClickListener() {
+            @Override
+            public void itemClicked(String categoryName) {
+                presenter.itemClicked(categoryName);
+            }
+        };
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -65,20 +70,9 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         context.startActivity(intent);
     }
 
-    public void initClickListener() {
-//        recyclerView.setOnClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Log.d(TAG, "onItemClick: item clicked is " + recyclerView.getItemAtPosition(i).toString());
-//                presenter.itemClicked(recyclerView.getItemAtPosition(i).toString());
-//            }
-//        });
-
-    }
-
     @Override
     public void updateCategories(ArrayList<Category> categoryList) {
-        CategoryCardsAdapter adapter=new CategoryCardsAdapter(categoryList,this);
+        CategoryCardsAdapter adapter=new CategoryCardsAdapter(categoryList,this,recyclerViewItemOnClickListener);
         recyclerView.setAdapter(adapter);
     }
 
