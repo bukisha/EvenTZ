@@ -9,17 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.Category;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CategoryNameViewHolder> {
+public class CategoryCardsAdapter extends RecyclerView.Adapter<CategoryCardsAdapter.CategoryNameViewHolder> {
     private ArrayList<Category> categoryList;
     private Context context;
 
-    public MyAdapter(ArrayList<Category> categoryNames,Context currentContext) {
+    public CategoryCardsAdapter(ArrayList<Category> categoryNames, Context currentContext) {
         this.categoryList = categoryNames;
         this.context=currentContext;
     }
@@ -33,7 +32,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CategoryNameViewHo
 
     @Override
     public void onBindViewHolder(CategoryNameViewHolder holder, int position) {
-            Glide.with(context).load(R.drawable.music_home_logo).centerCrop().into(holder.categoryLogo);
+           // Glide.with(context).load(R.drawable.).centerCrop().into(holder.categoryLogo);
             holder.categoryName.setText(categoryList.get(position).getName());
     }
 
@@ -54,5 +53,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CategoryNameViewHo
             categoryLogo=itemView.findViewById(R.id.category_item_image);
             categoryName=itemView.findViewById(R.id.category_item_name);
         }
+    }
+    public int getHomeItemLogo(String itemName) {
+            //TODO switch case sa with category names so them ethod returns coresponding images
+        return 0;
     }
 }

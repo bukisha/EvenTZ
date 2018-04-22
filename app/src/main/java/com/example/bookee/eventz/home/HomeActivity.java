@@ -38,7 +38,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
             Log.d(TAG, "onCreate: creating home presenter");
             presenter = new Presenter(this, model);
         }
-        //initClickListener();
+        initClickListener();
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -77,7 +77,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     @Override
     public void updateCategories(ArrayList<Category> categoryList) {
-        MyAdapter adapter=new MyAdapter(categoryList,this);
+        CategoryCardsAdapter adapter=new CategoryCardsAdapter(categoryList,this);
         recyclerView.setAdapter(adapter);
 
 //        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categoryNamesList);

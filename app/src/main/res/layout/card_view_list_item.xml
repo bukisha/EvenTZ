@@ -18,7 +18,7 @@
             android:layout_margin="5dp"
             android:scaleType="fitXY"
             android:id="@+id/category_item_image"
-            android:src="@drawable/party_temp"
+
             />
         <TextView
             android:layout_width="match_parent"
