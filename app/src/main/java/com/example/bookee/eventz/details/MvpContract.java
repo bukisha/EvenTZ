@@ -17,6 +17,7 @@ interface MvpContract {
     interface View {
         void displayError();
         void displayEvent(String title,String name,String date,String description,String logoUrl);
+        void displayEventWithoutLogo(String title, String name, String date, String description);
     }
 
     interface FetchEventForIdCallback {

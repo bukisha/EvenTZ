@@ -20,8 +20,12 @@ class Presenter implements MvpContract.Presenter {
             @Override
             public void onSuccess(Event event) {
                 if (notViewExists()) return;
-                view.displayEvent(getTitle(event), event.getName().getText(), getDate(event), event.getDescription().getText(), event.getLogo().getUrl());
-            }
+                if(event.getLogo()!=null) {
+                    view.displayEvent(getTitle(event), event.getName().getText(), getDate(event), event.getDescription().getText(), event.getLogo().getUrl());
+                }else {
+                    view.displayEventWithoutLogo(getTitle(event), event.getName().getText(), getDate(event), event.getDescription().getText());
+                }
+                }
 
             @Override
             public void onFailure() {

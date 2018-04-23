@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     public static final String CATEGORY_ID_KEY = "categoryId";
     private MvpContract.Presenter presenter;
     private RecyclerView recyclerView;
-    private RecyclerViewItemOnClickListener recyclerViewItemOnClickListener;
+    private RecyclerViewOnItemClickListener recyclerViewOnItemClickListener;
     private static ArrayList<Category> initialCategoryList;
 
     @Override
@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     private void setupRecyclerView(RecyclerView recyclerView) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerViewItemOnClickListener = new RecyclerViewItemOnClickListener() {
+        recyclerViewOnItemClickListener = new RecyclerViewOnItemClickListener() {
             @Override
             public void itemClicked(String categoryName) {
                 presenter.itemClicked(categoryName);
@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     @Override
     public void updateCategories(ArrayList<Category> categoryList) {
-        CategoryCardsAdapter adapter = new CategoryCardsAdapter(categoryList, this, recyclerViewItemOnClickListener);
+        CategoryCardsAdapter adapter = new CategoryCardsAdapter(categoryList, this, recyclerViewOnItemClickListener);
         recyclerView.setAdapter(adapter);
     }
 

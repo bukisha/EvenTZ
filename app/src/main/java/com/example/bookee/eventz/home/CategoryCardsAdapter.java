@@ -18,9 +18,9 @@ import java.util.ArrayList;
  class CategoryCardsAdapter extends RecyclerView.Adapter<CategoryCardsAdapter.CategoryNameViewHolder> {
     private ArrayList<Category> categoryList;
     private Context context;
-    private RecyclerViewItemOnClickListener onClickListener;
+    private RecyclerViewOnItemClickListener onClickListener;
 
-     CategoryCardsAdapter(ArrayList<Category> categoryNames, Context currentContext,RecyclerViewItemOnClickListener listener) {
+     CategoryCardsAdapter(ArrayList<Category> categoryNames, Context currentContext,RecyclerViewOnItemClickListener listener) {
         this.categoryList = categoryNames;
         this.context = currentContext;
         this.onClickListener=listener;
@@ -52,9 +52,9 @@ import java.util.ArrayList;
         ImageView categoryLogo;
         TextView categoryName;
         Category currentCategory;
-       // RecyclerViewItemOnClickListener parentOnClickListener;
+       // RecyclerViewOnItemClickListener parentOnClickListener;
 
-         CategoryNameViewHolder(View itemView, final RecyclerViewItemOnClickListener listener) {
+         CategoryNameViewHolder(View itemView, final RecyclerViewOnItemClickListener listener) {
             super(itemView);
             categoryCard = itemView.findViewById(R.id.card_view);
             categoryLogo = itemView.findViewById(R.id.category_item_image);

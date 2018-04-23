@@ -74,9 +74,9 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
 
     @Override
     public void populateEventListActivity(ArrayList<Event> eventNames) {
-        EventListCardAdapter eventListCardAdapter = new EventListCardAdapter(eventNames, context, recyclerViewOnItemClickListener);
+        EventListCardAdapter eventListCardAdapter = new EventListCardAdapter(eventNames, context,progressBar,recyclerView);
+        eventListCardAdapter.setOnClickLister(recyclerViewOnItemClickListener);
         recyclerView.setAdapter(eventListCardAdapter);
-        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override

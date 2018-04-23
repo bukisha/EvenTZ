@@ -1,5 +1,5 @@
 package com.example.bookee.eventz.home;
 
-public interface RecyclerViewItemOnClickListener {
+interface RecyclerViewOnItemClickListener {
     void itemClicked(String categoryName);
 }

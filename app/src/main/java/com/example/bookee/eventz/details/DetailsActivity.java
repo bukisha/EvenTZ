@@ -20,10 +20,12 @@ import com.bumptech.glide.request.target.Target;
 import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
+import com.example.bookee.eventz.utils.ResourceManager;
 
 public class DetailsActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "DetailsActivity";
     private static final String EXTRA_EVENT_ID = "eventId";
+    private static final String tempImg = "party_temp";
     private Presenter presenter;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private NestedScrollView nestedScrollView;
@@ -70,7 +72,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         Log.d(TAG, "onResume: ");
         presenter.attachView(this);
         String idOfEvent = getIntent().getStringExtra(EXTRA_EVENT_ID);
-        Log.d(TAG, "onResume: fetching event with id "+idOfEvent);
+        Log.d(TAG, "onResume: fetching event with id " + idOfEvent);
         presenter.fetchEventForId(idOfEvent);
     }
 
@@ -107,6 +109,30 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
                 progressBar.setVisibility(View.GONE);
                 collapsingToolbarLayout.setVisibility(View.VISIBLE);
                 nestedScrollView.setVisibility(View.VISIBLE);
+                return false;
+            }
+        }).fitCenter().into(eventLogo);
+    }
+
+    @Override
+    public void displayEventWithoutLogo(String title, String name, String date, String description) {
+        collapsingToolbarLayout.setTitle(title);
+        eventDate.setText(date);
+        eventName.setText(name);
+        eventDescription.setText(description);
+
+        Glide.with(this).load(ResourceManager.getImage(this, tempImg)).listener(new RequestListener<Integer, GlideDrawable>() {
+            @Override
+            public boolean onException(Exception e, Integer model, Target<GlideDrawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(GlideDrawable resource, Integer model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                progressBar.setVisibility(View.GONE);
+                collapsingToolbarLayout.setVisibility(View.VISIBLE);
+                nestedScrollView.setVisibility(View.VISIBLE);
+
                 return false;
             }
         }).fitCenter().into(eventLogo);
