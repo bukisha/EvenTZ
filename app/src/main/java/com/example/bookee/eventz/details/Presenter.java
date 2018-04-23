@@ -1,8 +1,11 @@
 package com.example.bookee.eventz.details;
 
+import android.util.Log;
+
 import com.example.bookee.eventz.data.Event;
 
 class Presenter implements MvpContract.Presenter {
+    private static final String TAG = "Presenter";
     private MvpContract.Model model;
     private MvpContract.View view;
 
@@ -16,13 +19,13 @@ class Presenter implements MvpContract.Presenter {
         MvpContract.FetchEventForIdCallback modelCallback = new MvpContract.FetchEventForIdCallback() {
             @Override
             public void onSuccess(Event event) {
-                if(notViewExists()) return;
-                view.displayEvent(getTitle(event),event.getName().getText(),getDate(event),event.getDescription().getText(),event.getLogo().getUrl());
+                if (notViewExists()) return;
+                view.displayEvent(getTitle(event), event.getName().getText(), getDate(event), event.getDescription().getText(), event.getLogo().getUrl());
             }
 
             @Override
             public void onFailure() {
-               if(notViewExists()) return;
+                if (notViewExists()) return;
                 view.displayError();
             }
         };
@@ -34,13 +37,15 @@ class Presenter implements MvpContract.Presenter {
     }
 
     private String getDate(Event event) {
-        String date= event.getStart().getLocal();
-        date=date.substring(0,date.indexOf("T"));
-        date=date.replace("-",".");
+        Log.d(TAG, "getDate: ");
+        String date = event.getStart().getLocal();
+        date = date.substring(0, date.indexOf("T"));
+        date = date.replace("-", ".");
         return date;
     }
 
     private String getTitle(Event event) {
+        Log.d(TAG, "getTitle: ");
         String title = event.getStart().getTimezone();
         title = title.substring(title.indexOf("/") + 1);
         title = title.replace("_", " ");
@@ -48,10 +53,10 @@ class Presenter implements MvpContract.Presenter {
     }
 
     public void attachView(DetailsActivity detailsActivity) {
-        this.view=detailsActivity;
+        this.view = detailsActivity;
     }
 
     public void detachView() {
-        this.view=null;
+        this.view = null;
     }
 }

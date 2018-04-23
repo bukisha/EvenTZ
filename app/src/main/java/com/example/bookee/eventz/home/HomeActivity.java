@@ -38,17 +38,17 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
             Log.d(TAG, "onCreate: creating home presenter");
             presenter = new Presenter(this, model);
         }
-        recyclerViewItemOnClickListener= new RecyclerViewItemOnClickListener() {
+    }
+
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerViewItemOnClickListener = new RecyclerViewItemOnClickListener() {
             @Override
             public void itemClicked(String categoryName) {
                 presenter.itemClicked(categoryName);
             }
         };
-    }
-
-    private void setupRecyclerView(RecyclerView recyclerView) {
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     @Override
     public void updateCategories(ArrayList<Category> categoryList) {
-        CategoryCardsAdapter adapter=new CategoryCardsAdapter(categoryList,this,recyclerViewItemOnClickListener);
+        CategoryCardsAdapter adapter = new CategoryCardsAdapter(categoryList, this, recyclerViewItemOnClickListener);
         recyclerView.setAdapter(adapter);
     }
 

@@ -3,10 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <ListView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:id="@+id/event_list"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/events_recycler_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
 
+    </android.support.v7.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="@dimen/smallProgressbarHeight"
+        android:layout_height="@dimen/smallProgressBarWidth"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

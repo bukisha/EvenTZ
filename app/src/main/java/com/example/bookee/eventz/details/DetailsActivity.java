@@ -3,7 +3,6 @@ package com.example.bookee.eventz.details;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -35,12 +34,13 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     private ProgressBar progressBar;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: starting");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
         initUI();
         RetrofitEventsRepository repository = EventApp.getRetrofitEventsRepository();
-        Model model = new Model(repository);
+        MvpContract.Model model = new Model(repository);
         if (savedInstanceState == null) {
             presenter = new Presenter(model, this);
         }
@@ -67,8 +67,10 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     @Override
     protected void onResume() {
         super.onResume();
-        String idOfEvent = getIntent().getStringExtra(EXTRA_EVENT_ID);
+        Log.d(TAG, "onResume: ");
         presenter.attachView(this);
+        String idOfEvent = getIntent().getStringExtra(EXTRA_EVENT_ID);
+        Log.d(TAG, "onResume: fetching event with id "+idOfEvent);
         presenter.fetchEventForId(idOfEvent);
     }
 
@@ -79,6 +81,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     }
 
     public static void launch(String eventId, Context context) {
+        Log.d(TAG, "launch: called");
         Intent intent = new Intent(context, DetailsActivity.class);
         intent.putExtra(EXTRA_EVENT_ID, eventId);
         context.startActivity(intent);
@@ -86,6 +89,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
 
     @Override
     public void displayEvent(String title, String name, String date, String description, String logoUrl) {
+        Log.d(TAG, "displayEvent: called");
         collapsingToolbarLayout.setTitle(title);
         eventDate.setText(date);
         eventName.setText(name);
@@ -94,6 +98,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         Glide.with(this).load(logoUrl).listener(new RequestListener<String, GlideDrawable>() {
             @Override
             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+
                 return false;
             }
 
@@ -105,7 +110,6 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
                 return false;
             }
         }).fitCenter().into(eventLogo);
-
     }
 
     @Override

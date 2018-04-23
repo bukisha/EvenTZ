@@ -10,5 +10,6 @@
     <color name="divider">#BDBDBD</color>
     <color name="white">#ffffff</color>
     <color name="primaryDarkTransparent">#A0FFA000</color>
+    <color name="transparentGray">#AF757575</color>
 </resources>
 

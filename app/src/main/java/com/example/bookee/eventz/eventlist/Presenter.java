@@ -23,7 +23,7 @@ class Presenter implements MvpContract.Presenter {
             @Override
             public void onSuccess(ArrayList<Event> events) {
                 if (notViewExists()) return;
-                view.populateEventListActivity(extractEventNames(events));
+                view.populateEventListActivity(events);
             }
 
             @Override

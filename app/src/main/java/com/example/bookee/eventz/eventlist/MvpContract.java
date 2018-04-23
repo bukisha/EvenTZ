@@ -19,7 +19,7 @@ interface MvpContract {
     }
 
     interface View {
-        void populateEventListActivity(ArrayList<String> eventNames);
+        void populateEventListActivity(ArrayList<Event> eventNames);
         void displayError();
     }
 

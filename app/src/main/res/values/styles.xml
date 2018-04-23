@@ -11,24 +11,28 @@
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
-    <style name="DetailsTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+
+    <style name="DetailsTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">20sp</item>
     </style>
+
     <style name="textDetailsDate" parent="TextAppearance.AppCompat">
         <item name="android:textSize">30sp</item>
     </style>
+
     <style name="textDetailsEventName" parent="TextAppearance.AppCompat">
-    <item name="android:textSize">30sp</item>
+        <item name="android:textSize">25sp</item>
     </style>
+
     <style name="textDetailsEventDescription" parent="TextAppearance.AppCompat">
         <item name="android:textSize">15sp</item>
     </style>
 
     <style name="TextAppearance.Design.CollapsingToolbar.Expanded.TitleText">
-        <item  name="android:textColor">@color/colorAccent</item>
-        <item  name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:layout_gravity">left</item>
     </style>
 

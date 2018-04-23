@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
     @Override
     public CategoryNameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_list_item, parent, false);
+        CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item_card, parent, false);
         return new CategoryNameViewHolder(cv,onClickListener);
     }
 
@@ -52,14 +52,14 @@ import java.util.ArrayList;
         ImageView categoryLogo;
         TextView categoryName;
         Category currentCategory;
-        RecyclerViewItemOnClickListener parentOnClickListener;
+       // RecyclerViewItemOnClickListener parentOnClickListener;
 
          CategoryNameViewHolder(View itemView, final RecyclerViewItemOnClickListener listener) {
             super(itemView);
             categoryCard = itemView.findViewById(R.id.card_view);
             categoryLogo = itemView.findViewById(R.id.category_item_image);
             categoryName = itemView.findViewById(R.id.category_item_name);
-            parentOnClickListener=listener;
+           // parentOnClickListener=listener;
             categoryCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
