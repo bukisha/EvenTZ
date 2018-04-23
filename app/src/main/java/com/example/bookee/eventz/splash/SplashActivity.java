@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "SplashActivity";
-    public static final String LIST_OF_CATEGORIES_KEY = "list of categories";
     private MvpContract.Presenter presenter;
 
     @Override

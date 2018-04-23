@@ -21,10 +21,11 @@ import java.util.HashMap;
 public class HomeActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "HomeActivity";
     public static final String CATEGORY_ID_KEY = "categoryId";
+    private static final String EXTRA_CATEGORY_LIST ="categoryList" ;
     private MvpContract.Presenter presenter;
     private RecyclerView recyclerView;
     private RecyclerViewOnItemClickListener recyclerViewOnItemClickListener;
-    private static ArrayList<Category> initialCategoryList;
+    //private static ArrayList<Category> initialCategoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,9 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
+        //Postoji ovaj nacin da prebacim listu kategorija iz splasha u homeActivity i nacin kod kojeg imam staticko polje(gore je zakomentarisano) u kojoj sacuvam listu cim je dobijem kroz launch(List l,context c) metodu
+        //ovde je problem sto imam uncheckedCast warning a ako bih koristio staticko polje to bi bila losa praksa bar sam tako procitao na netu,da li postoji 3 nacin? :D
+        ArrayList<Category> initialCategoryList= (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORY_LIST);
         presenter.populateNameList(initialCategoryList);
     }
 
@@ -66,13 +70,14 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     public static void launch(ArrayList<Category> list, Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
-        initialCategoryList = list;
+        intent.putExtra(EXTRA_CATEGORY_LIST,list);
         context.startActivity(intent);
     }
 
     @Override
     public void updateCategories(ArrayList<Category> categoryList) {
-        CategoryCardsAdapter adapter = new CategoryCardsAdapter(categoryList, this, recyclerViewOnItemClickListener);
+        CategoryCardsAdapter adapter = new CategoryCardsAdapter(categoryList, this);
+        adapter.setOnClickListener(recyclerViewOnItemClickListener);
         recyclerView.setAdapter(adapter);
     }
 
