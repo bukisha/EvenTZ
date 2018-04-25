@@ -25,7 +25,7 @@ import com.example.bookee.eventz.utils.ResourceManager;
 public class DetailsActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "DetailsActivity";
     private static final String EXTRA_EVENT_ID = "eventId";
-    private static final String tempImg = "party_temp";
+    private static final String tempImg = "party";
     private Presenter presenter;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private NestedScrollView nestedScrollView;

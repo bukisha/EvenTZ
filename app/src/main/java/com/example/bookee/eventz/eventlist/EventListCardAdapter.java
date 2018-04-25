@@ -63,7 +63,7 @@ class EventListCardAdapter extends RecyclerView.Adapter<EventListCardAdapter.Eve
         if (events.get(position).getLogo() != null) {
             Glide.with(context).load(events.get(position).getLogo().getUrl()).listener(listener).into(holder.eventCardBackground);
         } else {
-            Glide.with(context).load(R.drawable.party_temp).into(holder.eventCardBackground);
+            Glide.with(context).load(R.drawable.party).into(holder.eventCardBackground);
         }
     }
 

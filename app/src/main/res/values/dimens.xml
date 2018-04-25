@@ -7,4 +7,12 @@
     <dimen name="DetailsImageViewFadingEdge">40dp</dimen>
     <dimen name="recycler_text_size">15sp</dimen>
     <dimen name="detailsDescriptionMargin">5dp</dimen>
+    <dimen name="margin">15dp</dimen>
+    <dimen name="editTextWidth">140dp</dimen>
+    <dimen name="editTextHorizontalMargin">15dp</dimen>
+    <dimen name="editTextMarginTop">10dp</dimen>
+    <dimen name="editEventDescriptionHeight">100dp</dimen>
+    <dimen name="fabWidth">50dp</dimen>
+    <dimen name="fabHeight">50dp</dimen>
+    <dimen name="fabMargin">20dp</dimen>
 </resources>

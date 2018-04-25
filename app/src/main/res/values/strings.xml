@@ -2,4 +2,10 @@
     <string name="app_name">EvenTZ</string>
     <string name="test_title">This is my title</string>
     <string name="details_image">detailsImageContainer</string>
+    <string name="enterEventName">Enter name of the event</string>
+    <string name="enterEvenDescription">Event description</string>
+    <string name="eventNameLabel">Event Name</string>
+    <string name="eventDescriptionLabel">Enter additional info about your event</string>
+    <string name="buttonSetDate">Set date</string>
+    <string name="buttonSetTime">Set time</string>
 </resources>

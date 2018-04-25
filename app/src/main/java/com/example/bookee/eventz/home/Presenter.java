@@ -43,6 +43,11 @@ class Presenter implements MvpContract.Presenter {
         this.view=null;
     }
 
+    @Override
+    public void floatingActionButtonClick() {
+        view.launchCreateEventActivity();
+    }
+
     private ArrayList<String> extractCategoryNames(ArrayList<Category> list) {
         ArrayList<String> listOfNames = new ArrayList<>();
         for (Category c : list) {

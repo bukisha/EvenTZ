@@ -20,6 +20,7 @@
         <activity android:name=".eventlist.EventListActivity"/>
         <activity android:name=".details.DetailsActivity"
                   android:theme="@style/DetailsTheme" />
+        <activity android:name=".create.CreateActivity"/>
     </application>
 
 </manifest>

@@ -56,4 +56,21 @@ public class RetrofitEventsRepository {
 
             call.enqueue(callback);
     }
+
+    public void postNewEvent(Event event) {
+        Call<Event> call=api.createNewEvent(event,RetrofitFactory.getAuthToken());
+
+        Callback<Event> callback=new Callback<Event>() {
+            @Override
+            public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
+                    //TODO
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
+                //TODO
+            }
+        };
+        call.enqueue(callback);
+    }
 }

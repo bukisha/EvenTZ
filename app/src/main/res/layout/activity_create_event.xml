@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin">
+
+    <TextView
+        android:id="@+id/event_name_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/editTextHorizontalMargin"
+        android:layout_marginStart="@dimen/editTextHorizontalMargin"
+        android:text="@string/eventNameLabel"
+        android:textSize="@dimen/recycler_text_size" />
+
+    <EditText
+        android:id="@+id/create_event_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_name_label"
+        android:layout_marginEnd="@dimen/editTextHorizontalMargin"
+        android:layout_marginStart="@dimen/editTextHorizontalMargin"
+        android:layout_marginTop="@dimen/editTextMarginTop"
+        android:hint="@string/enterEventName" />
+
+    <TextView
+        android:id="@+id/event_description_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/create_event_name"
+        android:layout_marginEnd="@dimen/editTextHorizontalMargin"
+        android:layout_marginStart="@dimen/editTextHorizontalMargin"
+        android:inputType="text"
+        android:text="@string/eventDescriptionLabel"
+        android:textSize="@dimen/recycler_text_size" />
+
+    <EditText
+        android:id="@+id/create_event_description"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/editEventDescriptionHeight"
+        android:layout_below="@+id/event_description_label"
+        android:layout_marginEnd="@dimen/editTextHorizontalMargin"
+        android:layout_marginStart="@dimen/editTextHorizontalMargin"
+        android:layout_marginTop="@dimen/editTextMarginTop" />
+
+    <LinearLayout
+        android:id="@+id/button_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/create_event_description"
+        android:layout_marginTop="@dimen/editTextMarginTop"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.5"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/buttonSetDate" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.5"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/buttonSetTime" />
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/button_label"
+        android:src="@drawable/party_temp"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="@dimen/editTextHorizontalMargin"
+        android:layout_marginStart="@dimen/editTextHorizontalMargin"
+        android:layout_marginTop="@dimen/editTextMarginTop" >
+
+    </ImageButton>
+</RelativeLayout>
