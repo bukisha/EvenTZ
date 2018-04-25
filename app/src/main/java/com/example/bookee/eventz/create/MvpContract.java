@@ -11,6 +11,8 @@ interface MvpContract {
 
     interface Presenter {
         void postEvent(String eventName, String cityName, Date date, String description, String logoUrl);
+        void attachView(View view);
+        void detachView();
     }
 
     interface View {

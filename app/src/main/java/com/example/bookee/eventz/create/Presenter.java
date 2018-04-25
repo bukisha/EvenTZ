@@ -42,6 +42,15 @@ public class Presenter implements MvpContract.Presenter {
         return event;
 
     }
+    @Override
+    public void attachView(MvpContract.View view) {
+        this.view=view;
+    }
+
+    @Override
+    public void detachView() {
+        this.view=null;
+    }
 
     private String prepareDate(Date date) {
         TimeZone localTimeZone = TimeZone.getDefault();

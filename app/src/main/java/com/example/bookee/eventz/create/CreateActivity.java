@@ -12,19 +12,31 @@ import com.example.bookee.eventz.data.Event;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 
 
-public class CreateActivity extends AppCompatActivity implements MvpContract.View{
+public class CreateActivity extends AppCompatActivity implements MvpContract.View {
     private Presenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-        RetrofitEventsRepository repository= EventApp.getRetrofitEventsRepository();
-        MvpContract.Model model=new Model(repository);
+        RetrofitEventsRepository repository = EventApp.getRetrofitEventsRepository();
+        MvpContract.Model model = new Model(repository);
 
-        if(savedInstanceState==null) {
-            presenter=new Presenter(model,this);
+        if (savedInstanceState == null) {
+            presenter = new Presenter(model, this);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.attachView(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenter.detachView();
     }
 
     @Override
@@ -33,7 +45,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     public static void launch(Context context) {
-        Intent intent=new Intent(context,CreateActivity.class);
-       context.startActivity(intent);
+        Intent intent = new Intent(context, CreateActivity.class);
+        context.startActivity(intent);
     }
 }
