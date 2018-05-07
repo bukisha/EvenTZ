@@ -22,6 +22,6 @@ interface MvpContract {
 
     interface FetchEventForIdCallback {
        void onSuccess(Event event);
-       void onFailure();
+       void onFailure(Throwable t);
     }
 }

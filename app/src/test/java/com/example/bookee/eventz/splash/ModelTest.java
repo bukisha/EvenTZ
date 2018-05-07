@@ -20,9 +20,9 @@ import java.util.ArrayList;
 
 public class ModelTest {
 
-    private ArrayList<Category> tList;
+    private ArrayList<Category> list;
 
-    private Model tModel;
+    private Model model;
     @Mock
     private RetrofitCategoryRepository retrofitCategoryRepositoryMock;
     @Mock
@@ -32,7 +32,7 @@ public class ModelTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tModel = new Model(retrofitCategoryRepositoryMock);
+        model = new Model(retrofitCategoryRepositoryMock);
 
     }
     @Test
@@ -40,7 +40,7 @@ public class ModelTest {
         //Given
         //nothing is given here :D
         //when
-        tModel.fetchInitialCategories(Mockito.any(MvpContract.FetchCategoriesCallback.class));
+        model.fetchInitialCategories(Mockito.any(MvpContract.FetchCategoriesCallback.class));
         //Than
         Mockito.verify(retrofitCategoryRepositoryMock).fetchCategories(Mockito.any(FetchCategoriesCallback.class));
     }
@@ -48,21 +48,21 @@ public class ModelTest {
     @Test
     public void shouldPassDataToCallback() {
     //Given
-            tList=new ArrayList<>();
-            tList.add(new Category());
-            tList.add(new Category());
+            list =new ArrayList<>();
+            list.add(new Category());
+            list.add(new Category());
         Mockito.doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) {
                 FetchCategoriesCallback callback=invocation.getArgument(0);
-                callback.onSuccess(tList);
+                callback.onSuccess(list);
                 return null;
             }
         }).when(retrofitCategoryRepositoryMock).fetchCategories(Mockito.any(FetchCategoriesCallback.class));
         //When
-        tModel.fetchInitialCategories(MvpFetchCategoriesCallbackMock);
+        model.fetchInitialCategories(MvpFetchCategoriesCallbackMock);
        //Then
         Mockito.verify(MvpFetchCategoriesCallbackMock).onSuccess(listArgumentCaptor.capture());
-        Assert.assertEquals(tList,listArgumentCaptor.getValue());
+        Assert.assertEquals(list,listArgumentCaptor.getValue());
     }
 }

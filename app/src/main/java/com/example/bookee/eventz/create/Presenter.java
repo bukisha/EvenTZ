@@ -42,14 +42,32 @@ public class Presenter implements MvpContract.Presenter {
         return event;
 
     }
+
     @Override
     public void attachView(MvpContract.View view) {
-        this.view=view;
+        this.view = view;
     }
 
     @Override
     public void detachView() {
-        this.view=null;
+        this.view = null;
+    }
+
+    @Override
+    public void startDateChooser() {
+        if (notViewExists()) return;
+        view.showDateChooser();
+    }
+
+    @Override
+    public void startTimeChooser() {
+        if (notViewExists()) return;
+        view.showTimeChooser();
+    }
+
+    @Override
+    public void startImageChooser() {
+
     }
 
     private String prepareDate(Date date) {
@@ -68,4 +86,7 @@ public class Presenter implements MvpContract.Presenter {
         return arrangedTimezone;
     }
 
+    private boolean notViewExists() {
+        return this.view == null;
+    }
 }

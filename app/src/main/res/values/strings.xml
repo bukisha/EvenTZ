@@ -8,4 +8,5 @@
     <string name="eventDescriptionLabel">Enter additional info about your event</string>
     <string name="buttonSetDate">Set date</string>
     <string name="buttonSetTime">Set time</string>
+    <string name="choseCategory">Chose category of your event</string>
 </resources>

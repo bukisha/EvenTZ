@@ -22,7 +22,7 @@ public class PresenterTest {
     private static final String TEST_DESCRIPTION = "WE will be drinking a lot...";
     private static final String TEST_IMG_URL = "http//image/beer.org";
 
-    private Presenter tPresenter;
+    private Presenter presenter;
     @Mock
     private MvpContract.Model modelMock;
     @Mock
@@ -31,7 +31,7 @@ public class PresenterTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tPresenter = new Presenter(modelMock, viewMock);
+        presenter = new Presenter(modelMock, viewMock);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class PresenterTest {
             }
         }).when(modelMock).fetchEventForId(Mockito.anyString(), Mockito.any(MvpContract.FetchEventForIdCallback.class));
         //When
-        tPresenter.fetchEventForId(TEST_ID);
+        presenter.fetchEventForId(TEST_ID);
         //Then
         Mockito.verify(viewMock).displayEvent(Mockito.anyString(),Mockito.anyString(),Mockito.anyString(),Mockito.anyString(),Mockito.anyString());
         // Mockito.verify(modelMock).fetchEventForId(Mockito.anyString(),Mockito.any(MvpContract.FetchEventForIdCallback.class));

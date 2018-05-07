@@ -15,14 +15,14 @@ import java.util.ArrayList;
 
 public class HomeActivityTest {
 
-    private HomeActivity tHomeActivity;
+    private HomeActivity homeActivity;
     @Mock
     private Context contextMock;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tHomeActivity = new HomeActivity();
+        homeActivity = new HomeActivity();
     }
 
     @Test
@@ -30,7 +30,7 @@ public class HomeActivityTest {
         //Given
         ArrayList<Category> tCategoryList = new ArrayList<>();
         //When
-        tHomeActivity.launch(tCategoryList, contextMock);
+        homeActivity.launch(tCategoryList, contextMock);
         //Then
         Mockito.verify(contextMock).startActivity(Mockito.any(Intent.class));
     }

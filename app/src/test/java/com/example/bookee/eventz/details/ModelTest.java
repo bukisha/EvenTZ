@@ -14,7 +14,7 @@ import org.mockito.stubbing.Answer;
 
 public class ModelTest {
     private static final String TEST_ID = "1234567";
-    private MvpContract.Model tModel;
+    private MvpContract.Model model;
     @Mock
     private RetrofitEventsRepository retrofitEventsRepositoryMock;
     @Mock
@@ -23,7 +23,7 @@ public class ModelTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tModel = new Model(retrofitEventsRepositoryMock);
+        model = new Model(retrofitEventsRepositoryMock);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ModelTest {
             }
         }).when(retrofitEventsRepositoryMock).fetchEventForId(Mockito.anyString(), Mockito.any(FetchEventForIdCallback.class));
         //When
-        tModel.fetchEventForId(TEST_ID, fetchEventForIdCallbackMock);
+        model.fetchEventForId(TEST_ID, fetchEventForIdCallbackMock);
         //Then
         Mockito.verify(fetchEventForIdCallbackMock).onSuccess(tEvent);
     }

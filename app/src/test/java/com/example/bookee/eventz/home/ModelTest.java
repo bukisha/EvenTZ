@@ -20,16 +20,15 @@ public class ModelTest {
     private static final String T_VALUE = "tValue";
     private static final String T_CATEGORY_NAME = "name";
     private static final String T_CATEGORY_BASE_ID = "100";
-    private Model tModel;
-    private HashMap<String, String> tHash;
+    private Model model;
     @Mock
     private RetrofitCategoryRepository retrofitCategoryRepositoryMock;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tHash = new HashMap<>(50);
-        tModel = new Model(retrofitCategoryRepositoryMock, tHash);
+
+        model = new Model(retrofitCategoryRepositoryMock);
     }
 
     @Test
@@ -37,7 +36,7 @@ public class ModelTest {
         //Given
 
         //When
-        tModel.fetchCategoryNames(Mockito.any(MvpContract.FetchCategoriesCallback.class));
+        model.fetchCategoryNames(Mockito.any(MvpContract.FetchCategoriesCallback.class));
         //Then
         Mockito.verify(retrofitCategoryRepositoryMock).fetchCategories(Mockito.any(FetchCategoriesCallback.class));
     }
@@ -45,9 +44,18 @@ public class ModelTest {
     @Test
     public void shouldGetClickedCategoryId() {
         //Given
-        tHash.put(T_KEY, T_VALUE);
+        ArrayList<Category> list = new ArrayList<>();
+        Category category = new Category();
+        Category category1 = new Category();
+        Category category2 = new Category();
+        category.setId(T_VALUE);
+        category.setName(T_KEY);
+        list.add(category);
+        list.add(category1);
+        list.add(category2);
+        model.populateHash(list);
         //When
-        String answer = tModel.getClickedCategoryId(T_KEY);
+        String answer = model.getClickedCategoryId(T_KEY);
         //Then
         Assert.assertEquals(T_VALUE, answer);
     }
@@ -55,33 +63,32 @@ public class ModelTest {
     @Test
     public void shouldPopulateHash() {
         //Given
-        ArrayList<Category> tList = createTestList();
+        ArrayList<Category> list = createTestList();
         HashMap<String, String> expected = createTestHashMap();
 
         //When
-        tModel.populateHash(tList);
+        model.populateHash(list);
         //Then
-        HashMap<String, String> answer = tModel.getHash();
+        HashMap<String, String> answer = model.getHash();
         Assert.assertEquals(expected, answer);
-
     }
 
     private HashMap<String, String> createTestHashMap() {
-        HashMap<String, String> tHash = new HashMap<>(50);
+        HashMap<String, String> hash = new HashMap<>(50);
         for (int i = 0; i < 3; i++) {
-            tHash.put(T_CATEGORY_NAME + i, T_CATEGORY_BASE_ID + i);
+            hash.put(T_CATEGORY_NAME + i, T_CATEGORY_BASE_ID + i);
         }
-        return tHash;
+        return hash;
     }
 
     private ArrayList<Category> createTestList() {
-        ArrayList<Category> tList = new ArrayList<>();
+        ArrayList<Category> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Category category = new Category();
             category.setName(T_CATEGORY_NAME + i);
             category.setId(T_CATEGORY_BASE_ID + i);
-            tList.add(category);
+            list.add(category);
         }
-        return tList;
+        return list;
     }
 }

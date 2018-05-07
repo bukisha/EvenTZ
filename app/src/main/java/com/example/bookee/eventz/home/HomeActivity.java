@@ -11,15 +11,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.create.CreateActivity;
 import com.example.bookee.eventz.data.Category;
+import com.example.bookee.eventz.data.CategoryWebApi;
+import com.example.bookee.eventz.data.RetrofitCategoryRepository;
+import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.eventlist.EventListActivity;
-import com.example.bookee.eventz.utils.HashFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import retrofit2.Retrofit;
 
 public class HomeActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "HomeActivity";
@@ -43,11 +45,13 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
                 presenter.floatingActionButtonClick();
             }
         });
-
         recyclerView = findViewById(R.id.category_recycler_list);
         setupRecyclerView(recyclerView);
-        HashMap<String, String> hash = HashFactory.createStringToString();
-        MvpContract.Model model = new Model(EventApp.getRetrofitCategoryRepository(), hash);
+
+        Retrofit retrofit= RetrofitFactory.buildRetrofit();
+        RetrofitCategoryRepository repository=new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
+        MvpContract.Model model = new Model(repository);
+
         if (savedInstanceState == null) {
             Log.d(TAG, "onCreate: creating home presenter");
             presenter = new Presenter(this, model);

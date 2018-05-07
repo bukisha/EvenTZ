@@ -23,8 +23,8 @@ class Model implements MvpContract.Model {
             callbackFromPresenter.onSuccess(list);
            }
            @Override
-           public void onFailure() {
-            callbackFromPresenter.onFailure();
+           public void onFailure(Throwable t) {
+            callbackFromPresenter.onFailure(t);
            }
        };
         repository.fetchCategories(callbackForRepository);

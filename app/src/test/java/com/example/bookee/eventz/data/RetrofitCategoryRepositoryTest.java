@@ -22,8 +22,8 @@ import static org.mockito.Mockito.when;
 
 public class RetrofitCategoryRepositoryTest {
 
-    private RetrofitCategoryRepository tCategoryRepository;
-    private ArrayList<Category> tCategoryList;
+    private RetrofitCategoryRepository categoryRepository;
+    private ArrayList<Category> categories;
     @Mock
     private CategoryWebApi mockApi;
     @Mock
@@ -38,8 +38,8 @@ public class RetrofitCategoryRepositoryTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tCategoryList = createTestList();
-        tCategoryRepository = new RetrofitCategoryRepository(mockApi);
+        categories = createTestList();
+        categoryRepository = new RetrofitCategoryRepository(mockApi);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class RetrofitCategoryRepositoryTest {
         //Given
         when(mockApi.fetchCategories(anyString())).thenReturn(callPaginatedCategoryListMock);
         //When
-        tCategoryRepository.fetchCategories(Mockito.any(FetchCategoriesCallback.class));
+        categoryRepository.fetchCategories(Mockito.any(FetchCategoriesCallback.class));
         //Then
         verify(mockApi).fetchCategories(anyString());
     }
@@ -75,12 +75,12 @@ public class RetrofitCategoryRepositoryTest {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
-                fetchCategoriesCallbackMock.onSuccess(tCategoryList);
+                fetchCategoriesCallbackMock.onSuccess(categories);
                 return null;
             }
         }).when(enqueueCallbackSpy).onResponse(callPaginatedCategoryListMock, tResponse);
         //When
-        tCategoryRepository.fetchCategories(fetchCategoriesCallbackMock);
+        categoryRepository.fetchCategories(fetchCategoriesCallbackMock);
         //Then
         verify(callPaginatedCategoryListMock).enqueue(ArgumentMatchers.<Callback<PaginatedCategoryList>>any());
         verify(fetchCategoriesCallbackMock).onSuccess(ArgumentMatchers.<ArrayList<Category>>any());

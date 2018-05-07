@@ -17,15 +17,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
+import com.example.bookee.eventz.data.EventsWebApi;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
-import com.example.bookee.eventz.utils.ResourceManager;
+import com.example.bookee.eventz.data.RetrofitFactory;
+
+import retrofit2.Retrofit;
 
 public class DetailsActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "DetailsActivity";
     private static final String EXTRA_EVENT_ID = "eventId";
-    private static final String tempImg = "party";
     private Presenter presenter;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private NestedScrollView nestedScrollView;
@@ -41,7 +42,8 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
         initUI();
-        RetrofitEventsRepository repository = EventApp.getRetrofitEventsRepository();
+        Retrofit retrofit= RetrofitFactory.buildRetrofit();
+        RetrofitEventsRepository repository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
         MvpContract.Model model = new Model(repository);
         if (savedInstanceState == null) {
             presenter = new Presenter(model, this);
@@ -121,7 +123,8 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         eventName.setText(name);
         eventDescription.setText(description);
 
-        Glide.with(this).load(ResourceManager.getImage(this, tempImg)).listener(new RequestListener<Integer, GlideDrawable>() {
+
+        Glide.with(this).load(R.drawable.party).listener(new RequestListener<Integer, GlideDrawable>() {
             @Override
             public boolean onException(Exception e, Integer model, Target<GlideDrawable> target, boolean isFirstResource) {
                 return false;

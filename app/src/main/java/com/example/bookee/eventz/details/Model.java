@@ -23,8 +23,8 @@ class Model implements MvpContract.Model {
             }
 
             @Override
-            public void onFailure() {
-                callbackForPresenter.onFailure();
+            public void onFailure(Throwable t) {
+                callbackForPresenter.onFailure(t);
             }
         };
         repository.fetchEventForId(id,modelCallback);

@@ -11,15 +11,17 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.Event;
+import com.example.bookee.eventz.data.EventsWebApi;
+import com.example.bookee.eventz.data.RetrofitEventsRepository;
+import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.details.DetailsActivity;
 import com.example.bookee.eventz.home.HomeActivity;
-import com.example.bookee.eventz.utils.HashFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import retrofit2.Retrofit;
 
 public class EventListActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "EventListActivity";
@@ -40,8 +42,9 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
         progressBar.setVisibility(View.VISIBLE);
         setupRecyclerView(recyclerView);
 
-        HashMap<String, String> hashMap = HashFactory.createStringToString();
-        MvpContract.Model model = new Model(EventApp.getRetrofitEventsRepository(), hashMap);
+        Retrofit retrofit= RetrofitFactory.buildRetrofit();
+        RetrofitEventsRepository repository=new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
+        MvpContract.Model model = new Model(repository);
 
         if (savedInstanceState == null) {
             presenter = new Presenter(this, model);

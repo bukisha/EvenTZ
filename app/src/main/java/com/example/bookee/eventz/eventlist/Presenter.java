@@ -27,7 +27,7 @@ class Presenter implements MvpContract.Presenter {
             }
 
             @Override
-            public void onFailure() {
+            public void onFailure(Throwable t) {
                 if (notViewExists()) return;
                 view.displayError();
             }

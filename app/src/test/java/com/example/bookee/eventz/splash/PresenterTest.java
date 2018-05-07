@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class PresenterTest {
 
-    private Presenter tPresenter;
-    private ArrayList<Category> tList;
+    private Presenter presenter;
+    private ArrayList<Category> list;
     @Mock
     private Model modelMock;
     @Mock
@@ -27,8 +27,8 @@ public class PresenterTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tPresenter = new Presenter(viewMock, modelMock);
-        tList = new ArrayList<>();
+        presenter = new Presenter(viewMock, modelMock);
+        list = new ArrayList<>();
     }
 
     @Test
@@ -38,12 +38,12 @@ public class PresenterTest {
             @Override
             public Void answer(InvocationOnMock invocation) {
                 MvpContract.FetchCategoriesCallback callback = invocation.getArgument(0);
-                callback.onSuccess(tList);
+                callback.onSuccess(list);
                 return null;
             }
         }).when(modelMock).fetchInitialCategories(Mockito.any(MvpContract.FetchCategoriesCallback.class));
         //When
-        tPresenter.fetchInitialCategories();
+        presenter.fetchInitialCategories();
         //Than
         Mockito.verify(modelMock).fetchInitialCategories(Mockito.any(MvpContract.FetchCategoriesCallback.class));
     }
@@ -56,12 +56,12 @@ public class PresenterTest {
             public Void answer(InvocationOnMock invocation) {
                 MvpContract.FetchCategoriesCallback callback = invocation.getArgument(0);
                 fetchCategoriesCallbackSpy = Mockito.spy(callback);
-                fetchCategoriesCallbackSpy.onSuccess(tList);
+                fetchCategoriesCallbackSpy.onSuccess(list);
                 return null;
             }
         }).when(modelMock).fetchInitialCategories(Mockito.any(MvpContract.FetchCategoriesCallback.class));
         //When
-        tPresenter.fetchInitialCategories();
+        presenter.fetchInitialCategories();
         //Then
         Mockito.verify(fetchCategoriesCallbackSpy).onSuccess(Mockito.any(ArrayList.class));
 

@@ -4,15 +4,15 @@ import com.example.bookee.eventz.data.Event;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 
 class Model implements MvpContract.Model {
-    private RetrofitEventsRepository repository;
+    private RetrofitEventsRepository eventsRepository;
 
-    Model(RetrofitEventsRepository repository) {
-        this.repository=repository;
-
+    Model(RetrofitEventsRepository eventsRepository) {
+        this.eventsRepository = eventsRepository;
     }
+
     @Override
     public void postEvent(Event event) {
-        repository.postNewEvent(event);
+        eventsRepository.postNewEvent(event);
 
     }
 }

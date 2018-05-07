@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin">
+    android:padding="@dimen/createPadding">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/event_chose_category_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/editTextHorizontalMargin"
+        android:layout_marginStart="@dimen/editTextHorizontalMargin"
+        android:text="@string/choseCategory"
+        android:textSize="@dimen/recycler_text_size" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_category_chose"
+        android:layout_below="@id/event_chose_category_label"
+        android:layout_marginEnd="@dimen/editTextHorizontalMargin"
+        android:layout_marginStart="@dimen/editTextHorizontalMargin"
+        android:layout_marginTop="@dimen/editTextMarginTop">
+    </Spinner>
     <TextView
         android:id="@+id/event_name_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/spinner_category_chose"
+        android:layout_marginTop="@dimen/editTextMarginTop"
         android:layout_marginEnd="@dimen/editTextHorizontalMargin"
         android:layout_marginStart="@dimen/editTextHorizontalMargin"
         android:text="@string/eventNameLabel"
@@ -34,34 +56,48 @@
         android:text="@string/eventDescriptionLabel"
         android:textSize="@dimen/recycler_text_size" />
 
-    <EditText
-        android:id="@+id/create_event_description"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/create_event_info_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/editEventDescriptionHeight"
         android:layout_below="@+id/event_description_label"
         android:layout_marginEnd="@dimen/editTextHorizontalMargin"
-        android:layout_marginStart="@dimen/editTextHorizontalMargin"
-        android:layout_marginTop="@dimen/editTextMarginTop" />
+        android:layout_marginStart="@dimen/editTextHorizontalMargin">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editEventDescriptionHeight"
+            android:background="@color/colorPrimaryLight"
+            android:id="@+id/create_event_info"
+            android:gravity="top"
+            android:inputType="textFilter"/>
+    </android.support.design.widget.TextInputLayout>
 
     <LinearLayout
         android:id="@+id/button_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/create_event_description"
+        android:layout_below="@+id/create_event_info_container"
         android:layout_marginTop="@dimen/editTextMarginTop"
         android:orientation="horizontal">
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:id="@+id/set_date_button"
             android:layout_weight="0.5"
+            android:layout_marginEnd="@dimen/editTextHorizontalMargin"
+            android:layout_marginStart="@dimen/editTextHorizontalMargin"
             android:background="@color/colorPrimaryDark"
-            android:text="@string/buttonSetDate" />
+            android:text="@string/buttonSetDate"
+           />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:id="@+id/set_time_button"
             android:layout_weight="0.5"
+            android:layout_marginEnd="@dimen/editTextHorizontalMargin"
+            android:layout_marginStart="@dimen/editTextHorizontalMargin"
             android:background="@color/colorPrimaryDark"
             android:text="@string/buttonSetTime" />
     </LinearLayout>
@@ -69,6 +105,7 @@
     <ImageButton
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:id="@+id/button_set_image"
         android:layout_below="@id/button_label"
         android:src="@drawable/party_temp"
         android:scaleType="fitXY"
@@ -77,4 +114,6 @@
         android:layout_marginTop="@dimen/editTextMarginTop" >
 
     </ImageButton>
+
 </RelativeLayout>
+</ScrollView>

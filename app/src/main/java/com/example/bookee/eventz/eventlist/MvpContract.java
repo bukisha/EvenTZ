@@ -25,6 +25,6 @@ interface MvpContract {
 
     interface FetchEventsForCategoryCallback {
         void onSuccess(ArrayList<Event> events);
-        void onFailure();
+        void onFailure(Throwable t);
     }
 }

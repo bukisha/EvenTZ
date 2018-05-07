@@ -13,9 +13,14 @@ interface MvpContract {
         void postEvent(String eventName, String cityName, Date date, String description, String logoUrl);
         void attachView(View view);
         void detachView();
+        void startDateChooser();
+        void startTimeChooser();
+        void startImageChooser();
     }
 
     interface View {
         void showCreatedEvent(Event event);
+        void showDateChooser();
+        void showTimeChooser();
     }
 }

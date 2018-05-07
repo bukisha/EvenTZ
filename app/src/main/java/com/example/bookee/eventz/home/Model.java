@@ -15,9 +15,9 @@ class Model implements MvpContract.Model {
     private HashMap<String, String> nameToCategoryHash;
     private MvpContract.FetchCategoriesCallback callbackForPresenter;
 
-    Model(RetrofitCategoryRepository repository, HashMap<String,String> hashMap) {
+    Model(RetrofitCategoryRepository repository) {
         this.repository = repository;
-        this.nameToCategoryHash = hashMap;
+        this.nameToCategoryHash = new HashMap<>(50);
     }
 
     public void fetchCategoryNames(MvpContract.FetchCategoriesCallback callback) {
@@ -32,8 +32,8 @@ class Model implements MvpContract.Model {
             }
 
             @Override
-            public void onFailure() {
-                callbackForPresenter.onFailure();
+            public void onFailure(Throwable t) {
+                callbackForPresenter.onFailure(t);
             }
         };
         repository.fetchCategories(callbackForRepo);

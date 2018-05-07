@@ -6,5 +6,5 @@ import java.util.ArrayList;
 
 public interface FetchEventsForCategoryCallback {
     void onSuccess(ArrayList<Event> list);
-    void onFailure();
+    void onFailure(Throwable t);
 }

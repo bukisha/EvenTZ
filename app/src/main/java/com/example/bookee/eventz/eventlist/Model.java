@@ -15,9 +15,9 @@ class Model implements MvpContract.Model {
     private MvpContract.FetchEventsForCategoryCallback presenterCallback;
     private HashMap<String,String> nameToIdHash;
 
-    public Model(RetrofitEventsRepository repository,HashMap<String,String> hash) {
+    public Model(RetrofitEventsRepository repository) {
         this.repository = repository;
-        nameToIdHash=hash;
+        nameToIdHash=new HashMap<>(50);
     }
 
     @Override
@@ -31,8 +31,8 @@ class Model implements MvpContract.Model {
             }
 
             @Override
-            public void onFailure() {
-                presenterCallback.onFailure();
+            public void onFailure(Throwable t) {
+                presenterCallback.onFailure(t);
             }
         };
         repository.fetchEventsForCategory(categoryId, repositoryCallback);

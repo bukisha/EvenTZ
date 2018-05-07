@@ -34,7 +34,7 @@ public class RetrofitEventsRepository {
 
             @Override
             public void onFailure(@NonNull Call<PaginatedEvents> call, @NonNull Throwable t) {
-                     callback.onFailure();
+                     callback.onFailure(t);
             }
         });
         }
@@ -50,7 +50,7 @@ public class RetrofitEventsRepository {
 
                 @Override
                 public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
-                    modelCallback.onFailure();
+                    modelCallback.onFailure(t);
                 }
             };
 

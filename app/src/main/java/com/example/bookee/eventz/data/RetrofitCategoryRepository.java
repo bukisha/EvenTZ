@@ -31,7 +31,7 @@ public class RetrofitCategoryRepository {
 
             @Override
             public void onFailure(@NonNull Call<PaginatedCategoryList> call, @NonNull Throwable t) {
-                fetchCategoriesToModelCallback.onFailure();
+                fetchCategoriesToModelCallback.onFailure(t);
             }
         };
         call.enqueue(enqueueCallback);

@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class PresenterTest {
 
     private static final String T_CATEGORY_NAME = "testName";
-    private Presenter tPresenter;
-    private ArrayList<Event> tList;
+    private Presenter presenter;
+    private ArrayList<Event> list;
     @Mock
     private MvpContract.View viewMock;
     @Mock
@@ -28,8 +28,8 @@ public class PresenterTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tPresenter = new Presenter(viewMock, modelMock);
-        tList = new ArrayList<>();
+        presenter = new Presenter(viewMock, modelMock);
+        list = new ArrayList<>();
     }
 
     @Test
@@ -37,7 +37,7 @@ public class PresenterTest {
         //Given
 
         //When
-        tPresenter.fetchEventsForCategory(T_CATEGORY_NAME);
+        presenter.fetchEventsForCategory(T_CATEGORY_NAME);
         //Then
         Mockito.verify(modelMock).fetchEventsForCategory(Mockito.anyString(), Mockito.any(MvpContract.FetchEventsForCategoryCallback.class));
     }
@@ -56,13 +56,13 @@ public class PresenterTest {
 
                 modelCallbackSpy=Mockito.spy(callback);
 
-                modelCallbackSpy.onSuccess(tList);
+                modelCallbackSpy.onSuccess(list);
                 return null;
             }
         }).when(modelMock).fetchEventsForCategory(Mockito.anyString(),Mockito.any(MvpContract.FetchEventsForCategoryCallback.class));
         //When
-        tPresenter.fetchEventsForCategory(T_CATEGORY_NAME);
+        presenter.fetchEventsForCategory(T_CATEGORY_NAME);
         //Then
-        Mockito.verify(modelCallbackSpy).onSuccess(tList);
+        Mockito.verify(modelCallbackSpy).onSuccess(list);
     }
 }
