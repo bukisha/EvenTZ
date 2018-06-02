@@ -30,4 +30,10 @@ public class PaginatedEvents {
         mPagination = pagination;
     }
 
+    @Override
+    public String toString() {
+        return "PaginatedEvents{" +
+                "mEvents=" + mEvents.toString() +
+                '}';
+    }
 }

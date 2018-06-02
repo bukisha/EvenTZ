@@ -8,10 +8,13 @@ class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
     private MvpContract.Model model;
     private MvpContract.View view;
+    private boolean followChecked;
+    private Event currentEvent;
 
     public Presenter(MvpContract.Model model, MvpContract.View view) {
         this.model = model;
         this.view = view;
+        followChecked = false;
     }
 
     @Override
@@ -20,12 +23,13 @@ class Presenter implements MvpContract.Presenter {
             @Override
             public void onSuccess(Event event) {
                 if (notViewExists()) return;
-                if(event.getLogo()!=null) {
+                currentEvent = event;
+                if (event.getLogo() != null) {
                     view.displayEvent(getTitle(event), event.getName().getText(), getDate(event), event.getDescription().getText(), event.getLogo().getUrl());
-                }else {
+                } else {
                     view.displayEventWithoutLogo(getTitle(event), event.getName().getText(), getDate(event), event.getDescription().getText());
                 }
-                }
+            }
 
             @Override
             public void onFailure(Throwable t) {
@@ -62,5 +66,21 @@ class Presenter implements MvpContract.Presenter {
 
     public void detachView() {
         this.view = null;
+    }
+
+    @Override
+    public void followClicked() {
+        if (followChecked) {
+            if (notViewExists()) return;
+            view.setFollowUncheck();
+            followChecked = !followChecked;
+            //stop following this event inside a service
+        } else {
+            if (notViewExists()) return;
+            view.setFollowChecked(currentEvent);
+            followChecked = !followChecked;
+            //start following this event inside service if the service is running
+            //if the service does not exist than create one and start following event with it
+        }
     }
 }

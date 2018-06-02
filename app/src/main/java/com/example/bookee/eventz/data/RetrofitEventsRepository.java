@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
 import com.example.bookee.eventz.data.callbacks.FetchEventsForCategoryCallback;
+import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,60 +18,75 @@ public class RetrofitEventsRepository {
     private EventsWebApi api;
 
     public RetrofitEventsRepository(EventsWebApi api) {
-       this.api= api;
+        this.api = api;
     }
 
-    public void fetchEventsForCategory(String categoryId,final FetchEventsForCategoryCallback callback) {
-        Log.d(TAG, "fetchEventsForCategory: fetching of events for category "+categoryId);
-        Call<PaginatedEvents> call=api.fetchEventsForCategory(categoryId,RetrofitFactory.getAuthToken());
+    public void fetchEventsForCategory(String categoryId, final FetchEventsForCategoryCallback callback) {
+        Log.d(TAG, "fetchEventsForCategory: fetching of events for category " + categoryId);
+        Call<PaginatedEvents> call = api.fetchEventsForCategory(categoryId, RetrofitFactory.getAuthTokenAnonymous());
 
         call.enqueue(new Callback<PaginatedEvents>() {
             @Override
             public void onResponse(@NonNull Call<PaginatedEvents> call, @NonNull Response<PaginatedEvents> response) {
                 if (response.body() != null) {
                     callback.onSuccess(response.body().getEvents());
+
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<PaginatedEvents> call, @NonNull Throwable t) {
-                     callback.onFailure(t);
+                callback.onFailure(t);
             }
         });
-        }
-
-        public void fetchEventForId(String eventId, final FetchEventForIdCallback modelCallback) {
-
-            Call<Event> call=api.fetchEventForId(eventId,RetrofitFactory.getAuthToken());
-            Callback<Event> callback=new Callback<Event>() {
-                @Override
-                public void onResponse(@NonNull Call<Event> call, Response<Event> response) {
-                    modelCallback.onSuccess(response.body());
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
-                    modelCallback.onFailure(t);
-                }
-            };
-
-            call.enqueue(callback);
     }
 
-    public void postNewEvent(Event event) {
-        Call<Event> call=api.createNewEvent(event,RetrofitFactory.getAuthToken());
+    public void fetchEventForId(String eventId, final FetchEventForIdCallback modelCallback) {
 
-        Callback<Event> callback=new Callback<Event>() {
+        Call<Event> call = api.fetchEventForId(eventId, RetrofitFactory.getAuthTokenAnonymous());
+        Callback<Event> callback = new Callback<Event>() {
             @Override
-            public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
-                    //TODO
+            public void onResponse(@NonNull Call<Event> call, Response<Event> response) {
+                modelCallback.onSuccess(response.body());
             }
 
             @Override
             public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
-                //TODO
+                modelCallback.onFailure(t);
+            }
+        };
+
+        call.enqueue(callback);
+    }
+
+    public void postNewEvent(Event event, final PostEventCallback postCallback) {
+        Call<Event> call = api.createNewEvent(RetrofitFactory.getAuthTokenPersonal(), event);
+
+        Callback<Event> callback = new Callback<Event>() {
+
+            @Override
+            public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
+
+                //Log.d(TAG, "onResponse: "+response.body().getName().getText());
+                Log.d(TAG, "onResponse: " + response.message() + " " + response.isSuccessful() + " " + response.code());
+                Log.d(TAG, "onResponse: intersection ==================================================================================");
+
+                if (response.body() != null) {
+                    Log.d(TAG, "onResponse: Event " + response.body().toString());
+                } else {
+                    Log.d(TAG, "onResponse: response is empty");
+                }
+               postCallback.onSuccess(response.body());
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t.toString());
+                postCallback.onFailure(t);
             }
         };
         call.enqueue(callback);
+
     }
 }

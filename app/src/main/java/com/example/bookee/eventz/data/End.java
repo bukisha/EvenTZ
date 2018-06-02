@@ -3,38 +3,41 @@ package com.example.bookee.eventz.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class End {
+
+@SuppressWarnings("unused")
+public class End implements Serializable{
 
     @SerializedName("local")
-    private String mLocal;
+    private String Local;
     @SerializedName("timezone")
-    private String mTimezone;
+    private String Timezone;
     @SerializedName("utc")
-    private String mUtc;
+    private String Utc;
 
     public String getLocal() {
-        return mLocal;
+        return Local;
     }
 
     public void setLocal(String local) {
-        mLocal = local;
+        Local = local;
     }
 
     public String getTimezone() {
-        return mTimezone;
+        return Timezone;
     }
 
     public void setTimezone(String timezone) {
-        mTimezone = timezone;
+        Timezone = timezone;
     }
 
     public String getUtc() {
-        return mUtc;
+        return Utc;
     }
 
     public void setUtc(String utc) {
-        mUtc = utc;
+        Utc = utc;
     }
 
 }

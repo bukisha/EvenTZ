@@ -9,4 +9,5 @@
     <string name="buttonSetDate">Set date</string>
     <string name="buttonSetTime">Set time</string>
     <string name="choseCategory">Chose category of your event</string>
+    <string name="notification_message">Your event is starting soon!</string>
 </resources>

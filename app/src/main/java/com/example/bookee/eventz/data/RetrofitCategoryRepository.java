@@ -21,7 +21,7 @@ public class RetrofitCategoryRepository {
         Log.d(TAG, "fetchCategories: fetch starting");
         fetchCategoriesToModelCallback = callback;
 
-        Call<PaginatedCategoryList> call = api.fetchCategories(RetrofitFactory.getAuthToken());
+        Call<PaginatedCategoryList> call = api.fetchCategories(RetrofitFactory.getAuthTokenAnonymous());
         Callback<PaginatedCategoryList> enqueueCallback = new Callback<PaginatedCategoryList>() {
             @Override
             public void onResponse(@NonNull Call<PaginatedCategoryList> call, Response<PaginatedCategoryList> response) {

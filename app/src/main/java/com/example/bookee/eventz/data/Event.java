@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class Event implements Serializable{
 
+
     @SerializedName("capacity")
     private Long mCapacity;
     @SerializedName("capacity_is_custom")
@@ -78,6 +79,8 @@ public class Event implements Serializable{
     private String mVenueId;
     @SerializedName("version")
     private String mVersion;
+
+    public Event() {}
 
     public Long getCapacity() {
         return mCapacity;
@@ -365,6 +368,19 @@ public class Event implements Serializable{
 
     public void setVersion(String version) {
         mVersion = version;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "mCategoryId='" + mCategoryId + '\'' +
+                ", mCurrency='" + mCurrency + '\'' +
+                ", mEnd=" + mEnd +
+                ", mId='" + mId + '\'' +
+                ", mLogo=" + mLogo +
+                ", mName=" + mName +
+                ", mStart=" + mStart +
+                '}';
     }
 
 }

@@ -3,8 +3,10 @@ package com.example.bookee.eventz.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class TopLeft {
+
+public class TopLeft implements Serializable{
 
     @SerializedName("x")
     private Long mX;

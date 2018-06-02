@@ -26,18 +26,17 @@ import retrofit2.Retrofit;
 public class HomeActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "HomeActivity";
     public static final String CATEGORY_ID_KEY = "categoryId";
-    private static final String EXTRA_CATEGORY_LIST ="categoryList" ;
+    private static final String EXTRA_CATEGORY_LIST = "categoryList";
     private MvpContract.Presenter presenter;
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private RecyclerViewOnItemClickListener recyclerViewOnItemClickListener;
     //private static ArrayList<Category> initialCategoryList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        floatingActionButton=findViewById(R.id.floating_action_button);
+        floatingActionButton = findViewById(R.id.floating_action_button);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,11 +44,14 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
                 presenter.floatingActionButtonClick();
             }
         });
+        //====temp solution until posting event issue is resolved====
+        floatingActionButton.setVisibility(View.INVISIBLE);
+        //===========================================================
         recyclerView = findViewById(R.id.category_recycler_list);
         setupRecyclerView(recyclerView);
 
-        Retrofit retrofit= RetrofitFactory.buildRetrofit();
-        RetrofitCategoryRepository repository=new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
+        Retrofit retrofit = RetrofitFactory.buildRetrofit();
+        RetrofitCategoryRepository repository = new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
         MvpContract.Model model = new Model(repository);
 
         if (savedInstanceState == null) {
@@ -76,7 +78,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         //Postoji ovaj nacin da prebacim listu kategorija iz splasha u homeActivity i nacin kod kojeg imam staticko polje(gore je zakomentarisano)
         // u kojoj sacuvam listu cim je dobijem kroz launch(List l,context c) metodu
         //ovde je problem sto imam uncheckedCast warning a ako bih koristio staticko polje to bi bila losa praksa bar sam tako procitao na netu,da li postoji 3 nacin? :D
-        ArrayList<Category> initialCategoryList= (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORY_LIST);
+        ArrayList<Category> initialCategoryList = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORY_LIST);
         presenter.populateNameList(initialCategoryList);
     }
 
@@ -88,7 +90,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     public static void launch(ArrayList<Category> list, Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
-        intent.putExtra(EXTRA_CATEGORY_LIST,list);
+        intent.putExtra(EXTRA_CATEGORY_LIST, list);
         context.startActivity(intent);
     }
 

@@ -12,12 +12,15 @@ interface MvpContract {
         void fetchEventForId(String id);
         void attachView(DetailsActivity detailsActivity);
         void detachView();
+        void followClicked();
     }
 
     interface View {
         void displayError();
         void displayEvent(String title,String name,String date,String description,String logoUrl);
         void displayEventWithoutLogo(String title, String name, String date, String description);
+        void setFollowUncheck();
+        void setFollowChecked(Event event);
     }
 
     interface FetchEventForIdCallback {

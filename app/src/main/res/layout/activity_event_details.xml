@@ -52,13 +52,23 @@
                android:layout_height="match_parent"
                android:padding="@dimen/detailsPadding">
            <TextView
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/date_width"
                 android:layout_height="wrap_content"
                 android:id="@+id/event_date"
                 android:layout_marginTop="@dimen/detailsInfoTopMargin"
                 android:textAppearance="@style/textDetailsDate"
                 android:gravity="center"
                 />
+
+               <ImageButton
+                   android:id="@+id/follow_button"
+                   android:layout_width="@dimen/followWidth"
+                   android:layout_height="@dimen/followHeight"
+                   android:layout_alignParentEnd="true"
+                   android:layout_alignTop="@+id/event_date"
+                   android:layout_alignParentRight="true"
+                   android:background="@color/transparentGray"
+                   android:src="@drawable/ic_follow"/>
            <TextView
                android:layout_width="match_parent"
                android:layout_height="wrap_content"

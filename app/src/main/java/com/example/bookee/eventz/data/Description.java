@@ -3,29 +3,31 @@ package com.example.bookee.eventz.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
 
-public class Description {
+@SuppressWarnings("unused")
+public class Description implements Serializable {
 
     @SerializedName("html")
-    private String mHtml;
+    private String Html;
     @SerializedName("text")
-    private String mText;
+    private String Text;
 
     public String getHtml() {
-        return mHtml;
+        return Html;
     }
 
     public void setHtml(String html) {
-        mHtml = html;
+        Html = html;
     }
 
     public String getText() {
-        return mText;
+        return Text;
     }
 
     public void setText(String text) {
-        mText = text;
+        Text = text;
     }
 
 }

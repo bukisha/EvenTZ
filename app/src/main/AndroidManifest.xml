@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bookee.eventz">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".EventApp"
         android:allowBackup="true"
@@ -10,17 +14,33 @@
         android:roundIcon="@mipmap/ic_main_app_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".splash.SplashActivity" android:theme="@style/SplashTheme">
+        <activity
+            android:name=".splash.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".home.HomeActivity"/>
-        <activity android:name=".eventlist.EventListActivity"/>
-        <activity android:name=".details.DetailsActivity"
-                  android:theme="@style/DetailsTheme" />
-        <activity android:name=".create.CreateActivity"/>
-    </application>
+        <activity android:name=".home.HomeActivity" />
+        <activity android:name=".eventlist.EventListActivity" />
+        <activity
+            android:name=".details.DetailsActivity"
+            android:theme="@style/DetailsTheme" />
+        <activity android:name=".create.CreateActivity" />
 
+        <receiver android:name=".details.FollowEventBroadcastReceiver"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.example.bookee.eventz.details"/>
+            </intent-filter>
+        </receiver>
+
+
+        <service
+            android:name=".details.FollowEventService"
+            android:enabled="true"
+            android:exported="true" />
+    </application>
 </manifest>

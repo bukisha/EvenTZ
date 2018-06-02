@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/createPadding">
+    android:layout_height="match_parent">
+
+
+
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar_create_event"/>
 
     <TextView
         android:id="@+id/event_chose_category_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="@dimen/detailsInfoTopMargin"
         android:layout_marginEnd="@dimen/editTextHorizontalMargin"
         android:layout_marginStart="@dimen/editTextHorizontalMargin"
         android:text="@string/choseCategory"

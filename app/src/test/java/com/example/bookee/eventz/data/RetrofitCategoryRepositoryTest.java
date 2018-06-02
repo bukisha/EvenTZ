@@ -58,27 +58,27 @@ public class RetrofitCategoryRepositoryTest {
     @Test
     public void shouldCallOnSuccessOnModelCallback() {
         //Given
-        final Response<PaginatedCategoryList> tResponse = Response.success(paginatedCategoryListMock);
+        final Response<PaginatedCategoryList> retrofitResponse = Response.success(paginatedCategoryListMock);
         //what SHOULD mockedApi return after fetchCategories is called on it
         when(mockApi.fetchCategories(anyString())).thenReturn(callPaginatedCategoryListMock);
-        //what SHOULD happens when call is enqueued on new thread to do some work
+        //what SHOULD happen when call is enqueued on new thread to do some work
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 enqueueCallbackSpy = invocation.getArgument(0);
-                enqueueCallbackSpy.onResponse(callPaginatedCategoryListMock, tResponse);
+                enqueueCallbackSpy.onResponse(callPaginatedCategoryListMock, retrofitResponse);
                 return null;
             }
             //used argumentMatcher's functionality to make this part of tests type safe
         }).when(callPaginatedCategoryListMock).enqueue((ArgumentMatchers.<Callback<PaginatedCategoryList>>any()));
-        //what SHOULD happens when the work from separate thread is done and onResponse is called on callback
+        //what SHOULD happen when the work from separate thread is done and onResponse is called on callback
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocation) {
                 fetchCategoriesCallbackMock.onSuccess(categories);
                 return null;
             }
-        }).when(enqueueCallbackSpy).onResponse(callPaginatedCategoryListMock, tResponse);
+        }).when(enqueueCallbackSpy).onResponse(callPaginatedCategoryListMock, retrofitResponse);
         //When
         categoryRepository.fetchCategories(fetchCategoriesCallbackMock);
         //Then

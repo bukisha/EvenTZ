@@ -16,4 +16,8 @@
     <dimen name="fabHeight">56dp</dimen>
     <dimen name="fabMargin">20dp</dimen>
     <dimen name="createPadding">5dp</dimen>
+    <dimen name="ToolbarHeight">50dp</dimen>
+    <dimen name="date_width">250dp</dimen>
+    <dimen name="followWidth">40dp</dimen>
+    <dimen name="followHeight">40dp</dimen>
 </resources>
