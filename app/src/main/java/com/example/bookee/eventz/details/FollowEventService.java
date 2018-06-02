@@ -50,7 +50,9 @@ public class FollowEventService extends Service {
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), pendingIntentId, intentForBroadcast, 0);
 
                 AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+                if (alarmManager != null) {
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+                }
                 Toast.makeText(FollowEventService.this, "Following event", Toast.LENGTH_SHORT).show();
             }
         };

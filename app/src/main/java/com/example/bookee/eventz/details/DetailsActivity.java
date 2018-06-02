@@ -55,12 +55,8 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         if (savedInstanceState == null) {
             presenter = new Presenter(model, this);
         }
-
        dateReceiver = new FollowEventBroadcastReceiver();
-
-
-        //registerReceiver(dateReceiver, new IntentFilter("com.example.bookee.eventz.details"));
-    }
+        }
 
     @Override
     protected void onDestroy() {
@@ -102,8 +98,6 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         String idOfEvent = getIntent().getStringExtra(EXTRA_EVENT_ID);
         Log.d(TAG, "onResume: fetching Event with id " + idOfEvent);
         presenter.fetchEventForId(idOfEvent);
-
-        //registerReceiver(dateReceiver,new IntentFilter("com.example.bookee.eventz.details"));
     }
 
     @Override
@@ -111,7 +105,6 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         Log.d(TAG, "onPause: ");
         super.onPause();
         presenter.detachView();
-        // unregisterReceiver(dateReceiver);
     }
 
     public static void launch(String eventId, Context context) {
