@@ -26,7 +26,7 @@ import retrofit2.Retrofit;
 public class HomeActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "HomeActivity";
     public static final String CATEGORY_ID_KEY = "categoryId";
-    private static final String EXTRA_CATEGORY_LIST = "categoryList";
+    public static final String EXTRA_CATEGORY_LIST = "categoryList";
     private MvpContract.Presenter presenter;
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;

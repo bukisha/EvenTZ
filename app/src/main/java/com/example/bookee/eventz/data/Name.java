@@ -8,18 +8,25 @@ import java.io.Serializable;
 
 @SuppressWarnings("unused")
 public class Name implements Serializable{
+    @Override
+    public String toString() {
+        return "Name{" +
+                "html='" + html + '\'' +
+                ", Text='" + Text + '\'' +
+                '}';
+    }
 
     @SerializedName("html")
-    private String Html;
+    private String html;
     @SerializedName("text")
     private String Text;
 
     public String getHtml() {
-        return Html;
+        return html;
     }
 
     public void setHtml(String html) {
-        Html = html;
+        this.html = html;
     }
 
     public String getText() {

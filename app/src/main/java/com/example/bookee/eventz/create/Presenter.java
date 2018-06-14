@@ -7,6 +7,7 @@ import com.example.bookee.eventz.data.End;
 import com.example.bookee.eventz.data.Event;
 import com.example.bookee.eventz.data.Logo;
 import com.example.bookee.eventz.data.Name;
+import com.example.bookee.eventz.data.ResponseWrapper;
 import com.example.bookee.eventz.data.Start;
 
 import java.text.DateFormat;
@@ -36,7 +37,7 @@ public class Presenter implements MvpContract.Presenter {
 
         MvpContract.PostEventCallback callback = new MvpContract.PostEventCallback() {
             @Override
-            public void onSuccess(Event e) {
+            public void onSuccess(ResponseWrapper e) {
                 if (notViewExists()) return;
                 view.displayNewEvent(e);
             }
@@ -46,7 +47,7 @@ public class Presenter implements MvpContract.Presenter {
                 //TODO
             }
         };
-        model.postEvent(event, callback);
+       // model.postEvent(event, callback);
     }
 
     private Event createEvent(String eventName, String cityName, Date date, String eventDescription, String logoUrl) {

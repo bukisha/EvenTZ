@@ -16,5 +16,14 @@ public interface EventsWebApi {
     Call<Event> fetchEventForId(@Path("eventId") String eventId, @Query("token") String token);
 
     @POST("events")
-    Call<Event> createNewEvent(@Query("token") String token, @Body Event postEvent);
+    Call<ResponseWrapper> createNewEvent(@Query("token") String token, @Body EventWrapper postEvent);
+
+//    @POST("events")
+//    @FormUrlEncoded
+//    Call<Event> createNewEvent(@Query("token") String token, @Field("name.html") String name
+//                                                                , @Field("start.timezone") String startTimezone
+//                                                                ,@Field("start.utc") String startUtc
+//                                                                , @Field("end.timezone") String endTimezone
+//                                                                ,@Field("end.utc") String endUtc
+//                                                                , @Field("currency") String currency);
 }

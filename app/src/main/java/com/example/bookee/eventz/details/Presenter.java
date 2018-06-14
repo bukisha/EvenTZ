@@ -24,7 +24,7 @@ class Presenter implements MvpContract.Presenter {
             public void onSuccess(Event event) {
                 if (notViewExists()) return;
                 currentEvent = event;
-                if (event.getLogo() != null) {
+                if (event.getLogo()!= null) {
                     view.displayEvent(getTitle(event), event.getName().getText(), getDate(event), event.getDescription().getText(), event.getLogo().getUrl());
                 } else {
                     view.displayEventWithoutLogo(getTitle(event), event.getName().getText(), getDate(event), event.getDescription().getText());

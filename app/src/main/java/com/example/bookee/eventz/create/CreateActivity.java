@@ -22,8 +22,8 @@ import android.widget.TimePicker;
 
 import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
-import com.example.bookee.eventz.data.Event;
 import com.example.bookee.eventz.data.EventsWebApi;
+import com.example.bookee.eventz.data.ResponseWrapper;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.details.DetailsActivity;
@@ -114,7 +114,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     @Override
-    public void showCreatedEvent(Event event) {
+    public void showCreatedEvent(ResponseWrapper event) {
     }
 
     @Override
@@ -146,7 +146,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     @Override
-    public void displayNewEvent(Event e) {
+    public void displayNewEvent(ResponseWrapper e) {
         DetailsActivity.launch(e.getId(),this);
     }
 

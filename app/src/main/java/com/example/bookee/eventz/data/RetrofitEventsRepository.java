@@ -59,29 +59,54 @@ public class RetrofitEventsRepository {
         call.enqueue(callback);
     }
 
-    public void postNewEvent(Event event, final PostEventCallback postCallback) {
-        Call<Event> call = api.createNewEvent(RetrofitFactory.getAuthTokenPersonal(), event);
+//    public void postNewEvent(Event event, final PostEventCallback postCallback) {
+//        Call<Event> call = api.createNewEvent(RetrofitFactory.getAuthTokenPersonal(), event);
+//
+//        Callback<Event> callback = new Callback<Event>() {
+//
+//            @Override
+//            public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
+//
+//                //Log.d(TAG, "onResponse: "+response.body().getName().getText());
+//                Log.d(TAG, "onResponse: " + response.message() + " " + response.isSuccessful() + " " + response.code());
+//                Log.d(TAG, "onResponse: intersection ==================================================================================");
+//
+//                if (response.body() != null) {
+//                    Log.d(TAG, "onResponse: Event " + response.body().toString());
+//                } else {
+//                    Log.d(TAG, "onResponse: response is empty");
+//                }
+//               postCallback.onSuccess(response.body());
+//
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
+//                Log.d(TAG, "onFailure: " + t.toString());
+//                postCallback.onFailure(t);
+//            }
+//        };
+//        call.enqueue(callback);
+//
+//    }
 
-        Callback<Event> callback = new Callback<Event>() {
+    public void postNewEvent(EventWrapper event, final PostEventCallback postCallback) {
+        Call<ResponseWrapper> call = api.createNewEvent(RetrofitFactory.getAuthTokenPersonal(), event);
+
+        Callback<ResponseWrapper> callback = new Callback<ResponseWrapper>() {
 
             @Override
-            public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
+            public void onResponse(@NonNull Call<ResponseWrapper> call, @NonNull Response<ResponseWrapper> response) {
 
                 //Log.d(TAG, "onResponse: "+response.body().getName().getText());
                 Log.d(TAG, "onResponse: " + response.message() + " " + response.isSuccessful() + " " + response.code());
                 Log.d(TAG, "onResponse: intersection ==================================================================================");
 
-                if (response.body() != null) {
-                    Log.d(TAG, "onResponse: Event " + response.body().toString());
-                } else {
-                    Log.d(TAG, "onResponse: response is empty");
+                postCallback.onSuccess(response.body());
                 }
-               postCallback.onSuccess(response.body());
-
-            }
 
             @Override
-            public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ResponseWrapper> call, @NonNull Throwable t) {
                 Log.d(TAG, "onFailure: " + t.toString());
                 postCallback.onFailure(t);
             }
@@ -89,4 +114,6 @@ public class RetrofitEventsRepository {
         call.enqueue(callback);
 
     }
+
+
 }

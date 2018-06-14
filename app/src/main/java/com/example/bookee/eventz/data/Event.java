@@ -18,11 +18,11 @@ public class Event implements Serializable{
     @SerializedName("created")
     private String mCreated;
     @SerializedName("currency")
-    private String mCurrency;
+    private String currency;
     @SerializedName("description")
     private Description mDescription;
     @SerializedName("end")
-    private End mEnd;
+    private End end;
     @SerializedName("format_id")
     private String mFormatId;
     @SerializedName("hide_end_date")
@@ -50,7 +50,7 @@ public class Event implements Serializable{
     @SerializedName("logo_id")
     private String mLogoId;
     @SerializedName("name")
-    private Name mName;
+    private Name name;
     @SerializedName("online_event")
     private Boolean mOnlineEvent;
     @SerializedName("organization_id")
@@ -66,7 +66,7 @@ public class Event implements Serializable{
     @SerializedName("source")
     private String mSource;
     @SerializedName("start")
-    private Start mStart;
+    private Start start;
     @SerializedName("status")
     private String mStatus;
     @SerializedName("subcategory_id")
@@ -123,11 +123,11 @@ public class Event implements Serializable{
     }
 
     public String getCurrency() {
-        return mCurrency;
+        return currency;
     }
 
     public void setCurrency(String currency) {
-        mCurrency = currency;
+        this.currency = currency;
     }
 
     public Description getDescription() {
@@ -139,11 +139,11 @@ public class Event implements Serializable{
     }
 
     public End getEnd() {
-        return mEnd;
+        return end;
     }
 
     public void setEnd(End end) {
-        mEnd = end;
+        this.end = end;
     }
 
     public String getFormatId() {
@@ -251,11 +251,11 @@ public class Event implements Serializable{
     }
 
     public Name getName() {
-        return mName;
+        return name;
     }
 
     public void setName(Name name) {
-        mName = name;
+        this.name = name;
     }
 
     public Boolean getOnlineEvent() {
@@ -315,11 +315,11 @@ public class Event implements Serializable{
     }
 
     public Start getStart() {
-        return mStart;
+        return start;
     }
 
     public void setStart(Start start) {
-        mStart = start;
+        this.start = start;
     }
 
     public String getStatus() {
@@ -374,12 +374,12 @@ public class Event implements Serializable{
     public String toString() {
         return "Event{" +
                 "mCategoryId='" + mCategoryId + '\'' +
-                ", mCurrency='" + mCurrency + '\'' +
-                ", mEnd=" + mEnd +
+                ", currency='" + currency + '\'' +
+                ", end=" + end +
                 ", mId='" + mId + '\'' +
                 ", mLogo=" + mLogo +
-                ", mName=" + mName +
-                ", mStart=" + mStart +
+                ", name=" + name +
+                ", start=" + start +
                 '}';
     }
 

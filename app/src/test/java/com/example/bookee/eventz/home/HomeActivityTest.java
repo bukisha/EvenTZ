@@ -30,7 +30,7 @@ public class HomeActivityTest {
         //Given
         ArrayList<Category> tCategoryList = new ArrayList<>();
         //When
-        homeActivity.launch(tCategoryList, contextMock);
+        HomeActivity.launch(tCategoryList, contextMock);
         //Then
         Mockito.verify(contextMock).startActivity(Mockito.any(Intent.class));
     }
