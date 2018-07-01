@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class EventWrapper implements Serializable {
 
-    @SerializedName("event")
+    @SerializedName("Event")
     @Expose
     private Event event;
 

@@ -1,5 +1,6 @@
 package com.example.bookee.eventz.data;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -8,118 +9,159 @@ public class Event implements Serializable{
 
 
     @SerializedName("capacity")
-    private Long mCapacity;
+    @Expose
+    private Long capacity;
     @SerializedName("capacity_is_custom")
-    private Boolean mCapacityIsCustom;
+    @Expose
+    private Boolean capacity_is_custom;
     @SerializedName("category_id")
-    private String mCategoryId;
+    @Expose
+    private String category_id;
     @SerializedName("changed")
-    private String mChanged;
+    @Expose
+    private String changed;
     @SerializedName("created")
-    private String mCreated;
+    @Expose
+    private String created;
     @SerializedName("currency")
+    @Expose
     private String currency;
     @SerializedName("description")
-    private Description mDescription;
+    @Expose
+    private Description description;
     @SerializedName("end")
+    @Expose
     private End end;
     @SerializedName("format_id")
-    private String mFormatId;
+    @Expose
+    private String format_id;
     @SerializedName("hide_end_date")
-    private Boolean mHideEndDate;
+    @Expose
+    private Boolean hide_end_date;
     @SerializedName("hide_start_date")
-    private Boolean mHideStartDate;
+    @Expose
+    private Boolean hide_start_date;
     @SerializedName("id")
-    private String mId;
+    @Expose
+    private String id;
     @SerializedName("is_free")
-    private Boolean mIsFree;
+    @Expose
+    private Boolean is_free;
     @SerializedName("is_locked")
-    private Boolean mIsLocked;
+    @Expose
+    private Boolean is_locked;
     @SerializedName("is_reserved_seating")
-    private Boolean mIsReservedSeating;
+    @Expose
+    private Boolean is_reserved_seating;
     @SerializedName("is_series")
-    private Boolean mIsSeries;
+    @Expose
+    private Boolean is_series;
     @SerializedName("is_series_parent")
-    private Boolean mIsSeriesParent;
+    @Expose
+    private Boolean is_series_parent;
     @SerializedName("listed")
-    private Boolean mListed;
+    @Expose
+    private Boolean listed;
     @SerializedName("locale")
-    private String mLocale;
+    @Expose
+    private String locale;
     @SerializedName("logo")
-    private Logo mLogo;
+    @Expose
+    private Logo logo;
     @SerializedName("logo_id")
-    private String mLogoId;
+    @Expose
+    private String logo_id;
     @SerializedName("name")
+    @Expose
     private Name name;
     @SerializedName("online_event")
-    private Boolean mOnlineEvent;
+    @Expose
+    private Boolean online_event;
     @SerializedName("organization_id")
-    private String mOrganizationId;
+    @Expose
+    private String organization_id;
     @SerializedName("organizer_id")
-    private String mOrganizerId;
+    @Expose
+    private String organizer_id;
     @SerializedName("privacy_setting")
-    private String mPrivacySetting;
+    @Expose
+    private String privacy_setting;
     @SerializedName("resource_uri")
-    private String mResourceUri;
+    @Expose
+    private String resource_url;
     @SerializedName("shareable")
-    private Boolean mShareable;
+    @Expose
+    private Boolean shareable;
     @SerializedName("source")
-    private String mSource;
+    @Expose
+    private String source;
     @SerializedName("start")
+    @Expose
     private Start start;
     @SerializedName("status")
-    private String mStatus;
+    @Expose
+    private String status;
     @SerializedName("subcategory_id")
-    private Object mSubcategoryId;
+    @Expose
+    private Object subcategory_id;
     @SerializedName("tx_time_limit")
-    private Long mTxTimeLimit;
+    @Expose
+    private Long tx_time_limit;
     @SerializedName("url")
-    private String mUrl;
+    @Expose
+    private String url;
     @SerializedName("venue_id")
-    private String mVenueId;
+    @Expose
+    private String venue_id;
     @SerializedName("version")
-    private String mVersion;
+    @Expose
+    private String version;
 
+    public Event(String currency, End end, Name name, Start start) {
+        this.currency = currency;
+        this.end = end;
+        this.name = name;
+        this.start = start;
+    }
     public Event() {}
-
     public Long getCapacity() {
-        return mCapacity;
+        return capacity;
     }
 
     public void setCapacity(Long capacity) {
-        mCapacity = capacity;
+        this.capacity = capacity;
     }
 
     public Boolean getCapacityIsCustom() {
-        return mCapacityIsCustom;
+        return capacity_is_custom;
     }
 
     public void setCapacityIsCustom(Boolean capacityIsCustom) {
-        mCapacityIsCustom = capacityIsCustom;
+        capacity_is_custom = capacityIsCustom;
     }
 
     public String getCategoryId() {
-        return mCategoryId;
+        return category_id;
     }
 
     public void setCategoryId(String categoryId) {
-        mCategoryId = categoryId;
+        category_id = categoryId;
     }
 
     public String getChanged() {
-        return mChanged;
+        return changed;
     }
 
     public void setChanged(String changed) {
-        mChanged = changed;
+        this.changed = changed;
     }
 
     public String getCreated() {
-        return mCreated;
+        return created;
     }
 
     public void setCreated(String created) {
-        mCreated = created;
+        this.created = created;
     }
 
     public String getCurrency() {
@@ -131,11 +173,11 @@ public class Event implements Serializable{
     }
 
     public Description getDescription() {
-        return mDescription;
+        return description;
     }
 
     public void setDescription(Description description) {
-        mDescription = description;
+        this.description = description;
     }
 
     public End getEnd() {
@@ -147,107 +189,107 @@ public class Event implements Serializable{
     }
 
     public String getFormatId() {
-        return mFormatId;
+        return format_id;
     }
 
     public void setFormatId(String formatId) {
-        mFormatId = formatId;
+        format_id = formatId;
     }
 
     public Boolean getHideEndDate() {
-        return mHideEndDate;
+        return hide_end_date;
     }
 
     public void setHideEndDate(Boolean hideEndDate) {
-        mHideEndDate = hideEndDate;
+        hide_end_date = hideEndDate;
     }
 
     public Boolean getHideStartDate() {
-        return mHideStartDate;
+        return hide_start_date;
     }
 
     public void setHideStartDate(Boolean hideStartDate) {
-        mHideStartDate = hideStartDate;
+        hide_start_date = hideStartDate;
     }
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public Boolean getIsFree() {
-        return mIsFree;
+        return is_free;
     }
 
     public void setIsFree(Boolean isFree) {
-        mIsFree = isFree;
+        is_free = isFree;
     }
 
     public Boolean getIsLocked() {
-        return mIsLocked;
+        return is_locked;
     }
 
     public void setIsLocked(Boolean isLocked) {
-        mIsLocked = isLocked;
+        is_locked = isLocked;
     }
 
     public Boolean getIsReservedSeating() {
-        return mIsReservedSeating;
+        return is_reserved_seating;
     }
 
     public void setIsReservedSeating(Boolean isReservedSeating) {
-        mIsReservedSeating = isReservedSeating;
+        is_reserved_seating = isReservedSeating;
     }
 
     public Boolean getIsSeries() {
-        return mIsSeries;
+        return is_series;
     }
 
     public void setIsSeries(Boolean isSeries) {
-        mIsSeries = isSeries;
+        is_series = isSeries;
     }
 
     public Boolean getIsSeriesParent() {
-        return mIsSeriesParent;
+        return is_series_parent;
     }
 
     public void setIsSeriesParent(Boolean isSeriesParent) {
-        mIsSeriesParent = isSeriesParent;
+        is_series_parent = isSeriesParent;
     }
 
     public Boolean getListed() {
-        return mListed;
+        return listed;
     }
 
     public void setListed(Boolean listed) {
-        mListed = listed;
+        this.listed = listed;
     }
 
     public String getLocale() {
-        return mLocale;
+        return locale;
     }
 
     public void setLocale(String locale) {
-        mLocale = locale;
+        this.locale = locale;
     }
 
     public Logo getLogo() {
-        return mLogo;
+        return logo;
     }
 
     public void setLogo(Logo logo) {
-        mLogo = logo;
+        this.logo = logo;
     }
 
     public String getLogoId() {
-        return mLogoId;
+        return logo_id;
     }
 
     public void setLogoId(String logoId) {
-        mLogoId = logoId;
+        logo_id = logoId;
     }
 
     public Name getName() {
@@ -259,59 +301,59 @@ public class Event implements Serializable{
     }
 
     public Boolean getOnlineEvent() {
-        return mOnlineEvent;
+        return online_event;
     }
 
     public void setOnlineEvent(Boolean onlineEvent) {
-        mOnlineEvent = onlineEvent;
+        online_event = onlineEvent;
     }
 
     public String getOrganizationId() {
-        return mOrganizationId;
+        return organization_id;
     }
 
     public void setOrganizationId(String organizationId) {
-        mOrganizationId = organizationId;
+        organization_id = organizationId;
     }
 
     public String getOrganizerId() {
-        return mOrganizerId;
+        return organizer_id;
     }
 
     public void setOrganizerId(String organizerId) {
-        mOrganizerId = organizerId;
+        organizer_id = organizerId;
     }
 
     public String getPrivacySetting() {
-        return mPrivacySetting;
+        return privacy_setting;
     }
 
     public void setPrivacySetting(String privacySetting) {
-        mPrivacySetting = privacySetting;
+        privacy_setting = privacySetting;
     }
 
     public String getResourceUri() {
-        return mResourceUri;
+        return resource_url;
     }
 
     public void setResourceUri(String resourceUri) {
-        mResourceUri = resourceUri;
+        resource_url = resourceUri;
     }
 
     public Boolean getShareable() {
-        return mShareable;
+        return shareable;
     }
 
     public void setShareable(Boolean shareable) {
-        mShareable = shareable;
+        this.shareable = shareable;
     }
 
     public String getSource() {
-        return mSource;
+        return source;
     }
 
     public void setSource(String source) {
-        mSource = source;
+        this.source = source;
     }
 
     public Start getStart() {
@@ -323,61 +365,61 @@ public class Event implements Serializable{
     }
 
     public String getStatus() {
-        return mStatus;
+        return status;
     }
 
     public void setStatus(String status) {
-        mStatus = status;
+        this.status = status;
     }
 
     public Object getSubcategoryId() {
-        return mSubcategoryId;
+        return subcategory_id;
     }
 
     public void setSubcategoryId(Object subcategoryId) {
-        mSubcategoryId = subcategoryId;
+        subcategory_id = subcategoryId;
     }
 
     public Long getTxTimeLimit() {
-        return mTxTimeLimit;
+        return tx_time_limit;
     }
 
     public void setTxTimeLimit(Long txTimeLimit) {
-        mTxTimeLimit = txTimeLimit;
+        tx_time_limit = txTimeLimit;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public void setUrl(String url) {
-        mUrl = url;
+        this.url = url;
     }
 
     public String getVenueId() {
-        return mVenueId;
+        return venue_id;
     }
 
     public void setVenueId(String venueId) {
-        mVenueId = venueId;
+        venue_id = venueId;
     }
 
     public String getVersion() {
-        return mVersion;
+        return version;
     }
 
     public void setVersion(String version) {
-        mVersion = version;
+        this.version = version;
     }
 
     @Override
     public String toString() {
         return "Event{" +
-                "mCategoryId='" + mCategoryId + '\'' +
+                "category_id='" + category_id + '\'' +
                 ", currency='" + currency + '\'' +
                 ", end=" + end +
-                ", mId='" + mId + '\'' +
-                ", mLogo=" + mLogo +
+                ", id='" + id + '\'' +
+                ", logo=" + logo +
                 ", name=" + name +
                 ", start=" + start +
                 '}';

@@ -6,54 +6,54 @@ import com.google.gson.annotations.SerializedName;
 public class Pagination {
 
     @SerializedName("has_more_items")
-    private Boolean mHasMoreItems;
+    private Boolean has_more_items;
     @SerializedName("object_count")
-    private Long mObjectCount;
+    private Long object_count;
     @SerializedName("page_count")
-    private Long mPageCount;
+    private Long page_count;
     @SerializedName("page_number")
-    private Long mPageNumber;
+    private Long page_number;
     @SerializedName("page_size")
-    private Long mPageSize;
+    private Long page_size;
 
     public Boolean getHasMoreItems() {
-        return mHasMoreItems;
+        return has_more_items;
     }
 
     public void setHasMoreItems(Boolean hasMoreItems) {
-        mHasMoreItems = hasMoreItems;
+        has_more_items = hasMoreItems;
     }
 
     public Long getObjectCount() {
-        return mObjectCount;
+        return object_count;
     }
 
     public void setObjectCount(Long objectCount) {
-        mObjectCount = objectCount;
+        object_count = objectCount;
     }
 
     public Long getPageCount() {
-        return mPageCount;
+        return page_count;
     }
 
     public void setPageCount(Long pageCount) {
-        mPageCount = pageCount;
+        page_count = pageCount;
     }
 
     public Long getPageNumber() {
-        return mPageNumber;
+        return page_number;
     }
 
     public void setPageNumber(Long pageNumber) {
-        mPageNumber = pageNumber;
+        page_number = pageNumber;
     }
 
     public Long getPageSize() {
-        return mPageSize;
+        return page_size;
     }
 
     public void setPageSize(Long pageSize) {
-        mPageSize = pageSize;
+        page_size = pageSize;
     }
 
 }

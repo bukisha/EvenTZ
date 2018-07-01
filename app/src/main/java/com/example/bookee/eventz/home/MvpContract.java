@@ -17,12 +17,14 @@ interface MvpContract  {
         void attachView(MvpContract.View view);
         void detachView();
         void floatingActionButtonClick();
+        void launchFollowedEvents();
     }
     interface View {
         void updateCategories(ArrayList<Category> categoryList);
         void displayListOfEvents(String categoryId);
         void launchCreateEventActivity();
         void displayErrorMessage(String message);
+        void launchFollowedEventsActivity();
 
     }
     interface FetchCategoriesCallback {

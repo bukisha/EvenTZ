@@ -7,7 +7,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,6 +21,7 @@ import com.example.bookee.eventz.data.CategoryWebApi;
 import com.example.bookee.eventz.data.RetrofitCategoryRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.eventlist.EventListActivity;
+import com.example.bookee.eventz.followedevents.FollowedEventsActivity;
 
 import java.util.ArrayList;
 
@@ -32,6 +36,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     private FloatingActionButton floatingActionButton;
     private RecyclerViewOnItemClickListener recyclerViewOnItemClickListener;
     //private static ArrayList<Category> initialCategoryList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +49,13 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
                 presenter.floatingActionButtonClick();
             }
         });
-        //====temp solution until posting event issue is resolved====
-        floatingActionButton.setVisibility(View.INVISIBLE);
+        //====temp solution until posting Event issue is resolved====
+        //floatingActionButton.setVisibility(View.VISIBLE);
         //===========================================================
         recyclerView = findViewById(R.id.category_recycler_list);
         setupRecyclerView(recyclerView);
-
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
         RetrofitCategoryRepository repository = new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
         MvpContract.Model model = new Model(repository);
@@ -69,6 +75,28 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
                 presenter.itemClicked(categoryName);
             }
         };
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.followed_events:
+                presenter.launchFollowedEvents();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void launchFollowedEventsActivity() {
+        Intent intent=new Intent(this, FollowedEventsActivity.class);
+        startActivity(intent);
     }
 
     @Override

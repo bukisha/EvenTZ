@@ -10,24 +10,24 @@ import java.io.Serializable;
 public class Description implements Serializable {
 
     @SerializedName("html")
-    private String Html;
+    private String html;
     @SerializedName("text")
-    private String Text;
+    private String text;
 
     public String getHtml() {
-        return Html;
+        return html;
     }
 
     public void setHtml(String html) {
-        Html = html;
+        this.html = html;
     }
 
     public String getText() {
-        return Text;
+        return text;
     }
 
     public void setText(String text) {
-        Text = text;
+        this.text = text;
     }
 
 }

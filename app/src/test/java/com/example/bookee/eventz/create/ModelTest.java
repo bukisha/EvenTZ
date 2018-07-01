@@ -7,13 +7,13 @@ import com.example.bookee.eventz.data.EventWrapper;
 import com.example.bookee.eventz.data.EventsWebApi;
 import com.example.bookee.eventz.data.Logo;
 import com.example.bookee.eventz.data.Name;
-import com.example.bookee.eventz.data.ResponseWrapper;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.data.Start;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,11 +22,10 @@ import java.util.Date;
 public class ModelTest {
 
     private MvpContract.Model model;
-    private RetrofitEventsRepository repository;
 
     @Before
     public void setUp() throws Exception {
-        repository = new RetrofitEventsRepository(RetrofitFactory.buildRetrofit().create(EventsWebApi.class));
+        RetrofitEventsRepository repository = new RetrofitEventsRepository(RetrofitFactory.buildRetrofit().create(EventsWebApi.class));
         model = new Model(repository);
 
     }
@@ -35,11 +34,11 @@ public class ModelTest {
     public void postEvent() {
         //Given
         class ServerAnswerWrapper implements MvpContract.PostEventCallback {
-            private ResponseWrapper createdEvent;
+            private Event createdEvent;
             private boolean operationSuccess;
 
             @Override
-            public void onSuccess(ResponseWrapper e) {
+            public void onSuccess(Event e) {
                 System.out.println("SUCCESS-FULL CALLBACK!!!!");
                 createdEvent = e;
                 operationSuccess = true;
@@ -54,7 +53,7 @@ public class ModelTest {
 
             }
 
-            public ResponseWrapper getEvent() {
+            public Event getEvent() {
                 return createdEvent;
             }
 
@@ -63,32 +62,29 @@ public class ModelTest {
             }
         }
 
-        ServerAnswerWrapper answerWrapper = new ServerAnswerWrapper();
-//        String timezone;
-//        timezone = DateTimeZone.getDefault().toString();
-//        timezone = timezone.substring(0, timezone.indexOf("/") + 1);
-//        timezone = timezone.concat("Belgrade");
-//        DateTime date = DateTime.now(DateTimeZone.forID(timezone));
-//        DateTime dateUTC = DateTime.now(DateTimeZone.forID("UTC"));
-//
-//        System.out.println("my timezone is " + timezone + " " + date.toString() + " " + dateUTC.toString());
+         ServerAnswerWrapper answer=new ServerAnswerWrapper();
+
         Event event = createTestEvent("dalceovodaproradigovno",
                 "nebitno",
                 null,
                 "mojtest",
                 "http://memoryboundscrapbookstore.com/wordpress/wp-content/uploads/2016/02/lets-party.png");
-        //System.out.println("Created event : "+event.toString());
+
         EventWrapper eventWrapper=new EventWrapper();
         eventWrapper.setEvent(event);
         System.out.println("Event wrapper sadrzi u sebi "+ eventWrapper.getEvent());
-        model.postEvent(eventWrapper, answerWrapper);
+        //When
+        model.postEvent(event, answer );
+
 
         //Then
-        System.out.println("\nServer response is: "+answerWrapper.getEvent());
+
+        System.out.println("\nServer response is: "+answer.getEvent());
+        Assert.assertNotEquals(answer.getEvent(),null);
     }
 
     private Event createTestEvent(String eventName, String cityName, Date date, String eventDescription, String logoUrl) {
-        Event event = new Event();
+
         Name name = new Name();
         Logo logo = new Logo();
         Start start = new Start();
@@ -96,9 +92,10 @@ public class ModelTest {
         Description description = new Description();
         description.setHtml(eventDescription);
         name.setHtml(eventName);
-        event.setName(name);
+       // Event.setName(name);
         logo.setUrl(logoUrl);
-        event.setLogo(logo);
+       // Event.setLogo(logo);
+
 
         String timezone;
         timezone = DateTimeZone.getDefault().toString();
@@ -116,15 +113,18 @@ public class ModelTest {
         DateTime endTime = startTime.plusHours(2);
         end.setLocal(endTime.toString());
         end.setUtc(dateTimeUTC.plusHours(2).toString());
+        Event event = new Event("EUR",end,name,start);
 
-
-        event.setStart(start);
-        event.setEnd(end);
-        event.setCurrency("EUR");
-        event.setDescription(description);
-        event.setStatus("live");
-        event.setListed(true);
-
+//        Event.setStart(start);
+//        Event.setEnd(end);
+//        Event.setCurrency("EUR");
+//        Event.setDescription(description);
+//        Event.setStatus("live");
+//        Event.setListed(true);
+//        Event.setCapacity((long) 3000);
+//        Event.setCategoryId("104");
+//        Event.setOnlineEvent(true);
+//        Event.setShareable(true);
         return event;
     }
 

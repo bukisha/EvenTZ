@@ -13,13 +13,15 @@ interface MvpContract {
         void attachView(DetailsActivity detailsActivity);
         void detachView();
         void followClicked();
+
+        void displayFollowedEventsDialog();
     }
 
     interface View {
         void displayError();
         void displayEvent(String title,String name,String date,String description,String logoUrl);
         void displayEventWithoutLogo(String title, String name, String date, String description);
-        void setFollowUncheck();
+        void setFollowUncheck(Event event);
         void setFollowChecked(Event event);
     }
 

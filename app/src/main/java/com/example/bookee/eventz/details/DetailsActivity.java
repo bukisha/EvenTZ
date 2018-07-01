@@ -8,6 +8,8 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,7 +32,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     private static final String TAG = "DetailsActivity";
     public static final String EXTRA_EVENT_ID = "eventId";
     public static final String CHECKED_EVENT_EXTRA = "checkedExtraEvent";
-    public static final String EXTRA_EVENT_NAME ="eventName" ;
+    public static final String EXTRA_EVENT_NAME = "eventName";
     private Presenter presenter;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private NestedScrollView nestedScrollView;
@@ -42,6 +44,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     private ImageButton buttonFollow;
 
     private FollowEventBroadcastReceiver dateReceiver;
+    private EventsDatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +58,17 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         if (savedInstanceState == null) {
             presenter = new Presenter(model, this);
         }
-       dateReceiver = new FollowEventBroadcastReceiver();
-        }
+        dateReceiver = new FollowEventBroadcastReceiver();
+        databaseHelper = EventsDatabaseHelper.getInstance(this);
+
+    }
 
     @Override
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: ");
         super.onDestroy();
-       //unregisterReceiver(dateReceiver);
+        databaseHelper.close();
+        //unregisterReceiver(dateReceiver);
     }
 
     private void initUI() {
@@ -91,6 +97,21 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.followed_events: presenter.displayFollowedEventsDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
@@ -98,6 +119,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         String idOfEvent = getIntent().getStringExtra(EXTRA_EVENT_ID);
         Log.d(TAG, "onResume: fetching Event with id " + idOfEvent);
         presenter.fetchEventForId(idOfEvent);
+
     }
 
     @Override
@@ -164,15 +186,17 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     }
 
     @Override
-    public void setFollowUncheck() {
+    public void setFollowUncheck(Event uncheckedEvent) {
         buttonFollow.setImageResource(R.drawable.ic_follow);
+        databaseHelper.deleteRowWithId(uncheckedEvent.getId());
     }
 
     @Override
     public void setFollowChecked(Event checkedEvent) {
         buttonFollow.setImageResource(R.drawable.ic_follow_checked);
+        databaseHelper.addEvent(checkedEvent);
         Intent serviceIntent = new Intent(this, FollowEventService.class);
-        serviceIntent.putExtra(CHECKED_EVENT_EXTRA,checkedEvent);
+        serviceIntent.putExtra(CHECKED_EVENT_EXTRA, checkedEvent);
         startService(serviceIntent);
     }
 

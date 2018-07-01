@@ -7,6 +7,8 @@ import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
 import com.example.bookee.eventz.data.callbacks.FetchEventsForCategoryCallback;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,8 +61,8 @@ public class RetrofitEventsRepository {
         call.enqueue(callback);
     }
 
-//    public void postNewEvent(Event event, final PostEventCallback postCallback) {
-//        Call<Event> call = api.createNewEvent(RetrofitFactory.getAuthTokenPersonal(), event);
+//    public void postNewEvent(Event Event, final PostEventCallback postCallback) {
+//        Call<Event> call = api.createNewEvent(RetrofitFactory.getAuthTokenPersonal(), Event);
 //
 //        Callback<Event> callback = new Callback<Event>() {
 //
@@ -90,23 +92,30 @@ public class RetrofitEventsRepository {
 //
 //    }
 
-    public void postNewEvent(EventWrapper event, final PostEventCallback postCallback) {
-        Call<ResponseWrapper> call = api.createNewEvent(RetrofitFactory.getAuthTokenPersonal(), event);
+    public void postNewEvent(Event event, final PostEventCallback postCallback) {
+        Call<Event> call = api.createNewEvent(RetrofitFactory.getAuthTokenPersonal(), event);
 
-        Callback<ResponseWrapper> callback = new Callback<ResponseWrapper>() {
+        Callback<Event> callback = new Callback<Event>() {
 
             @Override
-            public void onResponse(@NonNull Call<ResponseWrapper> call, @NonNull Response<ResponseWrapper> response) {
+            public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
 
                 //Log.d(TAG, "onResponse: "+response.body().getName().getText());
-                Log.d(TAG, "onResponse: " + response.message() + " " + response.isSuccessful() + " " + response.code());
-                Log.d(TAG, "onResponse: intersection ==================================================================================");
-
-                postCallback.onSuccess(response.body());
+                Log.d(TAG, "onResponse: message: " + response.message() + " " + response.isSuccessful() + " " + response.code());
+                try {
+                    Log.d(TAG, "onResponse: body: " + response.errorBody().string() + " " + response.isSuccessful() + " " + response.code());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                Log.d(TAG, "onResponse: string "+response.raw().toString());
+                Log.d(TAG, "onResponse: intersection ==================================================================================");
+                Event e=response.body();
+                Log.d(TAG, "onResponse: Event received is "+e);
+                postCallback.onSuccess(e);
+            }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseWrapper> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
                 Log.d(TAG, "onFailure: " + t.toString());
                 postCallback.onFailure(t);
             }

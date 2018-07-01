@@ -1,11 +1,10 @@
 package com.example.bookee.eventz.create;
 
-import com.example.bookee.eventz.data.EventWrapper;
-import com.example.bookee.eventz.data.ResponseWrapper;
+import com.example.bookee.eventz.data.Event;
 
 interface MvpContract {
     interface Model {
-        void postEvent(EventWrapper postEvent, PostEventCallback callback);
+        void postEvent(Event postEvent, PostEventCallback callback);
     }
 
     interface Presenter {
@@ -21,13 +20,13 @@ interface MvpContract {
     }
 
     interface View {
-        void showCreatedEvent(ResponseWrapper event);
+        void showCreatedEvent(Event event);
         void showDateChooser();
         void showTimeChooser();
-        void displayNewEvent(ResponseWrapper e);
+        void displayNewEvent(Event e);
     }
     interface PostEventCallback {
-        void onSuccess(ResponseWrapper e);
+        void onSuccess(Event e);
         void onFailure(Throwable t);
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".followedevents.FollowedEventsActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <android.support.v7.widget.ListViewCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/followed_events"
+        android:layout_below="@+id/toolbar">
+
+    </android.support.v7.widget.ListViewCompat>
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:layout_width="@dimen/smallProgressBarWidth"
+        android:layout_height="@dimen/smallProgressbarHeight"
+        android:id="@+id/progress_bar"/>
+</android.widget.RelativeLayout>

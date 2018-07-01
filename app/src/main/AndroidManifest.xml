@@ -3,7 +3,6 @@
     package="com.example.bookee.eventz">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -19,6 +18,7 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,18 +29,21 @@
             android:theme="@style/DetailsTheme" />
         <activity android:name=".create.CreateActivity" />
 
-        <receiver android:name=".details.FollowEventBroadcastReceiver"
-            android:exported="true"
-            android:enabled="true">
+        <receiver
+            android:name=".details.FollowEventBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.example.bookee.eventz.details"/>
+                <action android:name="com.example.bookee.eventz.details" />
             </intent-filter>
         </receiver>
-
 
         <service
             android:name=".details.FollowEventService"
             android:enabled="true"
             android:exported="true" />
+
+        <activity android:name=".followedevents.FollowedEventsActivity"></activity>
     </application>
+
 </manifest>

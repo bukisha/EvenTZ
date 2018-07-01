@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -41,9 +43,10 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
         setupRecyclerView(recyclerView);
-
-        Retrofit retrofit= RetrofitFactory.buildRetrofit();
-        RetrofitEventsRepository repository=new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Retrofit retrofit = RetrofitFactory.buildRetrofit();
+        RetrofitEventsRepository repository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
         MvpContract.Model model = new Model(repository);
 
         if (savedInstanceState == null) {
@@ -63,6 +66,12 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
@@ -77,7 +86,7 @@ public class EventListActivity extends AppCompatActivity implements MvpContract.
 
     @Override
     public void populateEventListActivity(ArrayList<Event> eventNames) {
-        EventListCardAdapter eventListCardAdapter = new EventListCardAdapter(eventNames, context,progressBar,recyclerView);
+        EventListCardAdapter eventListCardAdapter = new EventListCardAdapter(eventNames, context, progressBar, recyclerView);
         eventListCardAdapter.setOnClickLister(recyclerViewOnItemClickListener);
         recyclerView.setAdapter(eventListCardAdapter);
     }

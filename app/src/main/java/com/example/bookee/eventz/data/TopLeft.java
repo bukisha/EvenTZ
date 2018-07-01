@@ -9,24 +9,24 @@ import java.io.Serializable;
 public class TopLeft implements Serializable{
 
     @SerializedName("x")
-    private Long mX;
+    private Long x;
     @SerializedName("y")
-    private Long mY;
+    private Long y;
 
     public Long getX() {
-        return mX;
+        return x;
     }
 
     public void setX(Long x) {
-        mX = x;
+        this.x = x;
     }
 
     public Long getY() {
-        return mY;
+        return y;
     }
 
     public void setY(Long y) {
-        mY = y;
+        this.y = y;
     }
 
 }

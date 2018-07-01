@@ -7,34 +7,34 @@ import java.util.ArrayList;
 public class PaginatedCategoryList {
 
     @SerializedName("categories")
-    private ArrayList<Category> mCategories;
+    private ArrayList<Category> categories;
     @SerializedName("locale")
-    private String mLocale;
+    private String locale;
     @SerializedName("pagination")
-    private Pagination mPagination;
+    private Pagination pagination;
 
     public ArrayList<Category> getCategories() {
-        return mCategories;
+        return categories;
     }
 
     public void setCategories(ArrayList<Category> categories) {
-        mCategories = categories;
+        this.categories = categories;
     }
 
     public String getLocale() {
-        return mLocale;
+        return locale;
     }
 
     public void setLocale(String locale) {
-        mLocale = locale;
+        this.locale = locale;
     }
 
     public Pagination getPagination() {
-        return mPagination;
+        return pagination;
     }
 
     public void setPagination(Pagination pagination) {
-        mPagination = pagination;
+        this.pagination = pagination;
     }
 
 }

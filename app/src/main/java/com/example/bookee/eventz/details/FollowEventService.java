@@ -40,7 +40,7 @@ public class FollowEventService extends Service {
                 intentForBroadcast.setAction(SERVICE_ACTION);
                 intentForBroadcast.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
                 Event event = (Event) msg.obj;
-                Log.d(TAG, "handleMessage: event here is " + event.toString());
+                Log.d(TAG, "handleMessage: Event here is " + event.toString());
 
                 intentForBroadcast.putExtra(EVENT_ID, event.getId());
                 intentForBroadcast.putExtra(EVENT_NAME, event.getName().getText());
@@ -53,7 +53,7 @@ public class FollowEventService extends Service {
                 if (alarmManager != null) {
                     alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
                 }
-                Toast.makeText(FollowEventService.this, "Following event", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FollowEventService.this, "Following Event", Toast.LENGTH_SHORT).show();
             }
         };
     }
@@ -63,7 +63,7 @@ public class FollowEventService extends Service {
         DateTime currentTime = new DateTime(zone);
         Log.d(TAG, "prepareTriggerTime: current time in " + timezone + ": " + currentTime + " in milliseconds " + currentTime.getMillis());
         DateTime startTime = new DateTime(utc);
-        Log.d(TAG, "prepareTriggerTime: event start time in " + timezone + ": " + startTime + " in milliseconds " + startTime.getMillis());
+        Log.d(TAG, "prepareTriggerTime: Event start time in " + timezone + ": " + startTime + " in milliseconds " + startTime.getMillis());
         Log.d(TAG, "prepareTriggerTime: trigger time in " + (startTime.getMillis() - currentTime.getMillis()));
         return (startTime.getMillis() - currentTime.getMillis()) + System.currentTimeMillis();
 

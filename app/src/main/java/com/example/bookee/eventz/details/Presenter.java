@@ -24,6 +24,7 @@ class Presenter implements MvpContract.Presenter {
             public void onSuccess(Event event) {
                 if (notViewExists()) return;
                 currentEvent = event;
+                Log.d(TAG, "onSuccess: Event from server is..."+event);
                 if (event.getLogo()!= null) {
                     view.displayEvent(getTitle(event), event.getName().getText(), getDate(event), event.getDescription().getText(), event.getLogo().getUrl());
                 } else {
@@ -72,15 +73,20 @@ class Presenter implements MvpContract.Presenter {
     public void followClicked() {
         if (followChecked) {
             if (notViewExists()) return;
-            view.setFollowUncheck();
+            view.setFollowUncheck(currentEvent);
             followChecked = !followChecked;
-            //stop following this event inside a service
+            //stop following this Event inside a service
         } else {
             if (notViewExists()) return;
             view.setFollowChecked(currentEvent);
             followChecked = !followChecked;
-            //start following this event inside service if the service is running
-            //if the service does not exist than create one and start following event with it
+            //start following this Event inside service if the service is running
+            //if the service does not exist than create one and start following Event with it
         }
+    }
+
+    @Override
+    public void displayFollowedEventsDialog() {
+        //TODO create followed Events dialog and display events that are folowed atm
     }
 }

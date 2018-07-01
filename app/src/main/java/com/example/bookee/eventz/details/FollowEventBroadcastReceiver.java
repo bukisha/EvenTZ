@@ -18,7 +18,7 @@ public class FollowEventBroadcastReceiver extends BroadcastReceiver {
     private static int NOTIFICATION_MANAGER_ID = 11;
     private static final String CHANNEL_ID = "123456";
     private static final String CHANNEL_NAME = "followEventChannel";
-    private static final String CHANNEL_DESCRIPTION = "event about to happen";
+    private static final String CHANNEL_DESCRIPTION = "Event about to happen";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -29,7 +29,7 @@ public class FollowEventBroadcastReceiver extends BroadcastReceiver {
         } else {
             Log.d(TAG, "onReceive: " + eventId);
         }
-        Notification notification = createNotification(context, intent.getStringExtra(FollowEventService.EVENT_NAME),eventId);
+        Notification notification = createNotification(context, intent.getStringExtra(FollowEventService.EVENT_NAME), eventId);
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (manager != null) {
@@ -39,15 +39,15 @@ public class FollowEventBroadcastReceiver extends BroadcastReceiver {
         //DetailsActivity.launch(eventId,context);
     }
 
-    private Notification createNotification(Context context, String eventName,String eventID) {
+    private Notification createNotification(Context context, String eventName, String eventID) {
         NotificationCompat.Builder compatBuilder;
         Notification.Builder builder;
         Notification notification;
 
-        Intent onNotificationClick=new Intent(context,DetailsActivity.class);
-        onNotificationClick.putExtra(DetailsActivity.EXTRA_EVENT_ID,eventID);
-        int pendingIntentId= (int) System.currentTimeMillis();
-        PendingIntent onClickPendingIntent=PendingIntent.getActivity(context,pendingIntentId,onNotificationClick,0);
+        Intent onNotificationClick = new Intent(context, DetailsActivity.class);
+        onNotificationClick.putExtra(DetailsActivity.EXTRA_EVENT_ID, eventID);
+        int pendingIntentId = (int) System.currentTimeMillis();
+        PendingIntent onClickPendingIntent = PendingIntent.getActivity(context, pendingIntentId, onNotificationClick, 0);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -74,52 +74,8 @@ public class FollowEventBroadcastReceiver extends BroadcastReceiver {
                     .setAutoCancel(true)
                     .build();
         }
-
+        EventsDatabaseHelper databaseHelper=EventsDatabaseHelper.getInstance(context);
+        databaseHelper.deleteRowWithId(eventID);
         return notification;
-    }
-
-    private String convertIntToMonthName(int month) {
-        String monthName;
-        switch (month) {
-            case 0:
-                monthName = "January";
-                break;
-            case 1:
-                monthName = "February";
-                break;
-            case 2:
-                monthName = "March";
-                break;
-            case 3:
-                monthName = "April";
-                break;
-            case 4:
-                monthName = "May";
-                break;
-            case 5:
-                monthName = "June";
-                break;
-            case 6:
-                monthName = "July";
-                break;
-            case 7:
-                monthName = "August";
-                break;
-            case 8:
-                monthName = "September";
-                break;
-            case 9:
-                monthName = "October";
-                break;
-            case 10:
-                monthName = "November";
-                break;
-            case 11:
-                monthName = "December";
-                break;
-            default:
-                monthName = "Unknown";
-        }
-        return monthName;
     }
 }

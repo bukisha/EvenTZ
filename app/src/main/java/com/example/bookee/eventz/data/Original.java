@@ -9,34 +9,34 @@ import java.io.Serializable;
 public class Original implements Serializable{
 
     @SerializedName("height")
-    private Object mHeight;
+    private Object height;
     @SerializedName("url")
-    private String mUrl;
+    private String url;
     @SerializedName("width")
-    private Object mWidth;
+    private Object width;
 
     public Object getHeight() {
-        return mHeight;
+        return height;
     }
 
     public void setHeight(Object height) {
-        mHeight = height;
+        this.height = height;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public void setUrl(String url) {
-        mUrl = url;
+        this.url = url;
     }
 
     public Object getWidth() {
-        return mWidth;
+        return width;
     }
 
     public void setWidth(Object width) {
-        mWidth = width;
+        this.width = width;
     }
 
 }

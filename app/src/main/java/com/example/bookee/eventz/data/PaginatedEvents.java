@@ -10,30 +10,30 @@ import java.util.ArrayList;
 public class PaginatedEvents {
 
     @SerializedName("events")
-    private ArrayList<Event> mEvents;
+    private ArrayList<Event> events;
     @SerializedName("pagination")
-    private Pagination mPagination;
+    private Pagination pagination;
 
     public ArrayList<Event> getEvents() {
-        return mEvents;
+        return events;
     }
 
     public void setEvents(ArrayList<Event> events) {
-        mEvents = events;
+        this.events = events;
     }
 
     public Pagination getPagination() {
-        return mPagination;
+        return pagination;
     }
 
     public void setPagination(Pagination pagination) {
-        mPagination = pagination;
+        this.pagination = pagination;
     }
 
     @Override
     public String toString() {
         return "PaginatedEvents{" +
-                "mEvents=" + mEvents.toString() +
+                "events=" + events.toString() +
                 '}';
     }
 }

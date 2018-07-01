@@ -10,74 +10,74 @@ import java.io.Serializable;
 public class Logo implements Serializable {
 
     @SerializedName("aspect_ratio")
-    private String mAspectRatio;
+    private String aspect_ratio;
     @SerializedName("crop_mask")
-    private CropMask mCropMask;
+    private CropMask crop_mask;
     @SerializedName("edge_color")
-    private String mEdgeColor;
+    private String edge_color;
     @SerializedName("edge_color_set")
-    private Boolean mEdgeColorSet;
+    private Boolean edge_color_set;
     @SerializedName("id")
-    private String mId;
+    private String id;
     @SerializedName("original")
-    private Original mOriginal;
+    private Original original;
     @SerializedName("url")
-    private String mUrl;
+    private String url;
 
     public String getAspectRatio() {
-        return mAspectRatio;
+        return aspect_ratio;
     }
 
     public void setAspectRatio(String aspectRatio) {
-        mAspectRatio = aspectRatio;
+        aspect_ratio = aspectRatio;
     }
 
     public CropMask getCropMask() {
-        return mCropMask;
+        return crop_mask;
     }
 
     public void setCropMask(CropMask cropMask) {
-        mCropMask = cropMask;
+        crop_mask = cropMask;
     }
 
     public String getEdgeColor() {
-        return mEdgeColor;
+        return edge_color;
     }
 
     public void setEdgeColor(String edgeColor) {
-        mEdgeColor = edgeColor;
+        edge_color = edgeColor;
     }
 
     public Boolean getEdgeColorSet() {
-        return mEdgeColorSet;
+        return edge_color_set;
     }
 
     public void setEdgeColorSet(Boolean edgeColorSet) {
-        mEdgeColorSet = edgeColorSet;
+        edge_color_set = edgeColorSet;
     }
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public Original getOriginal() {
-        return mOriginal;
+        return original;
     }
 
     public void setOriginal(Original original) {
-        mOriginal = original;
+        this.original = original;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public void setUrl(String url) {
-        mUrl = url;
+        this.url = url;
     }
 
 }

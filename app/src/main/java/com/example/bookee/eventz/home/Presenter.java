@@ -48,6 +48,12 @@ class Presenter implements MvpContract.Presenter {
         view.launchCreateEventActivity();
     }
 
+    @Override
+    public void launchFollowedEvents() {
+        if (notViewExists()) return;
+        view.launchFollowedEventsActivity();
+    }
+
     private ArrayList<String> extractCategoryNames(ArrayList<Category> list) {
         ArrayList<String> listOfNames = new ArrayList<>();
         for (Category c : list) {

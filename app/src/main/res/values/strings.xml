@@ -10,4 +10,7 @@
     <string name="buttonSetTime">Set time</string>
     <string name="choseCategory">Chose category of your event</string>
     <string name="notification_message">Your event is starting soon!</string>
+    <string name="followedEvents">Following</string>
+    <string name="sortByDistance">Sort by distance</string>
+    <string name="sortByTime">Sort by time</string>
 </resources>

@@ -12,14 +12,14 @@ public class Name implements Serializable{
     public String toString() {
         return "Name{" +
                 "html='" + html + '\'' +
-                ", Text='" + Text + '\'' +
+                ", text='" + text + '\'' +
                 '}';
     }
 
     @SerializedName("html")
     private String html;
     @SerializedName("text")
-    private String Text;
+    private String text;
 
     public String getHtml() {
         return html;
@@ -30,11 +30,11 @@ public class Name implements Serializable{
     }
 
     public String getText() {
-        return Text;
+        return text;
     }
 
     public void setText(String text) {
-        Text = text;
+        this.text = text;
     }
 
 }

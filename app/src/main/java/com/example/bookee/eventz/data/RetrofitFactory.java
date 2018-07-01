@@ -14,10 +14,10 @@ public class RetrofitFactory {
     private static final String API_OAUTH_TOKEN_PERSONAL = "UHSWAYREEJUQBBIH3H3H";
 
     public static Retrofit buildRetrofit() {
-        OkHttpClient.Builder okhttpBuilder=new OkHttpClient.Builder();
-       HttpLoggingInterceptor logger= new HttpLoggingInterceptor();
-       logger.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client=okhttpBuilder.addInterceptor(logger).build();
+        OkHttpClient.Builder okhttpBuilder = new OkHttpClient.Builder();
+        HttpLoggingInterceptor logger = new HttpLoggingInterceptor();
+        logger.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = okhttpBuilder.addInterceptor(logger).build();
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -33,6 +33,5 @@ public class RetrofitFactory {
     static String getAuthTokenPersonal() {
         return API_OAUTH_TOKEN_PERSONAL;
     }
-
 
 }

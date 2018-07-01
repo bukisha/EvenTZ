@@ -16,7 +16,7 @@ public interface EventsWebApi {
     Call<Event> fetchEventForId(@Path("eventId") String eventId, @Query("token") String token);
 
     @POST("events")
-    Call<ResponseWrapper> createNewEvent(@Query("token") String token, @Body EventWrapper postEvent);
+    Call<Event> createNewEvent(@Query("token") String token, @Body Event postEvent);
 
 //    @POST("events")
 //    @FormUrlEncoded
