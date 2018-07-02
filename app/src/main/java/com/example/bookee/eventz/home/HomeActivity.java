@@ -21,7 +21,7 @@ import com.example.bookee.eventz.data.CategoryWebApi;
 import com.example.bookee.eventz.data.RetrofitCategoryRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.eventlist.EventListActivity;
-import com.example.bookee.eventz.followedevents.FollowedEventsActivity;
+import com.example.bookee.eventz.followed.FollowedEventsActivity;
 
 import java.util.ArrayList;
 
