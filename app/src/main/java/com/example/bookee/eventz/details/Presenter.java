@@ -50,6 +50,7 @@ class Presenter implements MvpContract.Presenter {
         String date = event.getStart().getLocal();
         date = date.substring(0, date.indexOf("T"));
         date = date.replace("-", ".");
+
         return date;
     }
 

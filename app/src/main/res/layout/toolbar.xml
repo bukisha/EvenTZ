@@ -8,7 +8,5 @@
     android:background="@color/colorPrimary"
     app:title="@string/app_name"
     app:titleTextColor="@color/white">
-
-  >
 </android.support.v7.widget.Toolbar>
 

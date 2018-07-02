@@ -42,8 +42,6 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     private ImageView eventLogo;
     private ProgressBar progressBar;
     private ImageButton buttonFollow;
-
-    private FollowEventBroadcastReceiver dateReceiver;
     private EventsDatabaseHelper databaseHelper;
 
     @Override
@@ -58,17 +56,16 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         if (savedInstanceState == null) {
             presenter = new Presenter(model, this);
         }
-        dateReceiver = new FollowEventBroadcastReceiver();
         databaseHelper = EventsDatabaseHelper.getInstance(this);
-
     }
 
     @Override
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: ");
-        super.onDestroy();
         databaseHelper.close();
-        //unregisterReceiver(dateReceiver);
+        Intent stopServiceIntent = new Intent(this, FollowEventService.class);
+        stopService(stopServiceIntent);
+        super.onDestroy();
     }
 
     private void initUI() {
@@ -99,8 +96,9 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.followed_events: presenter.displayFollowedEventsDialog();
-            return true;
+            case R.id.followed_events:
+                presenter.displayFollowedEventsDialog();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -199,6 +197,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         serviceIntent.putExtra(CHECKED_EVENT_EXTRA, checkedEvent);
         startService(serviceIntent);
     }
+
 
     @Override
     public void displayError() {

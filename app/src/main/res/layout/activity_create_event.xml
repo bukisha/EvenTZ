@@ -15,7 +15,7 @@
         android:id="@+id/event_chose_category_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@id/toolbar"
         android:layout_marginTop="@dimen/detailsInfoTopMargin"
         android:layout_marginEnd="@dimen/editTextHorizontalMargin"
         android:layout_marginStart="@dimen/editTextHorizontalMargin"

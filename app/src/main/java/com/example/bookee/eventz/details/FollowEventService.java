@@ -16,7 +16,7 @@ import com.example.bookee.eventz.data.Event;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-
+//Maybe not the best usage of service but as practice it is ok
 public class FollowEventService extends Service {
     private static final String TAG = "FollowEventBackgroundS";
     public static final String EVENT_ID = "id";
@@ -66,14 +66,13 @@ public class FollowEventService extends Service {
         Log.d(TAG, "prepareTriggerTime: Event start time in " + timezone + ": " + startTime + " in milliseconds " + startTime.getMillis());
         Log.d(TAG, "prepareTriggerTime: trigger time in " + (startTime.getMillis() - currentTime.getMillis()));
         return (startTime.getMillis() - currentTime.getMillis()) + System.currentTimeMillis();
-
     }
 
     @Override
     public void onDestroy() {
         Log.d(TAG, "onDestroy: ");
+        followEventThread.quit();
         super.onDestroy();
-        stopSelf();
     }
 
     @Override

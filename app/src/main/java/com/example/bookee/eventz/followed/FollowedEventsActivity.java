@@ -19,7 +19,7 @@ public class FollowedEventsActivity extends AppCompatActivity implements MvpCont
     private ListView listView;
     private ProgressBar progressBar;
     private EventsDatabaseHelper databaseHelper;
-    private MvpContract.Presenter presenter;
+    private Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

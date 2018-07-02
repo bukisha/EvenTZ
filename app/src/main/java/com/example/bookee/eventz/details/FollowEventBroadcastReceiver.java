@@ -36,7 +36,8 @@ public class FollowEventBroadcastReceiver extends BroadcastReceiver {
             manager.notify(NOTIFICATION_MANAGER_ID, notification);
             NOTIFICATION_MANAGER_ID++;
         }
-        //DetailsActivity.launch(eventId,context);
+        //after notification is created and displayed remove event from database
+        EventsDatabaseHelper.getInstance(context).deleteRowWithId(eventId);
     }
 
     private Notification createNotification(Context context, String eventName, String eventID) {
