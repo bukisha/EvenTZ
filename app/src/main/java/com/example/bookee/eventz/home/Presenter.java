@@ -53,12 +53,4 @@ class Presenter implements MvpContract.Presenter {
         if (notViewExists()) return;
         view.launchFollowedEventsActivity();
     }
-
-    private ArrayList<String> extractCategoryNames(ArrayList<Category> list) {
-        ArrayList<String> listOfNames = new ArrayList<>();
-        for (Category c : list) {
-            listOfNames.add(c.getName());
-        }
-        return listOfNames;
-    }
 }

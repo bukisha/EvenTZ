@@ -20,7 +20,7 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_EVENT_ID = "eventId";
     private static final int DATABASE_VERSION=1;
     private static EventsDatabaseHelper helperInstance;
-    SQLiteDatabase database;
+    private SQLiteDatabase database;
 
     public static EventsDatabaseHelper getInstance(Context context) {
         if (helperInstance == null) {
@@ -29,7 +29,7 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
         return helperInstance;
     }
 
-    public EventsDatabaseHelper(Context context) {
+    private EventsDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         Log.d(TAG, "EventsDatabaseHelper: creating helper class instance");
 
@@ -47,10 +47,6 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(sqLiteDatabase);
-    }
-
-    public void open() {
-        database=getReadableDatabase();
     }
 
     public void addEvent(Event event) {
@@ -84,6 +80,7 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
                 break;
             }
         }
+        cursor.close();
         return idToReturn;
     }
 
@@ -117,8 +114,6 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
     public List<String> getAllFollowedEventsIds() {
         List<String> followedIds=new ArrayList<>();
             String[] projections={COLUMN_EVENT_ID};
-            String selection=COLUMN_EVENT_ID+" =?";
-            String[] selectionArgs={"*"};
             database =getReadableDatabase();
             Cursor cursor=database.query(
                     TABLE_NAME,

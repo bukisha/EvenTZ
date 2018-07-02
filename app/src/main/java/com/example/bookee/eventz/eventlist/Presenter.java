@@ -53,13 +53,4 @@ class Presenter implements MvpContract.Presenter {
     public void detachView() {
         this.view = null;
     }
-
-
-    private ArrayList<String> extractEventNames(ArrayList<Event> events) {
-        ArrayList<String> eventNames = new ArrayList<>();
-        for (Event e : events) {
-            eventNames.add(e.getName().getText());
-        }
-        return eventNames;
-    }
 }
