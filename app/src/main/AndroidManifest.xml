@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".home.HomeActivity" />
-        <activity android:name=".eventlist.EventListActivity" />
+        <activity android:name=".events.EventsListActivity" />
         <activity
             android:name=".details.DetailsActivity"
             android:theme="@style/DetailsTheme" />

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.bookee.eventz.R;
-import com.example.bookee.eventz.data.Category;
+import com.example.bookee.eventz.data.pojos.Category;
 
 import java.util.ArrayList;
 

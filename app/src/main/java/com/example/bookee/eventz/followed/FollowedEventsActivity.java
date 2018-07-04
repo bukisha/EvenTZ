@@ -11,14 +11,12 @@ import android.widget.Toast;
 
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.details.DetailsActivity;
-import com.example.bookee.eventz.details.EventsDatabaseHelper;
 
 import java.util.List;
 
 public class FollowedEventsActivity extends AppCompatActivity implements MvpContract.View {
     private ListView listView;
     private ProgressBar progressBar;
-    private EventsDatabaseHelper databaseHelper;
     private Presenter presenter;
 
     @Override
@@ -28,8 +26,7 @@ public class FollowedEventsActivity extends AppCompatActivity implements MvpCont
         listView = findViewById(R.id.followed_events);
         listView.setVisibility(View.INVISIBLE);
         progressBar = findViewById(R.id.progress_bar);
-        databaseHelper = EventsDatabaseHelper.getInstance(this);
-        MvpContract.Model model = new Model(databaseHelper);
+        MvpContract.Model model = new Model(this);
         presenter = new Presenter(model, this);
     }
 
@@ -50,7 +47,7 @@ public class FollowedEventsActivity extends AppCompatActivity implements MvpCont
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        databaseHelper.close();
+        presenter.closeDatabase();
     }
 
     @Override
@@ -59,8 +56,7 @@ public class FollowedEventsActivity extends AppCompatActivity implements MvpCont
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
-                String targetEventId = databaseHelper.getEventIdForName(eventNames.get(index));
-                DetailsActivity.launch(targetEventId, adapterView.getContext());
+                presenter.launchDetailsActivityForEvent(eventNames.get(index));
             }
         });
         listView.setAdapter(adapter);
@@ -71,5 +67,10 @@ public class FollowedEventsActivity extends AppCompatActivity implements MvpCont
     @Override
     public void displayError() {
         Toast.makeText(this, "Error while getting data ", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void launchDisplayActivity(String id) {
+        DetailsActivity.launch(id,this);
     }
 }

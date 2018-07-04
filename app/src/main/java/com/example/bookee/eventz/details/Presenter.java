@@ -2,7 +2,7 @@ package com.example.bookee.eventz.details;
 
 import android.util.Log;
 
-import com.example.bookee.eventz.data.Event;
+import com.example.bookee.eventz.data.pojos.Event;
 
 class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
@@ -15,6 +15,10 @@ class Presenter implements MvpContract.Presenter {
         this.model = model;
         this.view = view;
         followChecked = false;
+    }
+
+    public void setFollowed(boolean followed) {
+          followChecked=followed;
     }
 
     @Override
@@ -87,7 +91,35 @@ class Presenter implements MvpContract.Presenter {
     }
 
     @Override
-    public void displayFollowedEventsDialog() {
-        //TODO create followed Events dialog and display events that are folowed atm
+    public void launchFollowedEventsActivity() {
+        if (notViewExists()) return;
+        view.launchFollowedEventActivity();
+    }
+
+    @Override
+    public void removeRowWithId(String id) {
+            model.removeEventWithId(id);
+    }
+
+    @Override
+    public void addFollowedEvent(Event event) {
+          model.addFollowedEvent(event);
+    }
+
+    @Override
+    public void checkFollowButton(String eventId) {
+        MvpContract.CheckFollowedStatusCallback modelCallback=new MvpContract.CheckFollowedStatusCallback() {
+            @Override
+            public void onSuccess(Boolean status) {
+                if (notViewExists()) return;
+                view.setupFollowButton(status);
+            }
+        };
+         model.checkFollowButton(eventId,modelCallback);
+    }
+
+    @Override
+    public void closeDatabase() {
+        model.closeDatabase();
     }
 }

@@ -3,7 +3,7 @@ package com.example.bookee.eventz.home;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.bookee.eventz.data.Category;
+import com.example.bookee.eventz.data.pojos.Category;
 
 import org.junit.Before;
 import org.junit.Test;

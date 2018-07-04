@@ -1,6 +1,6 @@
 package com.example.bookee.eventz.details;
 
-import com.example.bookee.eventz.data.Event;
+import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
 

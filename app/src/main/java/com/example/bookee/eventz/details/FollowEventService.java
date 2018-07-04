@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.bookee.eventz.data.Event;
+import com.example.bookee.eventz.data.pojos.Event;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -71,7 +71,6 @@ public class FollowEventService extends Service {
     @Override
     public void onDestroy() {
         Log.d(TAG, "onDestroy: ");
-        followEventThread.quit();
         super.onDestroy();
     }
 

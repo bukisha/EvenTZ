@@ -1,10 +1,10 @@
 package com.example.bookee.eventz.details;
 
-import com.example.bookee.eventz.data.Description;
-import com.example.bookee.eventz.data.Event;
-import com.example.bookee.eventz.data.Logo;
-import com.example.bookee.eventz.data.Name;
-import com.example.bookee.eventz.data.Start;
+import com.example.bookee.eventz.data.pojos.Description;
+import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.pojos.Logo;
+import com.example.bookee.eventz.data.pojos.Name;
+import com.example.bookee.eventz.data.pojos.Start;
 
 import org.junit.Before;
 import org.junit.Test;

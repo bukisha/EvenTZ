@@ -1,6 +1,6 @@
 package com.example.bookee.eventz.create;
 
-import com.example.bookee.eventz.data.Event;
+import com.example.bookee.eventz.data.pojos.Event;
 
 interface MvpContract {
     interface Model {

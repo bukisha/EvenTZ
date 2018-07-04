@@ -2,7 +2,7 @@ package com.example.bookee.eventz.home;
 
 import android.util.Log;
 
-import com.example.bookee.eventz.data.Category;
+import com.example.bookee.eventz.data.pojos.Category;
 
 import java.util.ArrayList;
 

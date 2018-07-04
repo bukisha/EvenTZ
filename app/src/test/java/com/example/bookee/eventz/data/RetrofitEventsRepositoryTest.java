@@ -1,6 +1,12 @@
 package com.example.bookee.eventz.data;
 
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
+import com.example.bookee.eventz.data.pojos.Description;
+import com.example.bookee.eventz.data.pojos.End;
+import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.pojos.Logo;
+import com.example.bookee.eventz.data.pojos.Name;
+import com.example.bookee.eventz.data.pojos.Start;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;

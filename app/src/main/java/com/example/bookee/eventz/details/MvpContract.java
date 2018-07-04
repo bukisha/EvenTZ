@@ -1,11 +1,15 @@
 package com.example.bookee.eventz.details;
 
-import com.example.bookee.eventz.data.Event;
+import com.example.bookee.eventz.data.pojos.Event;
 
 interface MvpContract {
 
     interface Model {
         void fetchEventForId(String id,FetchEventForIdCallback callback);
+        void removeEventWithId(String id);
+        void addFollowedEvent(Event event);
+        void checkFollowButton(String eventId,CheckFollowedStatusCallback statusCallback);
+        void closeDatabase();
     }
 
     interface Presenter {
@@ -13,8 +17,11 @@ interface MvpContract {
         void attachView(DetailsActivity detailsActivity);
         void detachView();
         void followClicked();
-
-        void displayFollowedEventsDialog();
+        void launchFollowedEventsActivity();
+        void removeRowWithId(String id);
+        void addFollowedEvent(Event event);
+        void checkFollowButton(String id);
+        void closeDatabase();
     }
 
     interface View {
@@ -23,10 +30,16 @@ interface MvpContract {
         void displayEventWithoutLogo(String title, String name, String date, String description);
         void setFollowUncheck(Event event);
         void setFollowChecked(Event event);
+        void setupFollowButton(boolean isFollowed);
+        void launchFollowedEventActivity();
     }
 
     interface FetchEventForIdCallback {
        void onSuccess(Event event);
        void onFailure(Throwable t);
+    }
+
+    interface CheckFollowedStatusCallback {
+        void onSuccess(Boolean status);
     }
 }

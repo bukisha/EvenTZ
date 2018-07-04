@@ -14,9 +14,13 @@ public class Presenter implements MvpContract.Presenter {
         this.view = view;
     }
 
+    public void closeDatabase() {
+        model.closeDatabase();
+    }
+
     @Override
     public void getFollowedEventNames() {
-        MvpContract.GetDatabaseEventsCallback callbackForModel=new MvpContract.GetDatabaseEventsCallback() {
+        MvpContract.GetEventsNamesListCallback callbackForModel=new MvpContract.GetEventsNamesListCallback() {
             @Override
             public void onSuccess(List<String> names) {
                 Log.d(TAG, "onSuccess: ");
@@ -41,6 +45,23 @@ public class Presenter implements MvpContract.Presenter {
     @Override
     public void detachView() {
         this.view=null;
+    }
+
+    @Override
+    public void launchDetailsActivityForEvent(String name) {
+        MvpContract.GetEventIdCallback idCallback=new MvpContract.GetEventIdCallback() {
+            @Override
+            public void onSuccess(String id) {
+                if(viewNotExist()) return;
+                view.launchDisplayActivity(id);
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                view.displayError();
+            }
+        };
+        model.getIdForName(name,idCallback);
     }
 
     private boolean viewNotExist() {

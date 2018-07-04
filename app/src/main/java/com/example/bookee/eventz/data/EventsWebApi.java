@@ -1,5 +1,8 @@
 package com.example.bookee.eventz.data;
 
+import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.pojos.PaginatedEvents;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

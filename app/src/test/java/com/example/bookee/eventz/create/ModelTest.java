@@ -1,15 +1,15 @@
 package com.example.bookee.eventz.create;
 
-import com.example.bookee.eventz.data.Description;
-import com.example.bookee.eventz.data.End;
-import com.example.bookee.eventz.data.Event;
-import com.example.bookee.eventz.data.EventWrapper;
+import com.example.bookee.eventz.data.pojos.Description;
+import com.example.bookee.eventz.data.pojos.End;
+import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.EventsWebApi;
-import com.example.bookee.eventz.data.Logo;
-import com.example.bookee.eventz.data.Name;
+import com.example.bookee.eventz.data.pojos.Logo;
+import com.example.bookee.eventz.data.pojos.Name;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
-import com.example.bookee.eventz.data.Start;
+import com.example.bookee.eventz.data.pojos.Start;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;

@@ -6,6 +6,8 @@ import android.util.Log;
 import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
 import com.example.bookee.eventz.data.callbacks.FetchEventsForCategoryCallback;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
+import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.pojos.PaginatedEvents;
 
 import java.io.IOException;
 

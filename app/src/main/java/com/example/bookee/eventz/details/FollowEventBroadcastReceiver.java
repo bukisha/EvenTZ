@@ -12,6 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.bookee.eventz.R;
+import com.example.bookee.eventz.data.EventsDatabaseHelper;
 
 public class FollowEventBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = "FollowEventBroadcastRec";

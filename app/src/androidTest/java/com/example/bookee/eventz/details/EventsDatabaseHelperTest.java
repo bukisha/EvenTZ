@@ -4,10 +4,11 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.bookee.eventz.data.End;
-import com.example.bookee.eventz.data.Event;
-import com.example.bookee.eventz.data.Name;
-import com.example.bookee.eventz.data.Start;
+import com.example.bookee.eventz.data.pojos.End;
+import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.EventsDatabaseHelper;
+import com.example.bookee.eventz.data.pojos.Name;
+import com.example.bookee.eventz.data.pojos.Start;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -69,7 +70,7 @@ public class EventsDatabaseHelperTest {
         eventsDatabaseHelperTest.addEvent(eventOne);
         eventsDatabaseHelperTest.addEvent(eventTwo);
         //When
-        resultList = eventsDatabaseHelperTest.getAllFollowedEventsIds();
+        resultList = eventsDatabaseHelperTest.getAllEventsIds();
         //Than
         Assert.assertEquals("0", resultList.get(0));
         Assert.assertEquals("1", resultList.get(1));

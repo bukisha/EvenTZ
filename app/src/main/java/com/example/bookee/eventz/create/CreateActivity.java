@@ -22,7 +22,7 @@ import android.widget.TimePicker;
 
 import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
-import com.example.bookee.eventz.data.Event;
+import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.EventsWebApi;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;

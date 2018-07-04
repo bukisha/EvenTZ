@@ -16,12 +16,12 @@ import android.widget.Toast;
 
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.create.CreateActivity;
-import com.example.bookee.eventz.data.Category;
-import com.example.bookee.eventz.data.CategoryWebApi;
 import com.example.bookee.eventz.data.RetrofitCategoryRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
-import com.example.bookee.eventz.eventlist.EventListActivity;
+import com.example.bookee.eventz.data.pojos.Category;
+import com.example.bookee.eventz.events.EventsListActivity;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
+import com.example.bookee.eventz.splash.CategoryWebApi;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private RecyclerViewOnItemClickListener recyclerViewOnItemClickListener;
-    //private static ArrayList<Category> initialCategoryList;
+    private static ArrayList<Category> initialCategoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,8 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
             }
         });
         //====temp solution until posting Event issue is resolved====
-        //floatingActionButton.setVisibility(View.VISIBLE);
+        //======hiding floating action button========================
+        floatingActionButton.setVisibility(View.INVISIBLE);
         //===========================================================
         recyclerView = findViewById(R.id.category_recycler_list);
         setupRecyclerView(recyclerView);
@@ -103,10 +104,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
-        //Postoji ovaj nacin da prebacim listu kategorija iz splasha u homeActivity i nacin kod kojeg imam staticko polje(gore je zakomentarisano)
-        // u kojoj sacuvam listu cim je dobijem kroz launch(List l,context c) metodu
-        //ovde je problem sto imam uncheckedCast warning a ako bih koristio staticko polje to bi bila losa praksa bar sam tako procitao na netu,da li postoji 3 nacin? :D
-        ArrayList<Category> initialCategoryList = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORY_LIST);
+        //ArrayList<Category> initialCategoryList = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORY_LIST);
         presenter.populateNameList(initialCategoryList);
     }
 
@@ -118,7 +116,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     public static void launch(ArrayList<Category> list, Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
-        intent.putExtra(EXTRA_CATEGORY_LIST, list);
+        initialCategoryList=list;
         context.startActivity(intent);
     }
 
@@ -131,7 +129,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     @Override
     public void displayListOfEvents(String categoryId) {
-        Intent intent = new Intent(this, EventListActivity.class);
+        Intent intent = new Intent(this, EventsListActivity.class);
         Log.d(TAG, "displayListOfEvents: " + categoryId);
         intent.putExtra(CATEGORY_ID_KEY, categoryId);
         startActivity(intent);

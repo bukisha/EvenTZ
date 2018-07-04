@@ -21,10 +21,12 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.bookee.eventz.R;
-import com.example.bookee.eventz.data.Event;
+import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.EventsDatabaseHelper;
 import com.example.bookee.eventz.data.EventsWebApi;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
+import com.example.bookee.eventz.followed.FollowedEventsActivity;
 
 import retrofit2.Retrofit;
 
@@ -32,7 +34,6 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     private static final String TAG = "DetailsActivity";
     public static final String EXTRA_EVENT_ID = "eventId";
     public static final String CHECKED_EVENT_EXTRA = "checkedExtraEvent";
-    public static final String EXTRA_EVENT_NAME = "eventName";
     private Presenter presenter;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private NestedScrollView nestedScrollView;
@@ -52,17 +53,16 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         initUI();
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
         RetrofitEventsRepository repository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
-        MvpContract.Model model = new Model(repository);
+        MvpContract.Model model = new Model(repository,this);
         if (savedInstanceState == null) {
             presenter = new Presenter(model, this);
         }
-        databaseHelper = EventsDatabaseHelper.getInstance(this);
     }
 
     @Override
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: ");
-        databaseHelper.close();
+        presenter.closeDatabase();
         Intent stopServiceIntent = new Intent(this, FollowEventService.class);
         stopService(stopServiceIntent);
         super.onDestroy();
@@ -81,7 +81,6 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         collapsingToolbarLayout.setVisibility(View.INVISIBLE);
         nestedScrollView.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
-
         buttonFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,11 +92,17 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         setSupportActionBar(toolbar);
     }
 
+    public void setupFollowButton(boolean isFollowed) {
+        Log.d(TAG, "setupFollowButton: " + isFollowed);
+        if (isFollowed) buttonFollow.setImageResource(R.drawable.ic_follow_checked);
+        presenter.setFollowed(isFollowed);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.followed_events:
-                presenter.displayFollowedEventsDialog();
+                presenter.launchFollowedEventsActivity();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -109,6 +114,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         return true;
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -117,7 +123,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         String idOfEvent = getIntent().getStringExtra(EXTRA_EVENT_ID);
         Log.d(TAG, "onResume: fetching Event with id " + idOfEvent);
         presenter.fetchEventForId(idOfEvent);
-
+        presenter.checkFollowButton(idOfEvent);
     }
 
     @Override
@@ -186,18 +192,23 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     @Override
     public void setFollowUncheck(Event uncheckedEvent) {
         buttonFollow.setImageResource(R.drawable.ic_follow);
-        databaseHelper.deleteRowWithId(uncheckedEvent.getId());
+        presenter.removeRowWithId(uncheckedEvent.getId());
     }
 
     @Override
     public void setFollowChecked(Event checkedEvent) {
         buttonFollow.setImageResource(R.drawable.ic_follow_checked);
-        databaseHelper.addEvent(checkedEvent);
+        presenter.addFollowedEvent(checkedEvent);
         Intent serviceIntent = new Intent(this, FollowEventService.class);
         serviceIntent.putExtra(CHECKED_EVENT_EXTRA, checkedEvent);
         startService(serviceIntent);
     }
 
+    @Override
+    public void launchFollowedEventActivity() {
+        Intent startFollowedEvents = new Intent(this, FollowedEventsActivity.class);
+        startActivity(startFollowedEvents);
+    }
 
     @Override
     public void displayError() {

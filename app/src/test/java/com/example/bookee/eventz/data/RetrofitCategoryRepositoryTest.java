@@ -1,6 +1,10 @@
 package com.example.bookee.eventz.data;
 
 import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
+import com.example.bookee.eventz.data.pojos.Category;
+import com.example.bookee.eventz.data.pojos.PaginatedCategoryList;
+import com.example.bookee.eventz.splash.CategoryWebApi;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;

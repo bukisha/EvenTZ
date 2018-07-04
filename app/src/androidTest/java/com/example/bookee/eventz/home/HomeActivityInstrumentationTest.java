@@ -5,7 +5,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.example.bookee.eventz.R;
-import com.example.bookee.eventz.data.Category;
+import com.example.bookee.eventz.data.pojos.Category;
 
 import org.junit.Rule;
 import org.junit.Test;

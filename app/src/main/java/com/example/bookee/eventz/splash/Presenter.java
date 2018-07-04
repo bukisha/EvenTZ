@@ -1,7 +1,7 @@
 package com.example.bookee.eventz.splash;
 
 import com.example.bookee.eventz.EventApp;
-import com.example.bookee.eventz.data.Category;
+import com.example.bookee.eventz.data.pojos.Category;
 
 import java.util.ArrayList;
 
