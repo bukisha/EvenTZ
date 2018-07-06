@@ -20,13 +20,4 @@ public interface EventsWebApi {
 
     @POST("events")
     Call<Event> createNewEvent(@Query("token") String token, @Body Event postEvent);
-
-//    @POST("events")
-//    @FormUrlEncoded
-//    Call<Event> createNewEvent(@Query("token") String token, @Field("name.html") String name
-//                                                                , @Field("start.timezone") String startTimezone
-//                                                                ,@Field("start.utc") String startUtc
-//                                                                , @Field("end.timezone") String endTimezone
-//                                                                ,@Field("end.utc") String endUtc
-//                                                                , @Field("currency") String currency);
 }

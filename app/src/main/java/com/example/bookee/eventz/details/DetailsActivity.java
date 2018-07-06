@@ -21,11 +21,10 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.bookee.eventz.R;
-import com.example.bookee.eventz.data.pojos.Event;
-import com.example.bookee.eventz.data.EventsDatabaseHelper;
 import com.example.bookee.eventz.data.EventsWebApi;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
+import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
 
 import retrofit2.Retrofit;
@@ -43,7 +42,6 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     private ImageView eventLogo;
     private ProgressBar progressBar;
     private ImageButton buttonFollow;
-    private EventsDatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +60,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     @Override
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: ");
-        presenter.closeDatabase();
+        presenter.closeDataSource();
         Intent stopServiceIntent = new Intent(this, FollowEventService.class);
         stopService(stopServiceIntent);
         super.onDestroy();

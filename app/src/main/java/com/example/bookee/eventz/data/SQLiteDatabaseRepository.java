@@ -30,4 +30,14 @@ public class SQLiteDatabaseRepository implements EventDataStorage {
     public List<String> getEventsIds() {
         return databaseHelper.getAllEventsIds();
     }
+
+    @Override
+    public void closeDataSource() {
+        databaseHelper.close();
+    }
+
+    @Override
+    public void removeEventWithId(String id) {
+        databaseHelper.deleteRowWithId(id);
+    }
 }

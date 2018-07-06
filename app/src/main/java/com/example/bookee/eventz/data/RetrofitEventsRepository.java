@@ -34,7 +34,6 @@ public class RetrofitEventsRepository {
             public void onResponse(@NonNull Call<PaginatedEvents> call, @NonNull Response<PaginatedEvents> response) {
                 if (response.body() != null) {
                     callback.onSuccess(response.body().getEvents());
-
                 }
             }
 
@@ -109,10 +108,10 @@ public class RetrofitEventsRepository {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.d(TAG, "onResponse: string "+response.raw().toString());
+                Log.d(TAG, "onResponse: string " + response.raw().toString());
                 Log.d(TAG, "onResponse: intersection ==================================================================================");
-                Event e=response.body();
-                Log.d(TAG, "onResponse: Event received is "+e);
+                Event e = response.body();
+                Log.d(TAG, "onResponse: Event received is " + e);
                 postCallback.onSuccess(e);
             }
 

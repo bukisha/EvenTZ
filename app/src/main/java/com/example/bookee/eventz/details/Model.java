@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.bookee.eventz.data.EventsDatabaseHelper;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
+import com.example.bookee.eventz.data.SQLiteDatabaseRepository;
 import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
 import com.example.bookee.eventz.data.pojos.Event;
 
@@ -11,18 +12,19 @@ import java.util.List;
 
 class Model implements MvpContract.Model {
 
-    private RetrofitEventsRepository repository;
+    private RetrofitEventsRepository eventsRepository;
     private MvpContract.FetchEventForIdCallback callbackForPresenter;
-    private EventsDatabaseHelper helper;
+    private SQLiteDatabaseRepository database;
 
-    public Model(RetrofitEventsRepository repository,Context context) {
-        helper=EventsDatabaseHelper.getInstance(context);
-        this.repository = repository;
+
+    public Model(RetrofitEventsRepository eventsRepository, Context context) {
+        this.eventsRepository = eventsRepository;
+        this.database= new SQLiteDatabaseRepository(EventsDatabaseHelper.getInstance(context));
     }
 
     @Override
     public void checkFollowButton(String eventId,MvpContract.CheckFollowedStatusCallback statusCallback) {
-           List<String> followedIds=helper.getAllEventsIds();
+           List<String> followedIds=database.getEventsIds();
             Boolean status=false;
            for (String id : followedIds) {
               if(id.equals(eventId))
@@ -32,8 +34,8 @@ class Model implements MvpContract.Model {
         }
 
     @Override
-    public void closeDatabase() {
-        helper.close();
+    public void closeDataSource() {
+        database.closeDataSource();
     }
 
     @Override
@@ -50,16 +52,16 @@ class Model implements MvpContract.Model {
                 callbackForPresenter.onFailure(t);
             }
         };
-        repository.fetchEventForId(id,modelCallback);
+        eventsRepository.fetchEventForId(id,modelCallback);
     }
 
     @Override
     public void removeEventWithId(String id) {
-       helper.deleteRowWithId(id);
+       database.removeEventWithId(id);
     }
 
     @Override
     public void addFollowedEvent(Event event) {
-        helper.addEvent(event);
+        database.addEvent(event);
     }
 }

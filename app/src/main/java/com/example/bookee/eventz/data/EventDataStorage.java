@@ -13,4 +13,8 @@ public interface EventDataStorage {
     String getEventNameForId(String id);
 
     List<String> getEventsIds();
+
+    void closeDataSource();
+
+    void removeEventWithId(String id);
 }

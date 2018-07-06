@@ -119,7 +119,7 @@ class Presenter implements MvpContract.Presenter {
     }
 
     @Override
-    public void closeDatabase() {
-        model.closeDatabase();
+    public void closeDataSource() {
+        model.closeDataSource();
     }
 }

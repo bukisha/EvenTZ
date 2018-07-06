@@ -9,7 +9,7 @@ interface MvpContract {
         void removeEventWithId(String id);
         void addFollowedEvent(Event event);
         void checkFollowButton(String eventId,CheckFollowedStatusCallback statusCallback);
-        void closeDatabase();
+        void closeDataSource();
     }
 
     interface Presenter {
@@ -21,7 +21,7 @@ interface MvpContract {
         void removeRowWithId(String id);
         void addFollowedEvent(Event event);
         void checkFollowButton(String id);
-        void closeDatabase();
+        void closeDataSource();
     }
 
     interface View {
