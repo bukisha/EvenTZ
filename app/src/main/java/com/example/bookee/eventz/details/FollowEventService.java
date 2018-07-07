@@ -71,6 +71,7 @@ public class FollowEventService extends Service {
     @Override
     public void onDestroy() {
         Log.d(TAG, "onDestroy: ");
+
         super.onDestroy();
     }
 
