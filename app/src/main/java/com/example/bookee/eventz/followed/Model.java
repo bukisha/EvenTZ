@@ -34,7 +34,7 @@ public class Model implements MvpContract.Model {
     private List<String> prepareListOfNames(List<String> eventIds) {
         List<String> eventNames = new ArrayList<>();
         for (int i = 0; i < eventIds.size(); i++) {
-            String name = databaseHelper.getEventNameForId(eventIds.get(i));
+            String name = repository.getEventNameForId(eventIds.get(i));
             eventNames.add(name);
         }
         return eventNames;

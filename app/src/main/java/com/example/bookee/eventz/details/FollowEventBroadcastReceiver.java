@@ -38,7 +38,7 @@ public class FollowEventBroadcastReceiver extends BroadcastReceiver {
             NOTIFICATION_MANAGER_ID++;
         }
         //after notification is created and displayed remove event from database
-        EventsDatabaseHelper.getInstance(context).deleteRowWithId(eventId);
+        EventsDatabaseHelper.getInstance(context).getAttachedRepository().removeEventWithId(eventId);
     }
 
     private Notification createNotification(Context context, String eventName, String eventID) {
@@ -77,7 +77,7 @@ public class FollowEventBroadcastReceiver extends BroadcastReceiver {
                     .build();
         }
         EventsDatabaseHelper databaseHelper=EventsDatabaseHelper.getInstance(context);
-        databaseHelper.deleteRowWithId(eventID);
+        databaseHelper.getAttachedRepository().removeEventWithId(eventID);
         return notification;
     }
 }

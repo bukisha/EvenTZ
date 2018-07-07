@@ -1,26 +1,19 @@
 package com.example.bookee.eventz.data;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.bookee.eventz.data.pojos.Event;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class EventsDatabaseHelper extends SQLiteOpenHelper {
-    private static final String TAG = "EventsDatabaseHelper";
+    public static final String TAG = "EventsDatabaseHelper";
     private static final String DATABASE_NAME = "followedEvents.db";
-    private static final String TABLE_NAME = "followedEvents";
-    private static final String COLUMN_EVENT_NAME = "name";
-    private static final String COLUMN_EVENT_ID = "eventId";
+    public static final String TABLE_NAME = "followedEvents";
+    public static final String COLUMN_EVENT_NAME = "name";
+    public static final String COLUMN_EVENT_ID = "eventId";
     private static final int DATABASE_VERSION=1;
     private static EventsDatabaseHelper helperInstance;
-    private SQLiteDatabase database;
+    private SQLiteDatabaseRepository attachedRepository;
 
     public static EventsDatabaseHelper getInstance(Context context) {
         if (helperInstance == null) {
@@ -49,94 +42,101 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void addEvent(Event event) {
-        database = getWritableDatabase();
-        ContentValues addDatabaseRow = new ContentValues();
-        addDatabaseRow.put(COLUMN_EVENT_NAME, event.getName().getText());
-        addDatabaseRow.put(COLUMN_EVENT_ID, event.getId());
-
-        database.insert(TABLE_NAME, null, addDatabaseRow);
-        Log.d(TAG, "addEvent: "+this.toString());
+    public void attachRepository(SQLiteDatabaseRepository sqLiteDatabaseRepository) {
+        attachedRepository=sqLiteDatabaseRepository;
     }
 
-    public String getEventIdForName(String eventName) {
-        String selection=COLUMN_EVENT_NAME+" =?";
-        String[] selectionArgs={eventName};
-        String idToReturn=null;
-        database=getReadableDatabase();
-        Cursor cursor=database.query(TABLE_NAME,
-                null,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-        while (cursor.moveToNext()) {
-            String selectedEventName=cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_NAME));
-            String selectedEventId=cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_ID));
-            if(selectedEventName.equals(eventName)) {
-                idToReturn=selectedEventId;
-                break;
-            }
-        }
-        cursor.close();
-        return idToReturn;
+    public SQLiteDatabaseRepository getAttachedRepository() {
+        return attachedRepository;
     }
 
-    public String getEventNameForId(String eventId) {
-        String projections[]={COLUMN_EVENT_NAME,COLUMN_EVENT_ID};
-        String selection=COLUMN_EVENT_ID+" =?";
-        String[] selectionArgs={eventId};
-        String returnEventName=null;
-        database=getReadableDatabase();
-        Cursor returnCursor=database.query(
-                TABLE_NAME,
-                projections,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-        while (returnCursor.moveToNext()) {
-           String selectedEventName=returnCursor.getString(returnCursor.getColumnIndexOrThrow(COLUMN_EVENT_NAME));
-           String selectedEventId=returnCursor.getString(returnCursor.getColumnIndexOrThrow(COLUMN_EVENT_ID));
-           if(selectedEventId.equals(eventId)) {
-                returnEventName = selectedEventName;
-                break;
-          }
-        }
-        returnCursor.close();
-        return returnEventName;
-    }
+    //    public void addEvent(Event event) {
+//        database = getWritableDatabase();
+//        ContentValues addDatabaseRow = new ContentValues();
+//        addDatabaseRow.put(COLUMN_EVENT_NAME, event.getName().getText());
+//        addDatabaseRow.put(COLUMN_EVENT_ID, event.getId());
+//
+//        database.insert(TABLE_NAME, null, addDatabaseRow);
+//        Log.d(TAG, "addEvent: "+this.toString());
+//    }
 
-    public List<String> getAllEventsIds() {
-        List<String> followedIds=new ArrayList<>();
-            String[] projections={COLUMN_EVENT_ID};
-            database =getReadableDatabase();
-            Cursor cursor=database.query(
-                    TABLE_NAME,
-                    projections,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-            );
-            while (cursor.moveToNext()) {
-                String id=cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_ID));
-                followedIds.add(id);
-            }
-        cursor.close();
-        return followedIds;
-    }
+//    public String getEventIdForName(String eventName) {
+//        String selection=COLUMN_EVENT_NAME+" =?";
+//        String[] selectionArgs={eventName};
+//        String idToReturn=null;
+//        database=getReadableDatabase();
+//        Cursor cursor=database.query(TABLE_NAME,
+//                null,
+//                selection,
+//                selectionArgs,
+//                null,
+//                null,
+//                null
+//        );
+//        while (cursor.moveToNext()) {
+//            String selectedEventName=cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_NAME));
+//            String selectedEventId=cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_ID));
+//            if(selectedEventName.equals(eventName)) {
+//                idToReturn=selectedEventId;
+//                break;
+//            }
+//        }
+//        cursor.close();
+//        return idToReturn;
+//    }
 
-    public void deleteRowWithId(String deleteId) {
+//    public String getEventNameForId(String eventId) {
+//        String projections[]={COLUMN_EVENT_NAME,COLUMN_EVENT_ID};
+//        String selection=COLUMN_EVENT_ID+" =?";
+//        String[] selectionArgs={eventId};
+//        String returnEventName=null;
+//        database=getReadableDatabase();
+//        Cursor returnCursor=database.query(
+//                TABLE_NAME,
+//                projections,
+//                selection,
+//                selectionArgs,
+//                null,
+//                null,
+//                null
+//        );
+//        while (returnCursor.moveToNext()) {
+//           String selectedEventName=returnCursor.getString(returnCursor.getColumnIndexOrThrow(COLUMN_EVENT_NAME));
+//           String selectedEventId=returnCursor.getString(returnCursor.getColumnIndexOrThrow(COLUMN_EVENT_ID));
+//           if(selectedEventId.equals(eventId)) {
+//                returnEventName = selectedEventName;
+//                break;
+//          }
+//        }
+//        returnCursor.close();
+//        return returnEventName;
+//    }
+
+//    public List<String> getAllEventsIds() {
+//        List<String> followedIds=new ArrayList<>();
+//            String[] projections={COLUMN_EVENT_ID};
+//            database =getReadableDatabase();
+//            Cursor cursor=database.query(
+//                    TABLE_NAME,
+//                    projections,
+//                    null,
+//                    null,
+//                    null,
+//                    null,
+//                    null
+//            );
+//            while (cursor.moveToNext()) {
+//                String id=cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_ID));
+//                followedIds.add(id);
+//            }
+//        cursor.close();
+//        return followedIds;
+//    }
+
+/*    public void deleteRowWithId(String deleteId) {
         String selection=COLUMN_EVENT_ID+" LIKE ?";
         String[] selectionArgs={deleteId};
         this.getReadableDatabase().delete(TABLE_NAME,selection,selectionArgs);
-    }
-
+    }*/
 
 }

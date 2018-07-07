@@ -14,17 +14,17 @@ class Model implements MvpContract.Model {
 
     private RetrofitEventsRepository eventsRepository;
     private MvpContract.FetchEventForIdCallback callbackForPresenter;
-    private SQLiteDatabaseRepository database;
+    private SQLiteDatabaseRepository databaseRepository;
 
 
     public Model(RetrofitEventsRepository eventsRepository, Context context) {
         this.eventsRepository = eventsRepository;
-        this.database= new SQLiteDatabaseRepository(EventsDatabaseHelper.getInstance(context));
+        this.databaseRepository = new SQLiteDatabaseRepository(EventsDatabaseHelper.getInstance(context));
     }
 
     @Override
     public void checkFollowButton(String eventId,MvpContract.CheckFollowedStatusCallback statusCallback) {
-           List<String> followedIds=database.getEventsIds();
+           List<String> followedIds= databaseRepository.getEventsIds();
             Boolean status=false;
            for (String id : followedIds) {
               if(id.equals(eventId))
@@ -35,7 +35,7 @@ class Model implements MvpContract.Model {
 
     @Override
     public void closeDataSource() {
-        database.closeDataSource();
+        databaseRepository.closeDataSource();
     }
 
     @Override
@@ -57,11 +57,11 @@ class Model implements MvpContract.Model {
 
     @Override
     public void removeEventWithId(String id) {
-       database.removeEventWithId(id);
+       databaseRepository.removeEventWithId(id);
     }
 
     @Override
     public void addFollowedEvent(Event event) {
-        database.addEvent(event);
+        databaseRepository.addEvent(event);
     }
 }
