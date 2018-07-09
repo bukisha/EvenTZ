@@ -1,8 +1,10 @@
 package com.example.bookee.eventz.details;
 
-import com.example.bookee.eventz.data.pojos.Event;
+import android.content.Context;
+
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
+import com.example.bookee.eventz.data.pojos.Event;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,11 +21,12 @@ public class ModelTest {
     private RetrofitEventsRepository retrofitEventsRepositoryMock;
     @Mock
     private MvpContract.FetchEventForIdCallback fetchEventForIdCallbackMock;
-
+    @Mock
+    private Context contextMock;
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        model = new Model(retrofitEventsRepositoryMock);
+        model = new Model(retrofitEventsRepositoryMock,contextMock);
     }
 
     @Test

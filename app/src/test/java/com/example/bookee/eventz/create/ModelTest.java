@@ -1,6 +1,6 @@
 package com.example.bookee.eventz.create;
 
-import com.example.bookee.eventz.data.pojos.Description;
+import com.example.bookee.eventz.data.pojos.*;
 import com.example.bookee.eventz.data.pojos.End;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.pojos.EventWrapper;

@@ -1,5 +1,7 @@
 package com.example.bookee.eventz.details;
 
+import android.content.Context;
+
 import com.example.bookee.eventz.data.pojos.Event;
 
 interface MvpContract {
@@ -19,7 +21,8 @@ interface MvpContract {
         void followClicked();
         void launchFollowedEventsActivity();
         void removeRowWithId(String id);
-        void addFollowedEvent(Event event);
+        void startFollowingEvent(Event event,Context context);
+        void stopFollowingEvent(Event event,Context context);
         void checkFollowButton(String id);
         void closeDataSource();
     }
@@ -32,6 +35,7 @@ interface MvpContract {
         void setFollowChecked(Event event);
         void setupFollowButton(boolean isFollowed);
         void launchFollowedEventActivity();
+        void showToast(String toastStartedFollowing);
     }
 
     interface FetchEventForIdCallback {

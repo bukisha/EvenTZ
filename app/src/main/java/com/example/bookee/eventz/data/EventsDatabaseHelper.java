@@ -11,6 +11,7 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "followedEvents";
     public static final String COLUMN_EVENT_NAME = "name";
     public static final String COLUMN_EVENT_ID = "eventId";
+    public static final String COLUMN_EVENT_CANCEL_ID = "cancelId";
     private static final int DATABASE_VERSION=1;
     private static EventsDatabaseHelper helperInstance;
     private SQLiteDatabaseRepository attachedRepository;
@@ -49,94 +50,4 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
     public SQLiteDatabaseRepository getAttachedRepository() {
         return attachedRepository;
     }
-
-    //    public void addEvent(Event event) {
-//        database = getWritableDatabase();
-//        ContentValues addDatabaseRow = new ContentValues();
-//        addDatabaseRow.put(COLUMN_EVENT_NAME, event.getName().getText());
-//        addDatabaseRow.put(COLUMN_EVENT_ID, event.getId());
-//
-//        database.insert(TABLE_NAME, null, addDatabaseRow);
-//        Log.d(TAG, "addEvent: "+this.toString());
-//    }
-
-//    public String getEventIdForName(String eventName) {
-//        String selection=COLUMN_EVENT_NAME+" =?";
-//        String[] selectionArgs={eventName};
-//        String idToReturn=null;
-//        database=getReadableDatabase();
-//        Cursor cursor=database.query(TABLE_NAME,
-//                null,
-//                selection,
-//                selectionArgs,
-//                null,
-//                null,
-//                null
-//        );
-//        while (cursor.moveToNext()) {
-//            String selectedEventName=cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_NAME));
-//            String selectedEventId=cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_ID));
-//            if(selectedEventName.equals(eventName)) {
-//                idToReturn=selectedEventId;
-//                break;
-//            }
-//        }
-//        cursor.close();
-//        return idToReturn;
-//    }
-
-//    public String getEventNameForId(String eventId) {
-//        String projections[]={COLUMN_EVENT_NAME,COLUMN_EVENT_ID};
-//        String selection=COLUMN_EVENT_ID+" =?";
-//        String[] selectionArgs={eventId};
-//        String returnEventName=null;
-//        database=getReadableDatabase();
-//        Cursor returnCursor=database.query(
-//                TABLE_NAME,
-//                projections,
-//                selection,
-//                selectionArgs,
-//                null,
-//                null,
-//                null
-//        );
-//        while (returnCursor.moveToNext()) {
-//           String selectedEventName=returnCursor.getString(returnCursor.getColumnIndexOrThrow(COLUMN_EVENT_NAME));
-//           String selectedEventId=returnCursor.getString(returnCursor.getColumnIndexOrThrow(COLUMN_EVENT_ID));
-//           if(selectedEventId.equals(eventId)) {
-//                returnEventName = selectedEventName;
-//                break;
-//          }
-//        }
-//        returnCursor.close();
-//        return returnEventName;
-//    }
-
-//    public List<String> getAllEventsIds() {
-//        List<String> followedIds=new ArrayList<>();
-//            String[] projections={COLUMN_EVENT_ID};
-//            database =getReadableDatabase();
-//            Cursor cursor=database.query(
-//                    TABLE_NAME,
-//                    projections,
-//                    null,
-//                    null,
-//                    null,
-//                    null,
-//                    null
-//            );
-//            while (cursor.moveToNext()) {
-//                String id=cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EVENT_ID));
-//                followedIds.add(id);
-//            }
-//        cursor.close();
-//        return followedIds;
-//    }
-
-/*    public void deleteRowWithId(String deleteId) {
-        String selection=COLUMN_EVENT_ID+" LIKE ?";
-        String[] selectionArgs={deleteId};
-        this.getReadableDatabase().delete(TABLE_NAME,selection,selectionArgs);
-    }*/
-
 }

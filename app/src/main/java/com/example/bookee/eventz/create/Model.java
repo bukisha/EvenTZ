@@ -2,7 +2,7 @@ package com.example.bookee.eventz.create;
 
 import android.util.Log;
 
-import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.pojos.*;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 

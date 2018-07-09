@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -190,22 +191,28 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     @Override
     public void setFollowUncheck(Event uncheckedEvent) {
         buttonFollow.setImageResource(R.drawable.ic_follow);
-        presenter.removeRowWithId(uncheckedEvent.getId());
+       // presenter.removeRowWithId(uncheckedEvent.getId());
+        presenter.stopFollowingEvent(uncheckedEvent,this);
     }
 
     @Override
     public void setFollowChecked(Event checkedEvent) {
         buttonFollow.setImageResource(R.drawable.ic_follow_checked);
-        presenter.addFollowedEvent(checkedEvent);
-        Intent serviceIntent = new Intent(this, FollowEventService.class);
-        serviceIntent.putExtra(CHECKED_EVENT_EXTRA, checkedEvent);
-        startService(serviceIntent);
+        presenter.startFollowingEvent(checkedEvent,this);
+       // Intent serviceIntent = new Intent(this, FollowEventService.class);
+      //  serviceIntent.putExtra(CHECKED_EVENT_EXTRA, checkedEvent);
+       // startService(serviceIntent);
     }
 
     @Override
     public void launchFollowedEventActivity() {
         Intent startFollowedEvents = new Intent(this, FollowedEventsActivity.class);
         startActivity(startFollowedEvents);
+    }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
