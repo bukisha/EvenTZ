@@ -15,11 +15,11 @@ import static android.content.Context.ALARM_SERVICE;
 
 class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
-    private static final String EVENT_ID = "id";
-    private static final String EVENT_NAME = "name";
+    public static final String EVENT_ID = "id";
+    public static final String EVENT_NAME = "name";
     private static final String SERVICE_ACTION = "com.example.bookee.eventz.details";
     private static final String TOAST_STARTED_FOLLOWING = "Started following event";
-    private static final String TOAST_STOPED_FOLLOWING = "Stopped following event";
+    private static final String TOAST_STOPPED_FOLLOWING = "Stopped following event";
     private MvpContract.Model model;
     private MvpContract.View view;
     private boolean followChecked;
@@ -100,7 +100,7 @@ class Presenter implements MvpContract.Presenter {
             view.setFollowChecked(currentEvent);
             followChecked = !followChecked;
             //start following this Event inside service if the service is running
-            //if the service does not exist than create one and start following Event with it
+            //if the service does not exist than prepareNotification one and start following Event with it
         }
     }
 
@@ -159,7 +159,7 @@ class Presenter implements MvpContract.Presenter {
         });
         alarmDestroyThread.start();
         if (notViewExists()) return;
-        view.showToast(TOAST_STOPED_FOLLOWING);
+        view.showToast(TOAST_STOPPED_FOLLOWING);
     }
 
     private void destroyAlarm(Event event, Context context) {

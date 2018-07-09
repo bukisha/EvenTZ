@@ -62,8 +62,6 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: ");
         presenter.closeDataSource();
-        Intent stopServiceIntent = new Intent(this, FollowEventService.class);
-        stopService(stopServiceIntent);
         super.onDestroy();
     }
 
@@ -199,9 +197,6 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     public void setFollowChecked(Event checkedEvent) {
         buttonFollow.setImageResource(R.drawable.ic_follow_checked);
         presenter.startFollowingEvent(checkedEvent,this);
-       // Intent serviceIntent = new Intent(this, FollowEventService.class);
-      //  serviceIntent.putExtra(CHECKED_EVENT_EXTRA, checkedEvent);
-       // startService(serviceIntent);
     }
 
     @Override

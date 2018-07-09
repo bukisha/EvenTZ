@@ -38,11 +38,6 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".details.FollowEventService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity android:name=".followed.FollowedEventsActivity"/>
     </application>
 
