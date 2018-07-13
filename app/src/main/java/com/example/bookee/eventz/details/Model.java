@@ -1,8 +1,5 @@
 package com.example.bookee.eventz.details;
 
-import android.content.Context;
-
-import com.example.bookee.eventz.data.EventsDatabaseHelper;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.SQLiteDatabaseRepository;
 import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
@@ -17,9 +14,9 @@ class Model implements MvpContract.Model {
     private SQLiteDatabaseRepository databaseRepository;
 
 
-    public Model(RetrofitEventsRepository eventsRepository, Context context) {
+    public Model(RetrofitEventsRepository eventsRepository, SQLiteDatabaseRepository databaseRepository) {
         this.eventsRepository = eventsRepository;
-        this.databaseRepository = new SQLiteDatabaseRepository(EventsDatabaseHelper.getInstance(context));
+        this.databaseRepository = databaseRepository;
     }
 
     @Override

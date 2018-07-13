@@ -14,10 +14,10 @@ public class RetrofitFactory {
     private static final String API_OAUTH_TOKEN_PERSONAL = "UHSWAYREEJUQBBIH3H3H";
 
     public static Retrofit buildRetrofit() {
-        OkHttpClient.Builder okhttpBuilder = new OkHttpClient.Builder();
+        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();
         HttpLoggingInterceptor logger = new HttpLoggingInterceptor();
         logger.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = okhttpBuilder.addInterceptor(logger).build();
+        OkHttpClient client = okHttpBuilder.addInterceptor(logger).build();
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

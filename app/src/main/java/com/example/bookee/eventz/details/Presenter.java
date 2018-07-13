@@ -17,7 +17,7 @@ class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
     public static final String EVENT_ID = "id";
     public static final String EVENT_NAME = "name";
-    private static final String SERVICE_ACTION = "com.example.bookee.eventz.details";
+    private static final String BROADCAST_ACTION = "com.example.bookee.eventz.details.ACTION_EVENT_TODAY";
     private static final String TOAST_STARTED_FOLLOWING = "Started following event";
     private static final String TOAST_STOPPED_FOLLOWING = "Stopped following event";
     private MvpContract.Model model;
@@ -132,7 +132,7 @@ class Presenter implements MvpContract.Presenter {
 
     private void createAlarm(Event event, Context context) {
         Intent intentForBroadcast = new Intent(context, FollowEventBroadcastReceiver.class);
-        intentForBroadcast.setAction(SERVICE_ACTION);
+        intentForBroadcast.setAction(BROADCAST_ACTION);
         intentForBroadcast.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
 
         intentForBroadcast.putExtra(EVENT_ID, event.getId());
@@ -164,7 +164,7 @@ class Presenter implements MvpContract.Presenter {
 
     private void destroyAlarm(Event event, Context context) {
         Intent cancelIntent = new Intent(context, FollowEventBroadcastReceiver.class);
-        cancelIntent.setAction(SERVICE_ACTION);
+        cancelIntent.setAction(BROADCAST_ACTION);
         cancelIntent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         cancelIntent.putExtra(EVENT_ID, event.getId());
         cancelIntent.putExtra(EVENT_NAME, event.getName().getText());

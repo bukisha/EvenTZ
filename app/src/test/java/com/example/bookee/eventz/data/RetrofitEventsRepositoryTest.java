@@ -1,5 +1,7 @@
 package com.example.bookee.eventz.data;
 
+import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
+import com.example.bookee.eventz.data.callbacks.FetchEventsForCategoryCallback;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 import com.example.bookee.eventz.data.pojos.Description;
 import com.example.bookee.eventz.data.pojos.End;
@@ -10,50 +12,70 @@ import com.example.bookee.eventz.data.pojos.Start;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import java.util.Date;
+import java.util.ArrayList;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
 
 public class RetrofitEventsRepositoryTest {
     private static final String TAG = "RetrofitEventRepoTest";
+    private static final String TEST_CATEGORY_ID = "102";
+    private static final String TEST_EVENT_ID = "34163526026";
+    private static final String TEST_EVENT_LOGO_URL = "http://memoryboundscrapbookstore.com/wordpress/wp-content/uploads/2016/02/lets-party.png";
     private RetrofitEventsRepository repository;
-    private Event responseEvent;
+
+    @Mock
+    private FetchEventsForCategoryCallback fetchEventsForCategoryCallbackMock;
+    @Mock
+    private FetchEventForIdCallback fetchEventForIdCallbackMock;
+    @Mock
+    private PostEventCallback postEventCallbackMock;
+    @Mock
+    private Event eventMock;
 
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
         repository = new RetrofitEventsRepository(RetrofitFactory.buildRetrofit().create(EventsWebApi.class));
+
     }
 
     @Test
-    public void postNewEvent() {
-        //Given
-        Event event = createTestEvent("testEvent", "Belgrade", null, "test test test", null);
-
-        System.out.println("posting test Event....");
-
+    public void fetchEventsForCategory() {
         //When
-        repository.postNewEvent(event, new PostEventCallback() {
-            @Override
-            public void onSuccess(Event e) {
-                responseEvent = e;
-                System.out.println("Fetched Event is " + e);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                System.out.println("error while fetching Event for id" + t.getMessage());
-            }
-        });
-        //Than
-        Assert.assertNotEquals(null, responseEvent);
-
-        System.out.println("Fetched Event is " + responseEvent);
-
+        repository.fetchEventsForCategory(TEST_CATEGORY_ID, fetchEventsForCategoryCallbackMock);
+        //Then
+        //timeout was needed so the thread that executes fetch can finish its job
+        verify(fetchEventsForCategoryCallbackMock, timeout(4000)).onSuccess(any(ArrayList.class));
     }
 
-    private Event createTestEvent(String eventName, String cityName, Date date, String eventDescription, String logoUrl) {
+    @Test
+    public void fetchEventForId() {
+        //Given
+
+        //When
+        repository.fetchEventForId(TEST_EVENT_ID, fetchEventForIdCallbackMock);
+        //Then
+        verify(fetchEventForIdCallbackMock, timeout(4000)).onSuccess(any(Event.class));
+    }
+
+    @Test
+    public void postEvent() {
+        //Given
+        Event testEvent = createTestEvent("TEST EVENT", "TEST DESCRIPTION", TEST_EVENT_LOGO_URL);
+        //When
+        repository.postNewEvent(testEvent, postEventCallbackMock);
+        //Then
+        verify(postEventCallbackMock, timeout(5000)).onSuccess(any(Event.class));
+    }
+
+    private Event createTestEvent(String eventName, String eventDescription, String logoUrl) {
         System.out.println("creating test Event....");
         Name name = new Name();
         Logo logo = new Logo();
@@ -84,6 +106,11 @@ public class RetrofitEventsRepositoryTest {
         end.setLocal(endTime.toString());
         end.setUtc(dateTimeUTC.plusHours(2).toString());
         Event event = new Event("EUR", end, name, start);
+        event.setListed(true);
+        event.setCapacity((long) 3000);
+        event.setCategoryId("104");
+        event.setOnlineEvent(true);
+        event.setShareable(true);
 
 
         return event;

@@ -22,9 +22,11 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.bookee.eventz.R;
+import com.example.bookee.eventz.data.EventsDatabaseHelper;
 import com.example.bookee.eventz.data.EventsWebApi;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
+import com.example.bookee.eventz.data.SQLiteDatabaseRepository;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
 
@@ -44,6 +46,8 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     private ProgressBar progressBar;
     private ImageButton buttonFollow;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: starting");
@@ -51,8 +55,9 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         setContentView(R.layout.activity_event_details);
         initUI();
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
-        RetrofitEventsRepository repository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
-        MvpContract.Model model = new Model(repository,this);
+        RetrofitEventsRepository eventsRepository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
+        SQLiteDatabaseRepository databaseRepository=new SQLiteDatabaseRepository(EventsDatabaseHelper.getInstance(this));
+        MvpContract.Model model = new Model(eventsRepository,databaseRepository);
         if (savedInstanceState == null) {
             presenter = new Presenter(model, this);
         }
@@ -190,13 +195,13 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     public void setFollowUncheck(Event uncheckedEvent) {
         buttonFollow.setImageResource(R.drawable.ic_follow);
        // presenter.removeRowWithId(uncheckedEvent.getId());
-        presenter.stopFollowingEvent(uncheckedEvent,this);
+        presenter.stopFollowingEvent(uncheckedEvent,this.getApplicationContext());
     }
 
     @Override
     public void setFollowChecked(Event checkedEvent) {
         buttonFollow.setImageResource(R.drawable.ic_follow_checked);
-        presenter.startFollowingEvent(checkedEvent,this);
+        presenter.startFollowingEvent(checkedEvent,this.getApplicationContext());
     }
 
     @Override

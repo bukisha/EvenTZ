@@ -124,6 +124,45 @@ public class Event implements Serializable{
         this.start = start;
     }
     public Event() {}
+    public Event(Long capacity, Boolean capacity_is_custom, String category_id, String changed, String created, String currency, Description description, End end, String format_id, Boolean hide_end_date, Boolean hide_start_date, String id, Boolean is_free, Boolean is_locked, Boolean is_reserved_seating, Boolean is_series, Boolean is_series_parent, Boolean listed, String locale, Logo logo, String logo_id, Name name, Boolean online_event, String organization_id, String organizer_id, String privacy_setting, String resource_url, Boolean shareable, String source, Start start, String status, Object subcategory_id, Long tx_time_limit, String url, String venue_id, String version) {
+        this.capacity = capacity;
+        this.capacity_is_custom = capacity_is_custom;
+        this.category_id = category_id;
+        this.changed = changed;
+        this.created = created;
+        this.currency = currency;
+        this.description = description;
+        this.end = end;
+        this.format_id = format_id;
+        this.hide_end_date = hide_end_date;
+        this.hide_start_date = hide_start_date;
+        this.id = id;
+        this.is_free = is_free;
+        this.is_locked = is_locked;
+        this.is_reserved_seating = is_reserved_seating;
+        this.is_series = is_series;
+        this.is_series_parent = is_series_parent;
+        this.listed = listed;
+        this.locale = locale;
+        this.logo = logo;
+        this.logo_id = logo_id;
+        this.name = name;
+        this.online_event = online_event;
+        this.organization_id = organization_id;
+        this.organizer_id = organizer_id;
+        this.privacy_setting = privacy_setting;
+        this.resource_url = resource_url;
+        this.shareable = shareable;
+        this.source = source;
+        this.start = start;
+        this.status = status;
+        this.subcategory_id = subcategory_id;
+        this.tx_time_limit = tx_time_limit;
+        this.url = url;
+        this.venue_id = venue_id;
+        this.version = version;
+    }
+
     public Long getCapacity() {
         return capacity;
     }

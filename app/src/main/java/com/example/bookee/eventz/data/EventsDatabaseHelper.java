@@ -9,10 +9,10 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
     public static final String TAG = "EventsDatabaseHelper";
     private static final String DATABASE_NAME = "followedEvents.db";
     public static final String TABLE_NAME = "followedEvents";
-    public static final String COLUMN_EVENT_NAME = "name";
-    public static final String COLUMN_EVENT_ID = "eventId";
+    private static String COLUMN_EVENT_NAME = "name";
+    private static String COLUMN_EVENT_ID = "eventId";
     public static final String COLUMN_EVENT_CANCEL_ID = "cancelId";
-    private static final int DATABASE_VERSION=1;
+    private static final int DATABASE_VERSION = 1;
     private static EventsDatabaseHelper helperInstance;
     private SQLiteDatabaseRepository attachedRepository;
 
@@ -33,7 +33,7 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         Log.d(TAG, "onCreate: ");
         String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER, " + COLUMN_EVENT_NAME + " TEXT," + COLUMN_EVENT_ID + " TEXT PRIMARY KEY UNIQUE)";
-        Log.d(TAG, "onCreate: ==========================="+createTable);
+        Log.d(TAG, "onCreate: ===========================" + createTable);
         sqLiteDatabase.execSQL(createTable);
     }
 
@@ -44,10 +44,18 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void attachRepository(SQLiteDatabaseRepository sqLiteDatabaseRepository) {
-        attachedRepository=sqLiteDatabaseRepository;
+        attachedRepository = sqLiteDatabaseRepository;
     }
 
     public SQLiteDatabaseRepository getAttachedRepository() {
         return attachedRepository;
+    }
+
+    public static   String getColumnEventName() {
+        return COLUMN_EVENT_NAME;
+    }
+
+    public static String getColumnEventId() {
+        return COLUMN_EVENT_ID;
     }
 }

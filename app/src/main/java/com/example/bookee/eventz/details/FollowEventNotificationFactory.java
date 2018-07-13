@@ -8,10 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.example.bookee.eventz.R;
-import com.example.bookee.eventz.data.EventsDatabaseHelper;
 
 class FollowEventNotificationFactory {
     private static final String TAG = "FollowEventNotification";
@@ -27,11 +25,7 @@ class FollowEventNotificationFactory {
 
     public void prepareNotification(Intent intent) {
         String eventId = intent.getStringExtra(Presenter.EVENT_ID);
-        if (eventId.equals("")) {
-            Log.d(TAG, "onReceive: doslo je do sranja");
-        } else {
-            Log.d(TAG, "onReceive: " + eventId);
-        }
+
         Notification notification = createNotification(factoryContext, intent.getStringExtra(Presenter.EVENT_NAME), eventId);
         NotificationManager manager = (NotificationManager) factoryContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -40,7 +34,7 @@ class FollowEventNotificationFactory {
             NOTIFICATION_MANAGER_ID++;
         }
         //after notification is created and displayed remove event from database
-        EventsDatabaseHelper.getInstance(factoryContext).getAttachedRepository().removeEventWithId(eventId);
+        //EventsDatabaseHelper.getInstance(factoryContext).getAttachedRepository().removeEventWithId(eventId);
     }
 
     private Notification createNotification(Context context, String eventName, String eventID) {
@@ -78,8 +72,6 @@ class FollowEventNotificationFactory {
                     .setAutoCancel(true)
                     .build();
         }
-        EventsDatabaseHelper databaseHelper = EventsDatabaseHelper.getInstance(context);
-        databaseHelper.getAttachedRepository().removeEventWithId(eventID);
         return notification;
     }
 }

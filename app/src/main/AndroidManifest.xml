@@ -30,11 +30,9 @@
         <activity android:name=".create.CreateActivity" />
 
         <receiver
-            android:name=".details.FollowEventBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:name=".details.FollowEventBroadcastReceiver">
             <intent-filter>
-                <action android:name="com.example.bookee.eventz.details" />
+                <action android:name="com.example.bookee.eventz.details.ACTION_EVENT_TODAY" />
             </intent-filter>
         </receiver>
 
