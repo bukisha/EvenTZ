@@ -7,16 +7,15 @@ import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
 import com.example.bookee.eventz.data.callbacks.FetchEventsForCategoryCallback;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.PaginatedEvents;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class RetrofitEventsRepository {
     private static final String TAG = "RetrofitEventsRepo";
-
     private EventsWebApi api;
 
     public RetrofitEventsRepository(EventsWebApi api) {
@@ -43,8 +42,8 @@ public class RetrofitEventsRepository {
     }
 
     public void fetchEventForId(String eventId, final FetchEventForIdCallback modelCallback) {
-
         Call<Event> call = api.fetchEventForId(eventId, RetrofitFactory.getAuthTokenAnonymous());
+
         Callback<Event> callback = new Callback<Event>() {
             @Override
             public void onResponse(@NonNull Call<Event> call, Response<Event> response) {
@@ -60,11 +59,10 @@ public class RetrofitEventsRepository {
         call.enqueue(callback);
     }
 
-    public void postNewEvent(Event event, final PostEventCallback postCallback) {
-        Call<Event> call = api.createNewEvent(RetrofitFactory.getAuthTokenPersonal(), event);
+    public void postNewEvent(EventWrapper event, final PostEventCallback postCallback) {
+        Call<Event> call = api.createNewEvent( event);
 
         Callback<Event> callback = new Callback<Event>() {
-
             @Override
             public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
                 Event e=response.body();
@@ -78,8 +76,5 @@ public class RetrofitEventsRepository {
             }
         };
         call.enqueue(callback);
-
     }
-
-
 }

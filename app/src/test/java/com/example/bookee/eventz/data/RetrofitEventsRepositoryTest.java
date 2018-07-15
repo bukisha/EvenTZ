@@ -6,12 +6,15 @@ import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 import com.example.bookee.eventz.data.pojos.Description;
 import com.example.bookee.eventz.data.pojos.End;
 import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.Logo;
 import com.example.bookee.eventz.data.pojos.Name;
 import com.example.bookee.eventz.data.pojos.Start;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -24,10 +27,12 @@ import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
 public class RetrofitEventsRepositoryTest {
-    private static final String TAG = "RetrofitEventRepoTest";
+
     private static final String TEST_CATEGORY_ID = "102";
     private static final String TEST_EVENT_ID = "34163526026";
     private static final String TEST_EVENT_LOGO_URL = "http://memoryboundscrapbookstore.com/wordpress/wp-content/uploads/2016/02/lets-party.png";
+    private static final String TEST_EVENT_NAME ="TEST EVENT" ;
+    private static final String TEST_EVENT_DESCRIPTION = "TEST DESCRIPTION";
     private RetrofitEventsRepository repository;
 
     @Mock
@@ -36,11 +41,9 @@ public class RetrofitEventsRepositoryTest {
     private FetchEventForIdCallback fetchEventForIdCallbackMock;
     @Mock
     private PostEventCallback postEventCallbackMock;
-    @Mock
-    private Event eventMock;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp()  {
         MockitoAnnotations.initMocks(this);
         repository = new RetrofitEventsRepository(RetrofitFactory.buildRetrofit().create(EventsWebApi.class));
 
@@ -68,9 +71,13 @@ public class RetrofitEventsRepositoryTest {
     @Test
     public void postEvent() {
         //Given
-        Event testEvent = createTestEvent("TEST EVENT", "TEST DESCRIPTION", TEST_EVENT_LOGO_URL);
+        Event testEvent = createTestEvent(TEST_EVENT_NAME, TEST_EVENT_DESCRIPTION, TEST_EVENT_LOGO_URL);
+
+        EventWrapper eventWrapper=new EventWrapper();
+        eventWrapper.setEvent(testEvent);
+        System.out.println("Event that i want to post : "+eventWrapper);
         //When
-        repository.postNewEvent(testEvent, postEventCallbackMock);
+        repository.postNewEvent(eventWrapper, postEventCallbackMock);
         //Then
         verify(postEventCallbackMock, timeout(5000)).onSuccess(any(Event.class));
     }
@@ -84,27 +91,29 @@ public class RetrofitEventsRepositoryTest {
         Description description = new Description();
         description.setHtml(eventDescription);
         name.setHtml(eventName);
-        // Event.setName(name);
         logo.setUrl(logoUrl);
-        // Event.setLogo(logo);
 
 
         String timezone;
         timezone = DateTimeZone.getDefault().toString();
-        timezone = timezone.substring(0, timezone.indexOf("/") + 1);
-        timezone = timezone.concat("Belgrade");
-        DateTime dateTime = DateTime.now(DateTimeZone.forID(timezone));
-        DateTime startTime = dateTime.plusHours(5);
-        DateTime dateTimeUTC = DateTime.now(DateTimeZone.forID("UTC"));
-        dateTimeUTC = dateTimeUTC.plusHours(5);
-        start.setTimezone(timezone);
-        start.setLocal(startTime.toString());
-        start.setUtc(dateTimeUTC.toString());
+        System.out.println("Test timezone is "+timezone);
 
+       DateTimeFormatter formatter=ISODateTimeFormat.dateTimeNoMillis();
+       DateTime dateTimeUTC = DateTime.now(DateTimeZone.forID("UTC"));
+        System.out.println("UTC date time now is "+dateTimeUTC);
+        //setting start time in UTC format
+        String startUTC=formatter.print(dateTimeUTC.plusHours(5));
+        System.out.println("Start time UTC is "+startUTC );
+        start.setTimezone(timezone);
+        start.setUtc(startUTC);
+        //setting end time in UTC format
+        DateTime endTime = dateTimeUTC.plusHours(7);
+        String endUTC=formatter.print(endTime);
         end.setTimezone(timezone);
-        DateTime endTime = startTime.plusHours(2);
-        end.setLocal(endTime.toString());
-        end.setUtc(dateTimeUTC.plusHours(2).toString());
+        end.setUtc(endUTC);
+        System.out.println("End time UTC is "+endUTC);
+
+        //Creating test event to return
         Event event = new Event("EUR", end, name, start);
         event.setListed(true);
         event.setCapacity((long) 3000);
@@ -113,6 +122,9 @@ public class RetrofitEventsRepositoryTest {
         event.setShareable(true);
 
 
+        System.out.println("Event that is cooking for post "+event);
         return event;
     }
+
+
 }

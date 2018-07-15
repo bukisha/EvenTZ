@@ -2,9 +2,10 @@ package com.example.bookee.eventz.create;
 
 import android.util.Log;
 
-import com.example.bookee.eventz.data.pojos.*;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
+import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.pojos.EventWrapper;
 
 class Model implements MvpContract.Model {
     private static final String TAG = "Model";
@@ -15,7 +16,7 @@ class Model implements MvpContract.Model {
     }
 
     @Override
-    public void postEvent(Event postEvent, final MvpContract.PostEventCallback callback) {
+    public void postEvent(EventWrapper postEvent, final MvpContract.PostEventCallback callback) {
         Log.d(TAG, "postEvent: "+postEvent.toString());
         PostEventCallback postEventCallback=new PostEventCallback() {
             @Override

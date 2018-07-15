@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class EventWrapper implements Serializable {
 
-    @SerializedName("Event")
+    @SerializedName("event")
     @Expose
     private Event event;
 
@@ -17,5 +17,12 @@ public class EventWrapper implements Serializable {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    @Override
+    public String toString() {
+        return "EventWrapper{" +
+                "event=" + event +
+                '}';
     }
 }

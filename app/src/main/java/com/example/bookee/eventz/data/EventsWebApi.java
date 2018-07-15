@@ -1,6 +1,7 @@
 package com.example.bookee.eventz.data;
 
-import com.example.bookee.eventz.data.pojos.*;
+import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.PaginatedEvents;
 
 import retrofit2.Call;
@@ -19,5 +20,5 @@ public interface EventsWebApi {
     Call<Event> fetchEventForId(@Path("eventId") String eventId, @Query("token") String token);
 
     @POST("events")
-    Call<Event> createNewEvent(@Query("token") String token, @Body Event postEvent);
+    Call<Event> createNewEvent(@Body EventWrapper postEvent);
 }

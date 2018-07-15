@@ -19,3 +19,44 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+##--- Begin:GSON ----
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *; }
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.example.bookee.eventz.data.pojos.** { *; }
+
+
+# keep enum so gson can deserialize it
+-keepclassmembers enum * { *; }
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class net.mreunionlabs.wob.model.request.** { *; }
+-keep class net.mreunionlabs.wob.model.response.** { *; }
+-keep class net.mreunionlabs.wob.model.gson.** { *; }
+-keep class com.example.bookee.eventz.data.pojos.** { *; }
+##--- End:GSON ----
+
+## -------------Begin: Retrofit2 ---
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+-keepattributes *Annotation*
+
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+-keepclassmembernames interface * {
+        @retrofit.http.* <methods>;
+}
+
+## -------------End: Retrofit2 ---

@@ -19,13 +19,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
-import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.EventsWebApi;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
+import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.details.DetailsActivity;
 
 import retrofit2.Retrofit;
@@ -55,7 +56,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         buttonCreateEvent = toolbar.findViewById(R.id.button_ok);
         eventName=findViewById(R.id.create_event_name);
         eventDescription=findViewById(R.id.create_event_info);
-        setButtonListeners();
+        setListeners();
         setSpinnerAdapter();
 
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
@@ -72,7 +73,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         spinnerChoseCategory.setAdapter(adapter);
     }
 
-    private void setButtonListeners() {
+    private void setListeners() {
         buttonSetDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,10 +95,20 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         buttonCreateEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               //samo presenteru javis da treba da se postuje Event
-                presenter.postEvent(eventName.getText().toString(),"Pancevo",eventDescription.getText().toString(),"http://memoryboundscrapbookstore.com/wordpress/wp-content/uploads/2016/02/lets-party.png");
+                presenter.setName(eventName.getText().toString());
+                presenter.setDescription(eventDescription.getText().toString());
+                presenter.setCurrency("EUR");
+                presenter.setCategory("104");
+                presenter.postEvent();
             }
         });
+//        spinnerChoseCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                //TODO check this it might be error prone
+//                presenter.setCategory(adapterView.getItemAtPosition(i).toString());
+//            }
+//        });
     }
 
     @Override
@@ -115,6 +126,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
 
     @Override
     public void showCreatedEvent(Event event) {
+        DetailsActivity.launch(event.getId(),this);
     }
 
     @Override
@@ -138,7 +150,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         TimePickerDialog.OnTimeSetListener listener=new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int min) {
-                //presenter.setTime(hour,min);
+                presenter.setTime(hour,min);
             }
         };
         timePicker.setListener(listener);
@@ -147,7 +159,13 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
 
     @Override
     public void displayNewEvent(Event e) {
-        DetailsActivity.launch(e.getId(),this);
+        Toast.makeText(this, "id is "+e.getId(), Toast.LENGTH_LONG).show();
+        //DetailsActivity.launch(e.getId(),this);
+    }
+
+    @Override
+    public void displayError() {
+        //TODO display some kind of error message
     }
 
     public static void launch(Context context) {

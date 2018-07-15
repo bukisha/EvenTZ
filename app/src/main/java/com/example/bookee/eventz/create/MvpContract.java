@@ -1,14 +1,15 @@
 package com.example.bookee.eventz.create;
 
 import com.example.bookee.eventz.data.pojos.Event;
+import com.example.bookee.eventz.data.pojos.EventWrapper;
 
 interface MvpContract {
     interface Model {
-        void postEvent(Event postEvent, PostEventCallback callback);
+        void postEvent(EventWrapper postEvent, PostEventCallback callback);
     }
 
     interface Presenter {
-        void postEvent(String eventName, String cityName,String description, String logoUrl);
+        void postEvent();
         void attachView(View view);
         void detachView();
         void startDateChooser();
@@ -16,6 +17,10 @@ interface MvpContract {
         void startImageChooser();
         void setTime(int hour, int min);
         void setDate(int year, int month, int day);
+        void setName(String name);
+        void setDescription(String description);
+        void setCategory(String category);
+        void setCurrency(String currency);
 
     }
 
@@ -24,6 +29,7 @@ interface MvpContract {
         void showDateChooser();
         void showTimeChooser();
         void displayNewEvent(Event e);
+        void displayError();
     }
     interface PostEventCallback {
         void onSuccess(Event e);

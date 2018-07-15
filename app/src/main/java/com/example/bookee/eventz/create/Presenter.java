@@ -5,118 +5,112 @@ import android.util.Log;
 import com.example.bookee.eventz.data.pojos.Description;
 import com.example.bookee.eventz.data.pojos.End;
 import com.example.bookee.eventz.data.pojos.Event;
-import com.example.bookee.eventz.data.pojos.Logo;
+import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.Name;
 import com.example.bookee.eventz.data.pojos.Start;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 public class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
-    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private MvpContract.Model model;
     private MvpContract.View view;
-    private Date dateSelected;
-    private String timeSelected;
-    private Date endDate;
+    private EventWrapper currentWrapper;
+    private Event currentEvent;
+    private int selectedYear;
+    private int selectedMonth;
+    private int selectedDay;
+    private int selectedHourOfDay;
+    private int selectedMinuteOfHour;
 
     public Presenter(MvpContract.Model model, MvpContract.View view) {
         this.model = model;
         this.view = view;
+        currentWrapper=new EventWrapper();
+        currentEvent=new Event();
     }
 
     @Override
-    public void postEvent(String eventName, String cityName, String description, String logoUrl) {
-        Log.d(TAG, "postEvent: " + eventName + " creating " + dateSelected.toString());
-        Event event = createEvent(eventName, cityName, dateSelected, description, logoUrl);
+    public void setName(String name) {
+        Name currentName=new Name();
+        currentName.setHtml(name);
+        currentEvent.setName(currentName);
+    }
 
+    @Override
+    public void setDescription(String description) {
+        Description currentDescription=new Description();
+        currentDescription.setHtml(description);
+        currentEvent.setDescription(currentDescription);
+    }
 
-        MvpContract.PostEventCallback callback = new MvpContract.PostEventCallback() {
+    @Override
+    public void setCategory(String category) {
+        currentEvent.setCategoryId(category);
+    }
+
+    @Override
+    public void setCurrency(String currency) {
+        currentEvent.setCurrency(currency);
+    }
+
+    @Override
+    public void postEvent() {
+
+        //Calendar c = Calendar.getInstance();
+        //c.set(selectedYear, selectedMonth, selectedDay, selectedHourOfDay, selectedMinuteOfHour);
+        DateTime date=new DateTime()
+                .withYear(selectedYear)
+                .withMonthOfYear(selectedMonth)
+                .withDayOfMonth(selectedDay)
+                .withHourOfDay(selectedHourOfDay)
+                .withMinuteOfHour(selectedMinuteOfHour);
+        DateTimeZone myTimezone;
+        myTimezone=DateTimeZone.getDefault();
+        String currentTimezone=myTimezone.getID();
+        String timeZone=TimeZone.getDefault().getDisplayName();
+        Log.d(TAG, "postEvent: JAva timezone is "+timeZone);
+
+        End end=new End();
+        Log.d(TAG, "postEvent: timezone is "+myTimezone.getID());
+        end.setTimezone(currentTimezone);
+        end.setUtc(prepareISODateTime(date.plusHours(4)));
+        currentEvent.setEnd(end);
+        Start start=new Start();
+        start.setTimezone(currentTimezone);
+        start.setUtc(prepareISODateTime(date));
+        currentEvent.setStart(start);
+
+        currentEvent.setOnlineEvent(true);
+        currentEvent.setListed(true);
+        currentEvent.setCapacity((long) 100);
+        Log.d(TAG, "setDate: selected date and time:  "+date);
+
+            currentWrapper.setEvent(currentEvent);
+        MvpContract.PostEventCallback callback=new MvpContract.PostEventCallback() {
             @Override
             public void onSuccess(Event e) {
-                if (notViewExists()) return;
+                if(notViewExists()) return;
                 view.displayNewEvent(e);
             }
 
             @Override
             public void onFailure(Throwable t) {
-                //TODO
+                if(notViewExists()) return;
+                view.displayError();
             }
         };
-        model.postEvent(event, callback);
+        model.postEvent(currentWrapper,callback);
     }
 
-    private Event createEvent(String eventName, String cityName, Date date, String eventDescription, String logoUrl) {
-
-        Name name = new Name();
-        Logo logo = new Logo();
-        Start start = new Start();
-        End end = new End();
-        Description description = new Description();
-        description.setHtml(convertDescriptionToHTML(eventDescription));
-        name.setHtml(eventName);
-        logo.setUrl(logoUrl);
-
-
-        start.setTimezone(prepareTimezone("Belgrade"));
-        start.setLocal(prepareLocalDate(date));
-        start.setUtc(prepareLocalDateUTC(date));
-
-        end.setTimezone(prepareTimezone("Belgrade"));
-        end.setLocal(prepareLocalDate(endDate));
-        end.setUtc(prepareLocalDateUTC(endDate));
-        Event event = new Event("EUR", end, name, start);
-
-        Log.d(TAG, "createEvent: " + event.toString());
-        return event;
-        }
-
-    private String prepareTimezone(String cityName) {
-        Log.d(TAG, "prepareTimezone: start");
-        DateTimeZone timeZone = DateTimeZone.getDefault();//DateTimeZone.forID("Europe/" + cityName);
-        String returnTimezone = timeZone.toString();
-        Log.d(TAG, "prepareTimezone: arangedTimeZone " + returnTimezone);
-        Log.d(TAG, "prepareTimezone: arangedTimeZone before return " + returnTimezone);
-        return returnTimezone;
-    }
-
-    private String prepareLocalDate(Date date) {
-        Log.d(TAG, "prepareLocalDate: ");
-        TimeZone localTimeZone = TimeZone.getTimeZone("Europe/Belgrade");
-        Log.d(TAG, "prepareLocalDate: default local timezone is " + localTimeZone);
-
-        DateTime localTimeUTC = new DateTime(date);
-        Log.d(TAG, "prepareLocalDate: local time in UTC is " + localTimeUTC);
-
-        int currentTimeZoneOffset = localTimeZone.getOffset(new Date().getTime()) / 1000 / 60;
-        DateTime localTimeGMT = localTimeUTC.plusMinutes(currentTimeZoneOffset);
-        Log.d(TAG, "prepareLocalDate: local time in GMT is " + localTimeGMT);
-        Log.d(TAG, "prepareLocalDate: =============================================================================================");
-
-        String returnDate = localTimeGMT.toString();
-        returnDate = returnDate.substring(0, returnDate.indexOf("Z") - 1);
-        return returnDate;
-    }
-
-    private String prepareLocalDateUTC(Date date) {
-        Log.d(TAG, "prepareLocalDate: ");
-        TimeZone localTimeZone = TimeZone.getTimeZone("Europe/Belgrade");
-        Log.d(TAG, "prepareLocalDate: default local timezone is " + localTimeZone);
-
-        DateTime localTimeUTC = new DateTime(date);
-        Log.d(TAG, "prepareLocalDate: local time in UTC is " + localTimeUTC);
-
-        return localTimeUTC.toString();
-    }
-
-    private String convertDescriptionToHTML(String eventDescription) {
-        String returnDescription = eventDescription;
-        return returnDescription;
+    private String prepareISODateTime(DateTime date) {
+        DateTimeFormatter format=ISODateTimeFormat.dateTimeNoMillis();
+        return format.print(date);
     }
 
     @Override
@@ -148,21 +142,16 @@ public class Presenter implements MvpContract.Presenter {
 
     @Override
     public void setTime(int hour, int min) {
-        //TODO set start Time for Event
+        selectedHourOfDay=hour;
+        selectedMinuteOfHour=min;
     }
 
     @Override
     public void setDate(int year, int month, int day) {
-        Calendar c = Calendar.getInstance();
-        Log.d(TAG, "setDate: currentDate is " + c.getTime().toString());
-        c.set(year, month, day, 0, 0);
-        dateSelected = c.getTime();
-        //================creating end date for development purposes only========================
-        c.add(Calendar.HOUR_OF_DAY, 3);
-        endDate = c.getTime();
-        Log.d(TAG, "setDate: " + dateSelected.toString());
+       selectedYear=year;
+       selectedMonth=month+1;
+       selectedDay=day;
     }
-
     private boolean notViewExists() {
         return this.view == null;
     }
