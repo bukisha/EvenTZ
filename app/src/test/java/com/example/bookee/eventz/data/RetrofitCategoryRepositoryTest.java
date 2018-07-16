@@ -2,7 +2,7 @@ package com.example.bookee.eventz.data;
 
 import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
 import com.example.bookee.eventz.data.pojos.Category;
-import com.example.bookee.eventz.data.pojos.PaginatedCategoryList;
+import com.example.bookee.eventz.data.pojos.PaginatedCategories;
 import com.example.bookee.eventz.splash.CategoryWebApi;
 
 import org.junit.Before;
@@ -31,13 +31,13 @@ public class RetrofitCategoryRepositoryTest {
     @Mock
     private CategoryWebApi mockApi;
     @Mock
-    private Call<PaginatedCategoryList> callPaginatedCategoryListMock;
+    private Call<PaginatedCategories> callPaginatedCategoryListMock;
     @Mock
     private FetchCategoriesCallback fetchCategoriesCallbackMock;
     @Mock
-    private PaginatedCategoryList paginatedCategoryListMock;
+    private PaginatedCategories paginatedCategoriesMock;
     @Spy
-    private Callback<PaginatedCategoryList> enqueueCallbackSpy;
+    private Callback<PaginatedCategories> enqueueCallbackSpy;
 
     @Before
     public void setUp() {
@@ -62,7 +62,7 @@ public class RetrofitCategoryRepositoryTest {
     @Test
     public void shouldCallOnSuccessOnModelCallback() {
         //Given
-        final Response<PaginatedCategoryList> retrofitResponse = Response.success(paginatedCategoryListMock);
+        final Response<PaginatedCategories> retrofitResponse = Response.success(paginatedCategoriesMock);
         //what SHOULD mockedApi return after fetchCategories is called on it
         when(mockApi.fetchCategories(anyString())).thenReturn(callPaginatedCategoryListMock);
         //what SHOULD happen when call is enqueued on new thread to do some work
@@ -74,7 +74,7 @@ public class RetrofitCategoryRepositoryTest {
                 return null;
             }
             //used argumentMatcher's functionality to make this part of tests type safe
-        }).when(callPaginatedCategoryListMock).enqueue((ArgumentMatchers.<Callback<PaginatedCategoryList>>any()));
+        }).when(callPaginatedCategoryListMock).enqueue((ArgumentMatchers.<Callback<PaginatedCategories>>any()));
         //what SHOULD happen when the work from separate thread is done and onResponse is called on callback
         doAnswer(new Answer() {
             @Override
@@ -86,7 +86,7 @@ public class RetrofitCategoryRepositoryTest {
         //When
         categoryRepository.fetchCategories(fetchCategoriesCallbackMock);
         //Then
-        verify(callPaginatedCategoryListMock).enqueue(ArgumentMatchers.<Callback<PaginatedCategoryList>>any());
+        verify(callPaginatedCategoryListMock).enqueue(ArgumentMatchers.<Callback<PaginatedCategories>>any());
         verify(fetchCategoriesCallbackMock).onSuccess(ArgumentMatchers.<ArrayList<Category>>any());
     }
 

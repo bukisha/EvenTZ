@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class PaginatedCategoryList {
+public class PaginatedCategories {
 
     @SerializedName("categories")
     private ArrayList<Category> categories;

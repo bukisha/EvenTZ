@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
-import com.example.bookee.eventz.data.pojos.PaginatedCategoryList;
+import com.example.bookee.eventz.data.pojos.PaginatedCategories;
 import com.example.bookee.eventz.splash.CategoryWebApi;
 
 import retrofit2.Call;
@@ -24,16 +24,16 @@ public class RetrofitCategoryRepository {
         Log.d(TAG, "fetchCategories: fetch starting");
         fetchCategoriesToModelCallback = callback;
 
-        Call<PaginatedCategoryList> call = api.fetchCategories(RetrofitFactory.getAuthTokenAnonymous());
-        Callback<PaginatedCategoryList> enqueueCallback = new Callback<PaginatedCategoryList>() {
+        Call<PaginatedCategories> call = api.fetchCategories(RetrofitFactory.getAuthTokenAnonymous());
+        Callback<PaginatedCategories> enqueueCallback = new Callback<PaginatedCategories>() {
             @Override
-            public void onResponse(@NonNull Call<PaginatedCategoryList> call, Response<PaginatedCategoryList> response) {
+            public void onResponse(@NonNull Call<PaginatedCategories> call, Response<PaginatedCategories> response) {
                 //noinspection ConstantConditions
                 fetchCategoriesToModelCallback.onSuccess(response.body().getCategories());
             }
 
             @Override
-            public void onFailure(@NonNull Call<PaginatedCategoryList> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PaginatedCategories> call, @NonNull Throwable t) {
                 fetchCategoriesToModelCallback.onFailure(t);
             }
         };
