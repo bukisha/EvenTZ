@@ -3,6 +3,7 @@ package com.example.bookee.eventz.home;
 import com.example.bookee.eventz.data.pojos.Category;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 interface MvpContract  {
 
@@ -10,6 +11,7 @@ interface MvpContract  {
        void fetchCategoryNames(FetchCategoriesCallback callback);
        String getClickedCategoryId(String categoryName);
        void populateHash(ArrayList<Category> list);
+       HashMap<String,String> getHash();
     }
     interface Presenter {
         void populateNameList(ArrayList<Category> serializableExtra);

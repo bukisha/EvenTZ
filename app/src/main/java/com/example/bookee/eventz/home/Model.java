@@ -55,7 +55,7 @@ class Model implements MvpContract.Model {
             nameToCategoryHash.put(c.getName(), c.getId());
         }
     }
-
+    @Override
     public HashMap<String, String> getHash() {
         return nameToCategoryHash;
     }

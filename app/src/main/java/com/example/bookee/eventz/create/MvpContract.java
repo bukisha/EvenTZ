@@ -21,7 +21,7 @@ interface MvpContract {
         void setDescription(String description);
         void setCategory(String category);
         void setCurrency(String currency);
-
+        String getCategoryId(String itemAtPosition);
     }
 
     interface View {

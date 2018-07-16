@@ -49,10 +49,8 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
                 presenter.floatingActionButtonClick();
             }
         });
-        //====temp solution until posting Event issue is resolved====
-        //======hiding floating action button========================
         floatingActionButton.setVisibility(View.VISIBLE);
-        //===========================================================
+
         recyclerView = findViewById(R.id.category_recycler_list);
         setupRecyclerView(recyclerView);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -137,7 +135,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     @Override
     public void launchCreateEventActivity() {
-        CreateActivity.launch(this);
+        CreateActivity.launch(this,initialCategoryList);
     }
 
     @Override

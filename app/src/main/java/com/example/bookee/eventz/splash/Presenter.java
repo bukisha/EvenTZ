@@ -21,7 +21,7 @@ public class Presenter implements MvpContract.Presenter {
             @Override
             public void onSuccess(ArrayList<Category> list) {
 
-                EventApp.setGlobalCategoryIds(getCategoryIdNames(list));
+                EventApp.setGlobalCategoryIds(getCategoryIdShortNames(list));
                 view.passInitialCategories(list);
             }
 
@@ -35,7 +35,7 @@ public class Presenter implements MvpContract.Presenter {
         model.fetchInitialCategories(presenterCallback);
     }
 
-    private ArrayList<String> getCategoryIdNames(ArrayList<Category> list) {
+    private ArrayList<String> getCategoryIdShortNames(ArrayList<Category> list) {
         ArrayList<String> CategoryIds=new ArrayList<>();
         for(Category c : list) {
             CategoryIds.add(c.getShortName());
