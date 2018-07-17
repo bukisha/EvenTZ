@@ -35,7 +35,6 @@ import java.util.ArrayList;
 
 import retrofit2.Retrofit;
 
-
 public class CreateActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "CreateActivity";
     private static final String EXTRA_CATEGORIES = "nameToIdHash";
@@ -128,7 +127,6 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
-
     }
 
     @Override
@@ -181,6 +179,19 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     @Override
     public void displayError() {
         //TODO display some kind of error message
+    }
+
+    @Override
+    public void chooseImage() {
+        Log.d(TAG, "chooseImage: CHOOOOOOOOOOOOOOSEEEEE IMAGEEEEEEEEEEEEEEEEEEE");
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setType("image/*");
+        Intent chooser = Intent.createChooser(intent, "Choose");
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(chooser);
+        }
     }
 
     public static void launch(Context context, ArrayList<Category> categories) {

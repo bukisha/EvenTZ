@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -29,13 +28,11 @@ import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.data.SQLiteDatabaseRepository;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
-
 import retrofit2.Retrofit;
 
 public class DetailsActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "DetailsActivity";
     public static final String EXTRA_EVENT_ID = "eventId";
-    public static final String CHECKED_EVENT_EXTRA = "checkedExtraEvent";
     private Presenter presenter;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private NestedScrollView nestedScrollView;
@@ -45,8 +42,6 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     private ImageView eventLogo;
     private ProgressBar progressBar;
     private ImageButton buttonFollow;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

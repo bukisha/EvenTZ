@@ -1,7 +1,7 @@
 package com.example.bookee.eventz.create;
 
+import android.content.Intent;
 import android.util.Log;
-
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Description;
 import com.example.bookee.eventz.data.pojos.End;
@@ -9,15 +9,12 @@ import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.Name;
 import com.example.bookee.eventz.data.pojos.Start;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TimeZone;
 
 public class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
@@ -31,14 +28,14 @@ public class Presenter implements MvpContract.Presenter {
     private int selectedHourOfDay;
     private int selectedMinuteOfHour;
 
-    private HashMap<String, String> nameToIdHash;
+    private HashMap<String, String> shortNameToIdHash;
 
     public Presenter(MvpContract.Model model, MvpContract.View view) {
         this.model = model;
         this.view = view;
         currentWrapper = new EventWrapper();
         currentEvent = new Event();
-        nameToIdHash = new HashMap<>(20);
+        shortNameToIdHash = new HashMap<>(20);
     }
 
     @Override
@@ -65,10 +62,9 @@ public class Presenter implements MvpContract.Presenter {
         currentEvent.setCurrency(currency);
     }
 
-    @Override
-    public String getCategoryId(String categoryShortName) {
-        Log.d(TAG, "getCategoryId: u selected category with name " + categoryShortName + " and id " + nameToIdHash.get(categoryShortName));
-        return nameToIdHash.get(categoryShortName);
+    private String getCategoryId(String categoryShortName) {
+        Log.d(TAG, "getCategoryId: u selected category with name " + categoryShortName + " and id " + shortNameToIdHash.get(categoryShortName));
+        return shortNameToIdHash.get(categoryShortName);
     }
 
     @Override
@@ -106,27 +102,19 @@ public class Presenter implements MvpContract.Presenter {
                 .withDayOfMonth(selectedDay)
                 .withHourOfDay(selectedHourOfDay)
                 .withMinuteOfHour(selectedMinuteOfHour);
-        DateTimeZone myTimezone;
-        myTimezone = DateTimeZone.getDefault();
-        String currentTimezone = myTimezone.getID();
-        String timeZone = TimeZone.getDefault().getDisplayName();
-        Log.d(TAG, "postEvent: JAva timezone is " + timeZone);
+
+        String currentTimezone = DateTimeZone.getDefault().toString();
+        date = date.toDateTime(DateTimeZone.UTC);
+        DateTimeFormatter format = ISODateTimeFormat.dateTimeNoMillis();
 
         End end = new End();
-        Log.d(TAG, "postEvent: timezone is " + myTimezone.getID());
         end.setTimezone(currentTimezone);
-        end.setUtc(prepareISODateTime(date.plusHours(4)));
+        end.setUtc(format.print(date.plusHours(4).toDateTimeISO()));
         currentEvent.setEnd(end);
         Start start = new Start();
         start.setTimezone(currentTimezone);
-        start.setUtc(prepareISODateTime(date));
+        start.setUtc(date.toDateTimeISO().toString(format));
         currentEvent.setStart(start);
-        Log.d(TAG, "setDate: selected date and time:  " + date);
-    }
-
-    private String prepareISODateTime(DateTime date) {
-        DateTimeFormatter format = ISODateTimeFormat.dateTimeNoMillis();
-        return format.print(date);
     }
 
     @Override
@@ -153,7 +141,8 @@ public class Presenter implements MvpContract.Presenter {
 
     @Override
     public void startImageChooser() {
-        //TODO pick a logo from phone file system
+        if (notViewExists()) return;
+        view.chooseImage();
     }
 
     @Override
@@ -175,7 +164,7 @@ public class Presenter implements MvpContract.Presenter {
 
     public void setHashMapWithShortNames(ArrayList<Category> categories) {
         for (Category c : categories) {
-            nameToIdHash.put(c.getShortName(), c.getId());
+            shortNameToIdHash.put(c.getShortName(), c.getId());
         }
     }
 }

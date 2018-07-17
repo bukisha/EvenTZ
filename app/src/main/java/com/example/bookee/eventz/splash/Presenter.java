@@ -28,7 +28,7 @@ public class Presenter implements MvpContract.Presenter {
             @Override
             public void onFailure(Throwable t) {
                 {
-                    view.showErrorFragment();
+                    view.buildAndShowErrorFragment();
                 }
             }
         };

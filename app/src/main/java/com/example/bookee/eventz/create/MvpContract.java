@@ -21,7 +21,7 @@ interface MvpContract {
         void setDescription(String description);
         void setCategory(String category);
         void setCurrency(String currency);
-        String getCategoryId(String itemAtPosition);
+        //String getCategoryId(String itemAtPosition);
     }
 
     interface View {
@@ -30,6 +30,8 @@ interface MvpContract {
         void showTimeChooser();
         void displayNewEvent(Event e);
         void displayError();
+
+        void chooseImage();
     }
     interface PostEventCallback {
         void onSuccess(Event e);

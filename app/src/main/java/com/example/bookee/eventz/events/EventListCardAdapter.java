@@ -19,7 +19,6 @@ import com.example.bookee.eventz.data.pojos.Event;
 
 import java.util.ArrayList;
 
-
 class EventListCardAdapter extends RecyclerView.Adapter<EventListCardAdapter.EventViewHolder> {
     private ArrayList<Event> events;
     private Context context;

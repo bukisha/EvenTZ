@@ -60,3 +60,8 @@
 }
 
 ## -------------End: Retrofit2 ---
+
+##--------------Joda-Time-------------
+-keep class org.joda.** { *; }
+-keep class org.joda.time.** { *; }
+##-----------------------------------

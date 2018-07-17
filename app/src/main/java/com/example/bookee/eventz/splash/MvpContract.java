@@ -11,9 +11,10 @@ interface MvpContract {
     }
     interface Presenter {
         void fetchInitialCategories();
+
     }
     interface View {
-        void showErrorFragment();
+        void buildAndShowErrorFragment();
         void passInitialCategories(ArrayList<Category> list);
     }
     interface FetchCategoriesCallback {
