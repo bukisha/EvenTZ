@@ -38,9 +38,8 @@ public class ModelTest {
             private boolean operationSuccess;
 
             @Override
-            public void onSuccess(Event e) {
+            public void onSuccess(String eventId) {
                 System.out.println("SUCCESS-FULL CALLBACK!!!!");
-                createdEvent = e;
                 operationSuccess = true;
             }
 

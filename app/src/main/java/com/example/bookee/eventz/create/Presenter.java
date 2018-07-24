@@ -1,10 +1,7 @@
 package com.example.bookee.eventz.create;
 
 import android.util.Log;
-
-import com.example.bookee.eventz.data.callbacks.CreateTicketCallback;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
-import com.example.bookee.eventz.data.callbacks.PublishEventCallback;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Description;
 import com.example.bookee.eventz.data.pojos.End;
@@ -12,14 +9,17 @@ import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.Name;
 import com.example.bookee.eventz.data.pojos.Start;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 public class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
@@ -107,8 +107,9 @@ public class Presenter implements MvpContract.Presenter {
                 .withDayOfMonth(selectedDay)
                 .withHourOfDay(selectedHourOfDay)
                 .withMinuteOfHour(selectedMinuteOfHour);
-
-        String currentTimezone = DateTimeZone.getDefault().toString();
+        
+        String currentTimezone=DateTime.now().getZone().toString();
+        Log.d(TAG, "prepareEventDateAndTime: currentDateTimeZone in UTC is "+currentTimezone);
         date = date.toDateTime(DateTimeZone.UTC);
         DateTimeFormatter format = ISODateTimeFormat.dateTimeNoMillis();
 
