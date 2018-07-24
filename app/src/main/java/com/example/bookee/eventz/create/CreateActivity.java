@@ -1,12 +1,20 @@
 package com.example.bookee.eventz.create;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +39,7 @@ import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.details.DetailsActivity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Retrofit;
@@ -39,6 +48,10 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     private static final String TAG = "CreateActivity";
     private static final String EXTRA_CATEGORIES = "nameToIdHash";
     private static final String CURRENCY_EUR = "EUR";
+    private static final CharSequence CHOOSER_TITTLE = " Choose App";
+    private static final String TOAST_NO_IMAGE_APP = "No app for image viewing";
+    private static final int PICK_IMAGE_REQUEST_CODE = 13;
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
     private Presenter presenter;
     private AppCompatButton buttonSetDate;
     private AppCompatButton buttonSetTime;
@@ -48,8 +61,10 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     private EditText eventName;
     private TextInputEditText eventDescription;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         buttonSetDate = findViewById(R.id.set_date_button);
@@ -60,23 +75,22 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         buttonCreateEvent = toolbar.findViewById(R.id.button_ok);
         eventName = findViewById(R.id.create_event_name);
         eventDescription = findViewById(R.id.create_event_info);
-        setListeners();
-        setSpinnerAdapter();
 
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
         RetrofitEventsRepository repository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
         MvpContract.Model model = new Model(repository);
 
-        if (savedInstanceState == null) {
-            presenter = new Presenter(model, this);
-            ArrayList<Category> categories = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORIES);
-            if (categories != null) {
-                presenter.setHashMapWithShortNames(categories);
-            }
+        presenter = new Presenter(model, this);
+        ArrayList<Category> categories = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORIES);
+        if (categories != null) {
+            presenter.setHashMapWithShortNames(categories);
         }
+        setListeners();
+        setSpinnerAdapter();
     }
 
     private void setSpinnerAdapter() {
+        Log.d(TAG, "setSpinnerAdapter: ");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, EventApp.getGlobalCategoryIds());
         spinnerChoseCategory.setAdapter(adapter);
     }
@@ -97,7 +111,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         buttonSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.startImageChooser();
+                requestPermision();
             }
         });
         buttonCreateEvent.setOnClickListener(new View.OnClickListener() {
@@ -125,12 +139,14 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
 
     @Override
     protected void onResume() {
+        Log.d(TAG, "onResume: ");
         super.onResume();
         presenter.attachView(this);
     }
 
     @Override
     protected void onPause() {
+        Log.d(TAG, "onPause: ");
         super.onPause();
         presenter.detachView();
     }
@@ -169,11 +185,12 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     @Override
-    public void displayNewEvent(Event e) {
+    public void displayNewEvent(String eventId) {
+        Log.d(TAG, "displayNewEvent: " + eventId);
         //15.07.2018.
         //this is implemented just for testing,atm event is created as draft and is not live on server,so we can not acquire event object via its id
-        Toast.makeText(this, "id is " + e.getId(), Toast.LENGTH_LONG).show();
-        //DetailsActivity.launch(e.getId(),this);
+        //Toast.makeText(this, "id is " + eventId, Toast.LENGTH_LONG).show();
+        DetailsActivity.launch(eventId, this);
     }
 
     @Override
@@ -182,21 +199,84 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     @Override
-    public void chooseImage() {
-        Log.d(TAG, "chooseImage: CHOOOOOOOOOOOOOOSEEEEE IMAGEEEEEEEEEEEEEEEEEEE");
+    public void pickImage() {
+        Log.d(TAG, "pickImage: ");
         Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
+        intent.setAction(Intent.ACTION_PICK);
         intent.setType("image/*");
-        Intent chooser = Intent.createChooser(intent, "Choose");
-
+        Intent pickerIntent = Intent.createChooser(intent, CHOOSER_TITTLE);
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(chooser);
+            startActivityForResult(pickerIntent, PICK_IMAGE_REQUEST_CODE);
+        } else {
+            Toast.makeText(this, TOAST_NO_IMAGE_APP, Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri imgUri = data.getData();
+                try {
+                    displayNewImage(imgUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //Toast.makeText(this, uri.getPath(), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Error while choosing img", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void displayNewImage(Uri imgUri) throws IOException {
+        Bitmap imgBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
+        buttonSelectImage.setImageBitmap(imgBitmap);
+    }
+
 
     public static void launch(Context context, ArrayList<Category> categories) {
         Intent intent = new Intent(context, CreateActivity.class);
         intent.putExtra(EXTRA_CATEGORIES, categories);
         context.startActivity(intent);
+    }
+
+    //quick and dirty runtime permission request and procession
+    public void requestPermision() {
+        Log.d(TAG, "requestPermision: ");
+        //Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        } else {
+            // Permission has already been granted
+            presenter.startImageChooser();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: ");
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    presenter.startImageChooser();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    finish();
+                }
+
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 }

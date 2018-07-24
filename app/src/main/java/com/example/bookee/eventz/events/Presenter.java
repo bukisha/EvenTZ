@@ -2,6 +2,7 @@ package com.example.bookee.eventz.events;
 
 import android.util.Log;
 
+import com.example.bookee.eventz.data.callbacks.FetchEventsForQueryCallback;
 import com.example.bookee.eventz.data.pojos.Event;
 
 import java.util.ArrayList;
@@ -29,14 +30,14 @@ class Presenter implements MvpContract.Presenter {
             @Override
             public void onFailure(Throwable t) {
                 if (notViewExists()) return;
-                view.displayError();
+                view.displayError("error happened");
             }
         };
         model.fetchEventsForCategory(categoryName, modelCallback);
     }
 
     private boolean notViewExists() {
-       return this.view==null;
+        return this.view == null;
     }
 
     @Override
@@ -56,6 +57,27 @@ class Presenter implements MvpContract.Presenter {
 
     @Override
     public void launchFollowedEvents() {
+        if (notViewExists()) return;
+        view.launchFollowedActivity();
+    }
+
+    @Override
+    public void fetchEventsForQuery(String query) {
+        FetchEventsForQueryCallback callback=new FetchEventsForQueryCallback() {
+            @Override
+            public void onSuccess(ArrayList<Event> list) {
+                if(notViewExists()) return;
+                view.populateEventListActivity(list);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                if(notViewExists()) return;;
+                view.displayError("No event for query");
+            }
+        };
+        model.fetchEventsForQuery(query,callback);
 
     }
 }
+

@@ -1,7 +1,10 @@
 package com.example.bookee.eventz.create;
 
-import android.content.Intent;
 import android.util.Log;
+
+import com.example.bookee.eventz.data.callbacks.CreateTicketCallback;
+import com.example.bookee.eventz.data.callbacks.PostEventCallback;
+import com.example.bookee.eventz.data.callbacks.PublishEventCallback;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Description;
 import com.example.bookee.eventz.data.pojos.End;
@@ -9,10 +12,12 @@ import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.Name;
 import com.example.bookee.eventz.data.pojos.Start;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -73,11 +78,11 @@ public class Presenter implements MvpContract.Presenter {
         setAdditionalEventProperties();
 
         currentWrapper.setEvent(currentEvent);
-        MvpContract.PostEventCallback callback = new MvpContract.PostEventCallback() {
+        PostEventCallback callback = new PostEventCallback() {
             @Override
-            public void onSuccess(Event e) {
-                if (notViewExists()) return;
-                view.displayNewEvent(e);
+            public void onSuccess(String eventId) {
+                Log.d(TAG, "onSuccess: before creating tickets");
+                view.displayNewEvent(eventId);
             }
 
             @Override
@@ -142,7 +147,7 @@ public class Presenter implements MvpContract.Presenter {
     @Override
     public void startImageChooser() {
         if (notViewExists()) return;
-        view.chooseImage();
+        view.pickImage();
     }
 
     @Override

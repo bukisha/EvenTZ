@@ -18,6 +18,8 @@ public class RetrofitFactory {
     private static final String BASE_URL = "https://www.eventbriteapi.com/v3/";
     private static final String API_OAUTH_TOKEN_ANONYMOUS = "53SXZPEGKDPUHUDW26DP";
     private static final String API_OAUTH_TOKEN_PERSONAL = "UHSWAYREEJUQBBIH3H3H";
+    private static final String SLASH ="/" ;
+    private static final String METHOD_TYPE_POST ="POST" ;
 
     public static Retrofit buildRetrofit() {
         OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();
@@ -28,30 +30,28 @@ public class RetrofitFactory {
         Interceptor modifyRequestInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                Request outgoingRequest = chain.request();
-                HttpUrl outgoingUrl = outgoingRequest.url();
-                // System.out.println("My request url" + outgoingRequest.url());
+                Request oldRequest = chain.request();
+                HttpUrl outgoingUrl = oldRequest.url();
+                Request newRequest=oldRequest;
 
-                if (outgoingRequest.method().equals("POST")) {
-                    // System.out.println("++++++++++++++++++++++++++++");
-                    // System.out.println("My request url " + outgoingRequest.url());
+                if (oldRequest.method().equals(METHOD_TYPE_POST)) {
                     String nextUrl = outgoingUrl.toString();
-                    nextUrl = nextUrl.concat("/");
+                    nextUrl = nextUrl.concat(SLASH);
                     HttpUrl nextURL = HttpUrl.parse(nextUrl);
-                    // System.out.println("My request url NEXT " + nextURL);
-                    HttpUrl.Builder urlBuilder = nextURL.newBuilder();
-                    HttpUrl newUrl = urlBuilder
-                            .addQueryParameter("token", getAuthTokenPersonal())
-                            .build();
-                    Request newRequest = outgoingRequest.newBuilder().url(newUrl).build();
-                    //  System.out.println("My modified request url is " + outgoingRequest.url());
-                    //  System.out.println("++++++++++++++++++++++++++++");
+                    if(nextURL!=null) {
+                        HttpUrl.Builder urlBuilder = nextURL.newBuilder();
+
+                        HttpUrl newUrl = urlBuilder
+                                .addQueryParameter("token", getAuthTokenPersonal())
+                                .build();
+                         newRequest = oldRequest.newBuilder().url(newUrl).build();
+                    }
                     return chain.proceed(newRequest);
                 } else {
                     HttpUrl newUrl = outgoingUrl.newBuilder()
-                            .addQueryParameter("token", getAuthTokenPersonal())
+                           // .addQueryParameter("token", getAuthTokenPersonal())
                             .build();
-                    Request newRequest = outgoingRequest.newBuilder().url(newUrl).build();
+                    newRequest = oldRequest.newBuilder().url(newUrl).build();
                     return chain.proceed(newRequest);
                 }
             }
@@ -73,7 +73,7 @@ public class RetrofitFactory {
         return API_OAUTH_TOKEN_ANONYMOUS;
     }
 
-    static String getAuthTokenPersonal() {
+    private static String getAuthTokenPersonal() {
         return API_OAUTH_TOKEN_PERSONAL;
     }
 

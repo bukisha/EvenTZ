@@ -30,6 +30,7 @@ class Presenter implements MvpContract.Presenter {
 
     @Override
     public void itemClicked(String categoryName) {
+        if (notViewExists()) return;
         view.displayListOfEvents(model.getClickedCategoryId(categoryName));
     }
 

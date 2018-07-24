@@ -22,6 +22,7 @@ public class Presenter implements MvpContract.Presenter {
             public void onSuccess(ArrayList<Category> list) {
 
                 EventApp.setGlobalCategoryIds(getCategoryIdShortNames(list));
+                EventApp.setGlobalListOfAllCategories(list);
                 view.passInitialCategories(list);
             }
 

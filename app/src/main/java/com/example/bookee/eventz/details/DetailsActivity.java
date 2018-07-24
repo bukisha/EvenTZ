@@ -107,7 +107,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 

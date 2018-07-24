@@ -1,11 +1,16 @@
 package com.example.bookee.eventz.create;
 
+import com.example.bookee.eventz.data.callbacks.CreateTicketCallback;
+import com.example.bookee.eventz.data.callbacks.PostEventCallback;
+import com.example.bookee.eventz.data.callbacks.PublishEventCallback;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.pojos.EventWrapper;
 
 interface MvpContract {
     interface Model {
         void postEvent(EventWrapper postEvent, PostEventCallback callback);
+        void createTickets(String eventId,CreateTicketCallback callback);
+        void publishEvent(String eventId, PublishEventCallback callback);
     }
 
     interface Presenter {
@@ -28,13 +33,9 @@ interface MvpContract {
         void showCreatedEvent(Event event);
         void showDateChooser();
         void showTimeChooser();
-        void displayNewEvent(Event e);
+        void displayNewEvent(String eventId);
         void displayError();
 
-        void chooseImage();
-    }
-    interface PostEventCallback {
-        void onSuccess(Event e);
-        void onFailure(Throwable t);
+        void pickImage();
     }
 }

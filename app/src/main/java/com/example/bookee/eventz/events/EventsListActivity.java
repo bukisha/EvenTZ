@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -14,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.EventsWebApi;
@@ -23,9 +23,7 @@ import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.details.DetailsActivity;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
 import com.example.bookee.eventz.home.HomeActivity;
-
 import java.util.ArrayList;
-
 import retrofit2.Retrofit;
 
 public class EventsListActivity extends AppCompatActivity implements MvpContract.View {
@@ -35,6 +33,7 @@ public class EventsListActivity extends AppCompatActivity implements MvpContract
     private MvpContract.Presenter presenter;
     private Context context;
     private RecyclerViewOnItemClickListener recyclerViewOnItemClickListener;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +51,8 @@ public class EventsListActivity extends AppCompatActivity implements MvpContract
         RetrofitEventsRepository repository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
         MvpContract.Model model = new Model(repository);
 
-        if (savedInstanceState == null) {
-            presenter = new Presenter(this, model);
-        }
+        presenter = new Presenter(this, model);
+
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -70,7 +68,23 @@ public class EventsListActivity extends AppCompatActivity implements MvpContract
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu_events, menu);
+        MenuItem search=menu.findItem(R.id.action_search);
+        searchView= (SearchView) search.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                presenter.fetchEventsForQuery(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         return true;
     }
 
@@ -78,18 +92,17 @@ public class EventsListActivity extends AppCompatActivity implements MvpContract
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.followed_events:
-                //presenter.launchFollowedEvents();
-                launchFollowedActivity();
+                presenter.launchFollowedEvents();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void launchFollowedActivity() {
-        Intent startFollowed=new Intent(this, FollowedEventsActivity.class);
+    @Override
+    public void launchFollowedActivity() {
+        Intent startFollowed = new Intent(this, FollowedEventsActivity.class);
         startActivity(startFollowed);
     }
-
 
     @Override
     protected void onResume() {
@@ -112,7 +125,7 @@ public class EventsListActivity extends AppCompatActivity implements MvpContract
     }
 
     @Override
-    public void displayError() {
-        Toast.makeText(this, "error happened", Toast.LENGTH_LONG).show();
+    public void displayError(String searchCriteria) {
+        Toast.makeText(this, searchCriteria, Toast.LENGTH_LONG).show();
     }
 }

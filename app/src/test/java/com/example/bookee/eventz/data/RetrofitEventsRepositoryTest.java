@@ -46,7 +46,6 @@ public class RetrofitEventsRepositoryTest {
     public void setUp()  {
         MockitoAnnotations.initMocks(this);
         repository = new RetrofitEventsRepository(RetrofitFactory.buildRetrofit().create(EventsWebApi.class));
-
     }
 
     @Test

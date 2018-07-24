@@ -2,6 +2,7 @@ package com.example.bookee.eventz.events;
 
 import android.util.Log;
 
+import com.example.bookee.eventz.data.callbacks.FetchEventsForQueryCallback;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.callbacks.FetchEventsForCategoryCallback;
@@ -44,6 +45,24 @@ class Model implements MvpContract.Model {
         return   nameToIdHash.get(eventName);
     }
 
+    @Override
+    public void fetchEventsForQuery(String query, final FetchEventsForQueryCallback fetchEventsForQuery) {
+
+         FetchEventsForQueryCallback callback=new FetchEventsForQueryCallback() {
+             @Override
+             public void onSuccess(ArrayList<Event> list) {
+                 populateHash(list);
+                 fetchEventsForQuery.onSuccess(list);
+             }
+
+             @Override
+             public void onFailure(Throwable t) {
+                fetchEventsForQuery.onFailure(t);
+             }
+         };
+        repository.fetchEventsForQuery(query,callback);
+    }
+
     private void populateHash(ArrayList<Event> events) {
         for(Event e : events) {
             String eventName=e.getName().getText();
@@ -51,4 +70,5 @@ class Model implements MvpContract.Model {
             nameToIdHash.put(eventName,eventId);
         }
     }
+
 }

@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v4.app.NotificationBuilderWithBuilderAccessor;
 import android.support.v4.app.NotificationCompat;
 
 import com.example.bookee.eventz.R;
@@ -39,8 +40,8 @@ class FollowEventNotificationFactory {
 
     private Notification createNotification(Context context, String eventName, String eventID) {
         NotificationCompat.Builder compatBuilder;
-        Notification.Builder builder;
-        Notification notification;
+        NotificationCompat.Builder builder;
+
 
         Intent onNotificationClick = new Intent(context, DetailsActivity.class);
         onNotificationClick.putExtra(DetailsActivity.EXTRA_EVENT_ID, eventID);
@@ -57,21 +58,23 @@ class FollowEventNotificationFactory {
                 notificationManager.createNotificationChannel(channel);
             }
             compatBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
-            notification = compatBuilder.setSmallIcon(R.drawable.ic_music_cat)
+            Notification notification = compatBuilder.setSmallIcon(R.drawable.ic_music_cat)
                     .setContentIntent(onClickPendingIntent)
                     .setContentTitle(eventName)
                     .setContentText(context.getResources().getString(R.string.notification_message))
                     .setAutoCancel(true)
                     .build();
+            return notification;
         } else {
-            builder = new Notification.Builder(context);
-            notification = builder.setSmallIcon(R.drawable.ic_music_cat)
+            builder =new NotificationCompat.Builder(context,CHANNEL_ID);
+            Notification notification = builder.setSmallIcon(R.drawable.ic_music_cat)
                     .setContentIntent(onClickPendingIntent)
                     .setContentTitle(eventName)
                     .setContentText(context.getResources().getString(R.string.notification_message))
                     .setAutoCancel(true)
                     .build();
+            return notification;
         }
-        return notification;
+
     }
 }

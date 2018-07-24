@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.create.CreateActivity;
 import com.example.bookee.eventz.data.RetrofitCategoryRepository;
@@ -23,6 +25,7 @@ import com.example.bookee.eventz.events.EventsListActivity;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
 import com.example.bookee.eventz.splash.CategoryWebApi;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import retrofit2.Retrofit;
@@ -39,6 +42,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         floatingActionButton = findViewById(R.id.floating_action_button);
@@ -55,15 +59,15 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         setupRecyclerView(recyclerView);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
         RetrofitCategoryRepository repository = new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
         MvpContract.Model model = new Model(repository);
 
-        if (savedInstanceState == null) {
+
             Log.d(TAG, "onCreate: creating home presenter");
             presenter = new Presenter(this, model);
-        }
-    }
+                }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -78,7 +82,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -100,6 +104,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     @Override
     protected void onResume() {
+        Log.d(TAG, "onResume: ");
         super.onResume();
         presenter.attachView(this);
         //ArrayList<Category> initialCategoryList = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORY_LIST);
@@ -108,6 +113,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     @Override
     protected void onPause() {
+        Log.d(TAG, "onPause: ");
         super.onPause();
         presenter.detachView();
     }
