@@ -83,7 +83,7 @@ public class RetrofitEventsRepository {
     }
 
     public void postNewEvent(EventWrapper event, final PostEventCallback postCallback) {
-        Call<Event> call = api.createNewEvent(event);
+        Call<Event> call = api.createNewEvent(event,RetrofitFactory.getAuthTokenPersonal());
 
         Callback<Event> callback = new Callback<Event>() {
             @Override
@@ -105,7 +105,7 @@ public class RetrofitEventsRepository {
 
     public void publishEvent(final String eventId, final PublishEventCallback callback) {
         Log.d(TAG, "publishEvent: repository is publishing event with id "+eventId);
-        Call<PublishResponse> call = api.publishEvent(eventId);
+        Call<PublishResponse> call = api.publishEvent(eventId,RetrofitFactory.getAuthTokenPersonal());
 
         call.enqueue(new Callback<PublishResponse>() {
             @Override

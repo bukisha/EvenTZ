@@ -1,12 +1,8 @@
-
 package com.example.bookee.eventz.data.pojos;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
-
-@SuppressWarnings("unused")
 public class Logo implements Serializable {
 
     @SerializedName("aspect_ratio")

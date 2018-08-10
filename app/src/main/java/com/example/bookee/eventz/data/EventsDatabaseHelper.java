@@ -11,7 +11,6 @@ public class EventsDatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "followedEvents";
     private static String COLUMN_EVENT_NAME = "name";
     private static String COLUMN_EVENT_ID = "eventId";
-    public static final String COLUMN_EVENT_CANCEL_ID = "cancelId";
     private static final int DATABASE_VERSION = 1;
     private static EventsDatabaseHelper helperInstance;
     private SQLiteDatabaseRepository attachedRepository;

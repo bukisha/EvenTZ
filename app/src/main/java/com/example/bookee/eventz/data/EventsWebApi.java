@@ -25,9 +25,9 @@ public interface EventsWebApi {
     @GET("events/search")
     Call<PaginatedEvents> fetchEventsForQuery(@Query("token") String token,@Query("q") String query);
 
-    @POST("events")
-    Call<Event> createNewEvent(@Body EventWrapper postEvent);
+    @POST("events/")
+    Call<Event> createNewEvent(@Body EventWrapper postEvent,@Query("token") String authToken);
 
-    @POST("events/{eventId}/publish")
-    Call<PublishResponse> publishEvent(@Path("eventId") String eventId);
+    @POST("events/{eventId}/publish/")
+    Call<PublishResponse> publishEvent(@Path("eventId") String eventId,@Query("token") String authToken);
 }

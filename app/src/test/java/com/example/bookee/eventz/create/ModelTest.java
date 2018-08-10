@@ -18,15 +18,21 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 public class ModelTest {
 
+    private static final String TEST_URL = "http://memoryboundscrapbookstore.com/wordpress/wp-content/uploads/2016/02/lets-party.png";
     private MvpContract.Model model;
+    @Mock
+    private RetrofitImageRepository imageRepositoryMock;
 
     @Before
-    public void setUp()  {
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
         RetrofitEventsRepository repository = new RetrofitEventsRepository(RetrofitFactory.buildRetrofit().create(EventsWebApi.class));
-        model = new Model(repository);
+        model = new Model(repository, imageRepositoryMock);
 
     }
 
@@ -34,47 +40,30 @@ public class ModelTest {
     public void postEvent() {
         //Given
         class ServerAnswerWrapper implements PostEventCallback {
-            private Event createdEvent;
-            private boolean operationSuccess;
 
             @Override
             public void onSuccess(String eventId) {
                 System.out.println("SUCCESS-FULL CALLBACK!!!!");
-                operationSuccess = true;
             }
 
             @Override
             public void onFailure(Throwable t) {
                 System.out.println("FAILED CALLBACK!!!!");
-                createdEvent = null;
-                operationSuccess = false;
-            }
-
-            public Event getEvent() {
-                return createdEvent;
-            }
-
-            public boolean isOperationSuccess() {
-                return operationSuccess;
             }
         }
         ServerAnswerWrapper answer = new ServerAnswerWrapper();
 
-        Event event = createTestEvent("dalceovodaproradigovno",
-                "nebitno",
-                "http://memoryboundscrapbookstore.com/wordpress/wp-content/uploads/2016/02/lets-party.png");
+        Event event = createTestEvent("Will this work or not",
+                "test description of event",
+                TEST_URL);
 
         EventWrapper eventWrapper = new EventWrapper();
         eventWrapper.setEvent(event);
-        System.out.println("Event wrapper sadrzi u sebi " + eventWrapper.getEvent());
+        System.out.println("Event wrapper contains event " + eventWrapper.getEvent());
         //When
         model.postEvent(eventWrapper, answer);
-
-
         //Then
 
-        // System.out.println("\nServer response is: " + answer.getEvent());
-        // Assert.assertNotEquals(answer.getEvent(), null);
     }
 
     private Event createTestEvent(String eventName, String eventDescription, String logoUrl) {

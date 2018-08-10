@@ -2,10 +2,13 @@ package com.example.bookee.eventz.create;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.LoaderManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.EventsWebApi;
@@ -38,10 +40,9 @@ import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.details.DetailsActivity;
-
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import retrofit2.Retrofit;
 
 public class CreateActivity extends AppCompatActivity implements MvpContract.View {
@@ -61,7 +62,6 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     private EditText eventName;
     private TextInputEditText eventDescription;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
@@ -77,8 +77,9 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         eventDescription = findViewById(R.id.create_event_info);
 
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
-        RetrofitEventsRepository repository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
-        MvpContract.Model model = new Model(repository);
+        RetrofitEventsRepository eventsRepository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
+        RetrofitImageRepository imageRepository=new RetrofitImageRepository(retrofit.create(MediaUploadWebApi.class));
+        MvpContract.Model model = new Model(eventsRepository,imageRepository);
 
         presenter = new Presenter(model, this);
         ArrayList<Category> categories = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORIES);
@@ -111,7 +112,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         buttonSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestPermision();
+                requestPermission();
             }
         });
         buttonCreateEvent.setOnClickListener(new View.OnClickListener() {
@@ -187,9 +188,6 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     @Override
     public void displayNewEvent(String eventId) {
         Log.d(TAG, "displayNewEvent: " + eventId);
-        //15.07.2018.
-        //this is implemented just for testing,atm event is created as draft and is not live on server,so we can not acquire event object via its id
-        //Toast.makeText(this, "id is " + eventId, Toast.LENGTH_LONG).show();
         DetailsActivity.launch(eventId, this);
     }
 
@@ -219,22 +217,33 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
             if (data != null) {
                 Uri imgUri = data.getData();
                 try {
+                    if (imgUri != null) {
+                        File imageFile=createFileFromUri(imgUri);
+                        presenter.setLogo(imageFile);
+                    }
                     displayNewImage(imgUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //Toast.makeText(this, uri.getPath(), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Error while choosing img", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+    private File createFileFromUri(Uri imgUri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        CursorLoader cursorLoader=new CursorLoader(this,imgUri,projection,null,null,null);
+        Cursor cursor=cursorLoader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return new File(cursor.getString(column_index));
+    }
+
     private void displayNewImage(Uri imgUri) throws IOException {
         Bitmap imgBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
         buttonSelectImage.setImageBitmap(imgBitmap);
     }
-
 
     public static void launch(Context context, ArrayList<Category> categories) {
         Intent intent = new Intent(context, CreateActivity.class);
@@ -243,11 +252,9 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     //quick and dirty runtime permission request and procession
-    public void requestPermision() {
-        Log.d(TAG, "requestPermision: ");
-        //Here, thisActivity is the current activity
+    public void requestPermission() {
+        Log.d(TAG, "requestPermission: ");
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
         } else {
@@ -262,21 +269,13 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     presenter.startImageChooser();
                 } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    // permission denied,Disable the functionality that depends on this permission.
                     finish();
                 }
-
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request.
         }
     }
 }

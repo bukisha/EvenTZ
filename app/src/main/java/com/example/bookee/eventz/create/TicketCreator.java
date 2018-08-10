@@ -39,7 +39,7 @@ public class TicketCreator  {
     }
 
     public void createTicketForEvent(final String eventId, final CreateTicketCallback callback) {
-        Call<PaginatedTickets> call=api.createTicketForEvent(eventId,createFreeTicket());
+        Call<PaginatedTickets> call=api.createTicketForEvent(eventId,createFreeTicket(),RetrofitFactory.getAuthTokenPersonal());
 
 
         call.enqueue(new Callback<PaginatedTickets>() {

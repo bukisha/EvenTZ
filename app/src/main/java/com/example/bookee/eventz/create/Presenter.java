@@ -1,25 +1,26 @@
 package com.example.bookee.eventz.create;
 
 import android.util.Log;
+
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Description;
 import com.example.bookee.eventz.data.pojos.End;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.pojos.EventWrapper;
+import com.example.bookee.eventz.data.pojos.Logo;
 import com.example.bookee.eventz.data.pojos.Name;
+import com.example.bookee.eventz.data.pojos.Original;
 import com.example.bookee.eventz.data.pojos.Start;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.TimeZone;
 
 public class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
@@ -32,6 +33,7 @@ public class Presenter implements MvpContract.Presenter {
     private int selectedDay;
     private int selectedHourOfDay;
     private int selectedMinuteOfHour;
+    private File currentImageFile;
 
     private HashMap<String, String> shortNameToIdHash;
 
@@ -67,6 +69,11 @@ public class Presenter implements MvpContract.Presenter {
         currentEvent.setCurrency(currency);
     }
 
+    @Override
+    public void setLogo(File imageFile) {
+        currentImageFile = imageFile;
+    }
+
     private String getCategoryId(String categoryShortName) {
         Log.d(TAG, "getCategoryId: u selected category with name " + categoryShortName + " and id " + shortNameToIdHash.get(categoryShortName));
         return shortNameToIdHash.get(categoryShortName);
@@ -76,26 +83,58 @@ public class Presenter implements MvpContract.Presenter {
     public void postEvent() {
         prepareEventDateAndTime();
         setAdditionalEventProperties();
+        if (currentImageFile != null) {
+            uploadEventLogo();
+        } else {
+            currentWrapper.setEvent(currentEvent);
+            PostEventCallback callback = new PostEventCallback() {
+                @Override
+                public void onSuccess(String eventId) {
+                    Log.d(TAG, "onSuccess: before creating tickets");
+                    view.displayNewEvent(eventId);
+                }
 
-        currentWrapper.setEvent(currentEvent);
-        PostEventCallback callback = new PostEventCallback() {
+                @Override
+                public void onFailure(Throwable t) {
+                    if (notViewExists()) return;
+                    view.displayError();
+                }
+            };
+            model.postEvent(currentWrapper, callback);
+        }
+    }
+
+    private void uploadEventLogo() {
+        model.uploadLogo(currentImageFile, new MvpContract.EndUploadImageCallback() {
             @Override
-            public void onSuccess(String eventId) {
-                Log.d(TAG, "onSuccess: before creating tickets");
-                view.displayNewEvent(eventId);
+            public void onSuccess(Logo logo) {
+                currentEvent.setLogoId(logo.getId());
+                currentWrapper.setEvent(currentEvent);
+                PostEventCallback callback = new PostEventCallback() {
+                    @Override
+                    public void onSuccess(String eventId) {
+                        Log.d(TAG, "onSuccess: before creating tickets");
+                        view.displayNewEvent(eventId);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        if (notViewExists()) return;
+                        view.displayError();
+                    }
+                };
+                model.postEvent(currentWrapper, callback);
             }
 
             @Override
             public void onFailure(Throwable t) {
-                if (notViewExists()) return;
-                view.displayError();
+                //TODO inform view(user) that image did not upload
             }
-        };
-        model.postEvent(currentWrapper, callback);
+        });
     }
 
     private void setAdditionalEventProperties() {
-        currentEvent.setOnlineEvent(true);
+        //currentEvent.setOnlineEvent(true);
         currentEvent.setListed(true);
         currentEvent.setCapacity((long) 100);
     }
@@ -107,9 +146,9 @@ public class Presenter implements MvpContract.Presenter {
                 .withDayOfMonth(selectedDay)
                 .withHourOfDay(selectedHourOfDay)
                 .withMinuteOfHour(selectedMinuteOfHour);
-        
-        String currentTimezone=DateTime.now().getZone().toString();
-        Log.d(TAG, "prepareEventDateAndTime: currentDateTimeZone in UTC is "+currentTimezone);
+
+        String currentTimezone = DateTime.now().getZone().toString();
+        Log.d(TAG, "prepareEventDateAndTime: currentDateTimeZone in UTC is " + currentTimezone);
         date = date.toDateTime(DateTimeZone.UTC);
         DateTimeFormatter format = ISODateTimeFormat.dateTimeNoMillis();
 
