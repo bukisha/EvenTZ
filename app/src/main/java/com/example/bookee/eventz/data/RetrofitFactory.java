@@ -30,57 +30,7 @@ public class RetrofitFactory {
         //logger interceptor for debugging
         HttpLoggingInterceptor logger = new HttpLoggingInterceptor();
         logger.setLevel(HttpLoggingInterceptor.Level.BODY);
-        //interceptor that concatenates slash onto request url if we are doing POST request
-//        Interceptor addPersonalAuthTokenInterceptor = new Interceptor() {
-//            @Override
-//            public Response intercept(Chain chain) throws IOException {
-//                Request oldRequest = chain.request();
-//                HttpUrl outgoingUrl = oldRequest.url();
-//                Request newRequest = oldRequest;
-//
-//                if (oldRequest.method().equals(METHOD_TYPE_POST)) {
-//                    String nextUrl = outgoingUrl.toString();
-//
-//                    Log.d(TAG, "intercept: next url before adding slash is " + nextUrl);
-//                    if (!(nextUrl.equals("https://s3.amazonaws.com/eventbrite-uploader-incoming-prod/"))) {
-//                        nextUrl = nextUrl.concat(SLASH);
-//                    }
-//                    Log.d(TAG, "intercept: next url after adding slash is " + nextUrl);
-//                    HttpUrl nextURL = HttpUrl.parse(nextUrl);
-//                    if (nextURL != null && !nextUrl.equals("https://s3.amazonaws.com/eventbrite-uploader-incoming-prod/")) {
-//                        HttpUrl.Builder urlBuilder = nextURL.newBuilder();
-//                            HttpUrl newUrl = urlBuilder
-//                                    .addQueryParameter("token", getAuthTokenPersonal())
-//                                    .build();
-//                            newRequest = oldRequest.newBuilder().url(newUrl).build();
-//                    }
-//                    return chain.proceed(newRequest);
-//                } else {
-//                    HttpUrl newUrl = outgoingUrl.newBuilder()
-//                            // .addQueryParameter("token", getAuthTokenPersonal())
-//                            .build();
-//                    newRequest = oldRequest.newBuilder().url(newUrl).build();
-//                    return chain.proceed(newRequest);
-//                }
-//            }
-//        };
 
-//        Interceptor addPersonalAuthTokenInterceptor = new Interceptor() {
-//            @Override
-//            public Response intercept(Chain chain) throws IOException {
-//                Request oldRequest = chain.request();
-//                HttpUrl outgoingUrl = oldRequest.url();
-//                Request newRequest;
-//                if(oldRequest.method().equals(METHOD_TYPE_POST )) {
-//                    HttpUrl newUrl = outgoingUrl.newBuilder()
-//                            .addQueryParameter("token", getAuthTokenPersonal())
-//                            .build();
-//                    newRequest = oldRequest.newBuilder().url(newUrl).build();
-//                    return chain.proceed(newRequest);
-//                }
-//                return chain.proceed(oldRequest);
-//            }
-//        };
         OkHttpClient client = okHttpBuilder
                 .addInterceptor(logger)
                 //.addInterceptor(addPersonalAuthTokenInterceptor)

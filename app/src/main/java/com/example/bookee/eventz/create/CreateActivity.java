@@ -2,7 +2,6 @@ package com.example.bookee.eventz.create;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.app.LoaderManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.CursorLoader;

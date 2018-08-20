@@ -94,13 +94,10 @@ class Presenter implements MvpContract.Presenter {
             if (notViewExists()) return;
             view.setFollowUncheck(currentEvent);
             followChecked = !followChecked;
-            //stop following this Event inside a service
         } else {
             if (notViewExists()) return;
             view.setFollowChecked(currentEvent);
             followChecked = !followChecked;
-            //start following this Event inside service if the service is running
-            //if the service does not exist than prepareNotification one and start following Event with it
         }
     }
 

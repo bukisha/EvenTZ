@@ -188,7 +188,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
 
     @Override
     public void setFollowUncheck(Event uncheckedEvent) {
-        buttonFollow.setImageResource(R.drawable.ic_follow);
+        buttonFollow.setImageResource(R.drawable.ic_follow_unchecked);
        // presenter.removeRowWithId(uncheckedEvent.getId());
         presenter.stopFollowingEvent(uncheckedEvent,this.getApplicationContext());
     }

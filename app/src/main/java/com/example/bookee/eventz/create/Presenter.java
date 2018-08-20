@@ -10,14 +10,11 @@ import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.Logo;
 import com.example.bookee.eventz.data.pojos.Name;
-import com.example.bookee.eventz.data.pojos.Original;
 import com.example.bookee.eventz.data.pojos.Start;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;

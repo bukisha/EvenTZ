@@ -15,32 +15,29 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static com.example.bookee.eventz.util.EspressoHelper.waitFor;
 
 @RunWith(AndroidJUnit4.class)
 public class EventsListActivityInstrumentationTest {
 
     private static final String CATEGORY_ID = "104";
-
+    private Intent launchIntent;
     @Rule
     public ActivityTestRule<EventsListActivity> eventsRule = new ActivityTestRule<>(EventsListActivity.class, true, false);
 
     @Before
-    public void initActivity() {
-        Intent intent = new Intent();
-        intent.putExtra(HomeActivity.CATEGORY_ID_KEY, CATEGORY_ID);
-        eventsRule.launchActivity(intent);
+    public void setUp() {
+        launchIntent = new Intent();
+        launchIntent.putExtra(HomeActivity.CATEGORY_ID_KEY, CATEGORY_ID);
+        eventsRule.launchActivity(launchIntent);
     }
 
     @Test
-    public void viewsDisplayedCorrectly() throws InterruptedException {
+    public void viewsDisplayedCorrectly()  {
+        //When
+        eventsRule.launchActivity(launchIntent);
+        //Then
         onView(withId(R.id.progress_bar)).check(matches(isDisplayed()));
-        onView(isRoot()).perform(waitFor(5000));
         onView(withId(R.id.events_recycler_list)).check(matches(isDisplayed()));
-        //pausing UI thread so that i can check what is displayed as result
-        onView(isRoot()).perform(waitFor(5000));
         }
-
 }

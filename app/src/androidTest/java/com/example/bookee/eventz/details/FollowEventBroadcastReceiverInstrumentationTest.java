@@ -8,9 +8,7 @@ import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.Until;
-
 import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,18 +27,21 @@ public class FollowEventBroadcastReceiverInstrumentationTest {
 
     //I needed this test activity so that my database would be created
     @Rule
-    public ActivityTestRule<DetailsActivity> testRule=new ActivityTestRule<>(DetailsActivity.class);
+    public ActivityTestRule<DetailsActivity> testRule=new ActivityTestRule<>(DetailsActivity.class,true,false);
 
     @Before
     public void setUp() {
         receiver = new FollowEventBroadcastReceiver();
         device=UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+
     }
 
     @Test
     public void onBroadcastReceivedShowNotification() throws InterruptedException {
         //Given
-        //Hide progress bar in DetailsActivity because it bugs test on API-s below 26
+        // progress bar in DetailsActivity can bug test on API-s below 26
+
+        testRule.launchActivity(new Intent().putExtra(DetailsActivity.EXTRA_EVENT_ID,TEST_EVENT_ID));
         Intent testIntent = new Intent();
         testIntent.putExtra(EVENT_ID_KEY, TEST_EVENT_ID);
         testIntent.putExtra(EVENT_NAME_KEY, TEST_EVENT_NAME);

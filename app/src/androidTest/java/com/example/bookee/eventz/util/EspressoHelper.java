@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 
@@ -33,6 +34,27 @@ public class EspressoHelper {
             }
         };
     }
+
+    public static ViewAction hideView(final boolean shouldHide) {
+
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return Matchers.any(View.class);
+            }
+
+            @Override
+            public String getDescription() {
+                return "hide/show view";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                view.setVisibility(shouldHide?View.GONE:View.VISIBLE);
+            }
+        };
+    }
+
     public static Matcher<View> withDrawable(final int resourceId , final Context context) {
 
         return new Matcher<View>() {
@@ -50,12 +72,12 @@ public class EspressoHelper {
 
             @Override
             public void _dont_implement_Matcher___instead_extend_BaseMatcher_() {
-
+                //intentionally left blank
             }
 
             @Override
             public void describeTo(Description description) {
-
+                //intentionally left blank
             }
         };
     }

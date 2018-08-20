@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
-import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.create.CreateActivity;
 import com.example.bookee.eventz.data.RetrofitCategoryRepository;
@@ -24,8 +21,6 @@ import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.events.EventsListActivity;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
 import com.example.bookee.eventz.splash.CategoryWebApi;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import retrofit2.Retrofit;
@@ -63,7 +58,6 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
         RetrofitCategoryRepository repository = new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
         MvpContract.Model model = new Model(repository);
-
 
             Log.d(TAG, "onCreate: creating home presenter");
             presenter = new Presenter(this, model);
@@ -107,7 +101,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         Log.d(TAG, "onResume: ");
         super.onResume();
         presenter.attachView(this);
-        //ArrayList<Category> initialCategoryList = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORY_LIST);
+        initialCategoryList = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORY_LIST);
         presenter.populateNameList(initialCategoryList);
     }
 
@@ -120,7 +114,8 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     public static void launch(ArrayList<Category> list, Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
-        initialCategoryList=list;
+        //initialCategoryList=list;
+        intent.putExtra(EXTRA_CATEGORY_LIST,list);
         context.startActivity(intent);
     }
 

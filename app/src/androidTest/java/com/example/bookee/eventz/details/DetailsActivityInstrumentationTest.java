@@ -10,12 +10,17 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.action.ViewActions.swipeDown;
+import static android.support.test.espresso.action.ViewActions.swipeUp;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.example.bookee.eventz.util.EspressoHelper.waitFor;
+import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class DetailsActivityInstrumentationTest {
@@ -29,34 +34,20 @@ public class DetailsActivityInstrumentationTest {
     @Rule
     public ActivityTestRule<DetailsActivity> detailsActivityRule = new ActivityTestRule<>(DetailsActivity.class, true, false);
 
-
     @Test
     public void isEventDisplayed() {
-        Intent withLogo=new Intent();
-        withLogo.putExtra(DetailsActivity.EXTRA_EVENT_ID,EVENT_ID_WITHOUT_LOGO);
+        //Given
+        Intent withLogo = new Intent();
+        withLogo.putExtra(DetailsActivity.EXTRA_EVENT_ID, EVENT_ID_WITHOUT_LOGO);
+        //When
         detailsActivityRule.launchActivity(withLogo);
-
-        onView(withId(R.id.progress_bar)).check(matches(isDisplayed()));
-        //onView(withId(R.id.collapsing_toolbar_layout)).check(matches(isDisplayed()));
-        //onView(withId(R.id.nested_scroll_view)).check(matches(isDisplayed()));
-
-        onView(isRoot()).perform(waitFor(5000));
-
-//        onView(withId(R.id.event_name)).check(matches(isDisplayed()));
-//        onView(withId(R.id.event_date)).check(matches(isDisplayed()));
-//        onView(withId(R.id.event_logo)).check(matches(isDisplayed()));
-//        onView(withId(R.id.event_description)).check(matches(isDisplayed()));
-//        onView(withId(R.id.follow_button)).check(matches(isDisplayed()));
-//        onView(withId(R.id.follow_button)).check(matches(isClickable()));
-
-        //checks if correct drawable is displayed in event_logo imageView
-        //should work but still not sure...
-        //onView(withId(R.id.event_logo)).check(matches(withDrawable(R.drawable.party,detailsActivityRule.getActivity().getApplicationContext())));
-    }
-
-    @Test
-    public void isBroadcastRecieved() {
+        //Then
+        onView(withId(R.id.collapsing_toolbar_layout)).check(matches(isDisplayed()));
+        onView(withId(R.id.event_logo)).check(matches(isDisplayed()));
+        onView(withId(R.id.event_date)).check(matches(isDisplayed()));
+        onView(withId(R.id.event_name)).check(matches(isDisplayed()));
+        onView(withId(R.id.nested_scroll_view)).check(matches(isDisplayed()));
+       //TODO da li se event_description vidi kad skrolujes do njega mozda treba da se napravi novi matcher pogledaj na stackOverflow-u
 
     }
-
 }
