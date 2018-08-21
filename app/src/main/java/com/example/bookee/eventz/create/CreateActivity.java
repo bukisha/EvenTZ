@@ -1,6 +1,7 @@
 package com.example.bookee.eventz.create;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.hardware.input.InputManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,6 +24,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -31,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.EventsWebApi;
@@ -39,9 +43,11 @@ import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.details.DetailsActivity;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import retrofit2.Retrofit;
 
 public class CreateActivity extends AppCompatActivity implements MvpContract.View {
@@ -77,8 +83,8 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
 
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
         RetrofitEventsRepository eventsRepository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
-        RetrofitImageRepository imageRepository=new RetrofitImageRepository(retrofit.create(MediaUploadWebApi.class));
-        MvpContract.Model model = new Model(eventsRepository,imageRepository);
+        RetrofitImageRepository imageRepository = new RetrofitImageRepository(retrofit.create(MediaUploadWebApi.class));
+        MvpContract.Model model = new Model(eventsRepository, imageRepository);
 
         presenter = new Presenter(model, this);
         ArrayList<Category> categories = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORIES);
@@ -217,7 +223,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
                 Uri imgUri = data.getData();
                 try {
                     if (imgUri != null) {
-                        File imageFile=createFileFromUri(imgUri);
+                        File imageFile = createFileFromUri(imgUri);
                         presenter.setLogo(imageFile);
                     }
                     displayNewImage(imgUri);
@@ -231,9 +237,9 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     private File createFileFromUri(Uri imgUri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        CursorLoader cursorLoader=new CursorLoader(this,imgUri,projection,null,null,null);
-        Cursor cursor=cursorLoader.loadInBackground();
+        String[] projection = {MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader = new CursorLoader(this, imgUri, projection, null, null, null);
+        Cursor cursor = cursorLoader.loadInBackground();
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return new File(cursor.getString(column_index));

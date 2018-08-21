@@ -53,9 +53,9 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         RetrofitEventsRepository eventsRepository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
         SQLiteDatabaseRepository databaseRepository=new SQLiteDatabaseRepository(EventsDatabaseHelper.getInstance(this));
         MvpContract.Model model = new Model(eventsRepository,databaseRepository);
-        if (savedInstanceState == null) {
+
             presenter = new Presenter(model, this);
-        }
+
     }
 
     @Override

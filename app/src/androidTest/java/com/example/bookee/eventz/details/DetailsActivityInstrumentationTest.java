@@ -47,6 +47,7 @@ public class DetailsActivityInstrumentationTest {
         onView(withId(R.id.event_date)).check(matches(isDisplayed()));
         onView(withId(R.id.event_name)).check(matches(isDisplayed()));
         onView(withId(R.id.nested_scroll_view)).check(matches(isDisplayed()));
+        onView(withId(R.id.event_description)).perform() .check(matches(isDisplayed()));
        //TODO da li se event_description vidi kad skrolujes do njega mozda treba da se napravi novi matcher pogledaj na stackOverflow-u
 
     }
