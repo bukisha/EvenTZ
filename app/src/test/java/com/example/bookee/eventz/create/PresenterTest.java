@@ -32,15 +32,11 @@ public class PresenterTest {
     private static final int TEST_MONTH = 10;
     private static final int TEST_DAY = 11;
     private static final String SHORT_CAT_NAME = "CAT";
-    private Presenter presenter;
-
-
     private static final String TEST_EVENT_NAME = "test event name";
     private static final String TEST_EVENT_DESCRIPTION = "test description of my event";
     private static final String TEST_EVENT_URL = "http://memoryboundscrapbookstore.com/wordpress/wp-content/uploads/2016/02/lets-party.png";
-
     private static final int NUMBER_OF_CATEGORIES_IN_LIST = 5;
-
+    private Presenter presenter;
 
     @Mock
     private MvpContract.Model modelMock;
