@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.assertion.PositionAssertions.isCompletelyBelow;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -59,7 +60,7 @@ public class CreateActivityInstrumentationTest {
         onView(withId(R.id.create_event_info)).perform(scrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.set_date_button)).perform(scrollTo()).check(matches(isDisplayed()));
         onView(withId(R.id.set_time_button)).perform(scrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.button_set_image)).perform(scrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.button_set_image)).perform(scrollTo()).check(matches(isDisplayed())).check(isCompletelyBelow(withId(R.id.set_time_button)));
     }
 
 }
