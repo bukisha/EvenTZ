@@ -19,11 +19,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Presenter implements MvpContract.Presenter {
+public class Presenter implements MvpContract.Presenter {//todo zasto public
     private static final String TAG = "Presenter";
     private MvpContract.Model model;
     private MvpContract.View view;
-    private EventWrapper currentWrapper;
+    private EventWrapper currentWrapper;//todo ako vec imas ovaj wrapper, zasto ne bi samo wrapperu prosledio event i posle toga 100% tvog rada se vrti oko wrappera. Event vise ni ne dodirnes
     private Event currentEvent;
     private int selectedYear;
     private int selectedMonth;

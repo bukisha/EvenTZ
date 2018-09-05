@@ -54,12 +54,12 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     private static final String TAG = "CreateActivity";
     private static final String EXTRA_CATEGORIES = "nameToIdHash";
     private static final String CURRENCY_EUR = "EUR";
-    private static final CharSequence CHOOSER_TITTLE = " Choose App";
-    private static final String TOAST_NO_IMAGE_APP = "No app for image viewing";
+    private static final CharSequence CHOOSER_TITTLE = " Choose App";//todo charsequence? Isto kao i za ovo ispod
+    private static final String TOAST_NO_IMAGE_APP = "No app for image viewing";//todo Ne nikako! String ide u string.xml! Ako jos negde imas ovo OBAVEZNO ispravi
     private static final int PICK_IMAGE_REQUEST_CODE = 13;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
-    private Presenter presenter;
-    private AppCompatButton buttonSetDate;
+    private Presenter presenter;//todo nemoj da vezujes za konkretnu implementaciju, vezuj se za interface. dakle za MvpContract.Presenter presenter;
+    private AppCompatButton buttonSetDate; //todo zasto ne Button?
     private AppCompatButton buttonSetTime;
     private ImageButton buttonSelectImage;
     private Spinner spinnerChoseCategory;
@@ -81,6 +81,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         eventName = findViewById(R.id.create_event_name);
         eventDescription = findViewById(R.id.create_event_info);
 
+        //todo Ono sto mozes da uradis je da napravis Factory koji ce da ima metodu createModel() i u tom factory odradis ovo. Na taj nacin Activity nema pojma kako se kreira model. To ga ni ne zanima
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
         RetrofitEventsRepository eventsRepository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
         RetrofitImageRepository imageRepository = new RetrofitImageRepository(retrofit.create(MediaUploadWebApi.class));
@@ -90,7 +91,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         ArrayList<Category> categories = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORIES);
         if (categories != null) {
             presenter.setHashMapWithShortNames(categories);
-        }
+        }//todo a sta je sa else kaluzulom? Sta ako greskom ne prosledis kategorije? Sta ce se prikazati?
         setListeners();
         setSpinnerAdapter();
     }
@@ -126,7 +127,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
                 presenter.setName(eventName.getText().toString());
                 presenter.setDescription(eventDescription.getText().toString());
                 //Hardcoded currency because i am to lazy to extract currency code from location atm :D
-                presenter.setCurrency(CURRENCY_EUR);
+                presenter.setCurrency(CURRENCY_EUR);//todo onda ga smesti u Model i nemoj ni da koristis setCurrency()
                 presenter.postEvent();
             }
         });
@@ -158,7 +159,7 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     @Override
-    public void showCreatedEvent(Event event) {
+    public void showCreatedEvent(Event event) {//todo a di ga koristis, rodjo?
         DetailsActivity.launch(event.getId(), this);
     }
 

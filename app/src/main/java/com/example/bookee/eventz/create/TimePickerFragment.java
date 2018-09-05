@@ -9,7 +9,7 @@ import android.text.format.DateFormat;
 import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment {
-    private TimePickerDialog.OnTimeSetListener listener;
+    private TimePickerDialog.OnTimeSetListener listener;//todo unused?
 
     public void setListener(TimePickerDialog.OnTimeSetListener listener) {
         this.listener = listener;

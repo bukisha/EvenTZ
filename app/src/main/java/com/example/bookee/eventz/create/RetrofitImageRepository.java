@@ -16,7 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RetrofitImageRepository {
+public class RetrofitImageRepository {//todo zasto public?
     private static final String TAG = "RetrofitImageRepository";
     private static final String LOGO_TYPE_QUERY_PARAMETER = "image-event-logo-preserve-quality";
     private static final String MEDIA_TYPE_IMAGE = "image/*";

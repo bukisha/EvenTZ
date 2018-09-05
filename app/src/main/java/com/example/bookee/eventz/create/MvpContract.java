@@ -9,7 +9,7 @@ import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.Logo;
 
 import java.io.File;
-
+//todo ja volim da vidim komentare za svaku metodu. tu se cesto desi da dok pises komentar shvatis da mozda moze drugacije
 interface MvpContract {
     interface Model {
         void postEvent(EventWrapper postEvent, PostEventCallback callback);
