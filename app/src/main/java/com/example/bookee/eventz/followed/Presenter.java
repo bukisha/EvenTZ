@@ -4,7 +4,7 @@ import android.util.Log;
 
 import java.util.List;
 
-public class Presenter implements MvpContract.Presenter {
+class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
     private MvpContract.Model model;
     private MvpContract.View view;

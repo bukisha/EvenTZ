@@ -19,7 +19,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Presenter implements MvpContract.Presenter {//todo zasto public
+class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
     private MvpContract.Model model;
     private MvpContract.View view;

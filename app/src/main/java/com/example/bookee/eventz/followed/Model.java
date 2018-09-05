@@ -8,7 +8,7 @@ import com.example.bookee.eventz.data.SQLiteDatabaseRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Model implements MvpContract.Model {
+class Model implements MvpContract.Model {
     private EventsDatabaseHelper databaseHelper;
     private SQLiteDatabaseRepository repository;
 
