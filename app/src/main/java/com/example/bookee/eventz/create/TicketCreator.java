@@ -11,7 +11,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TicketCreator  {
+public class TicketCreator  {//todo zasto public
     private static final String FREE_TICKET_NAME ="Free ticket" ;
     private static final int NUMBER_OF_TICKETS = 100 ;
     private static TicketCreator instance;

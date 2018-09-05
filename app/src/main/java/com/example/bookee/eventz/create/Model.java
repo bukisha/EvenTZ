@@ -40,7 +40,7 @@ class Model implements MvpContract.Model {
         eventsRepository.postNewEvent(postEvent, postEventCallback);
     }
 
-    @SuppressWarnings("UnnecessaryLocalVariable")
+    @SuppressWarnings("UnnecessaryLocalVariable")//todo ovoaj warning nije dzaba. on ti kaze da nema potrebe da pravis promenljivu jer mozes ovo da uradis inline. Ako mislis da je ovako citljivije, onda pored ove anotacije dodaj i komentar da se zna zasto si odlucio da prekrsis Lint warning.
     private CreateTicketCallback prepareCreateEventCallback(final PostEventCallback callback) {
         final CreateTicketCallback createTicketsCallback = new CreateTicketCallback() {
             @Override
@@ -88,7 +88,7 @@ class Model implements MvpContract.Model {
     @Override
     public void uploadLogo(final File currentImageFile, final MvpContract.EndUploadImageCallback endUploadImageCallback) {
 
-        imageRepository.fetchUploadData(new MvpContract.FetchUploadDataCallback() {
+        imageRepository.fetchUploadData(new MvpContract.FetchUploadDataCallback() {//todo ako ti za upload podataka treba da nesto fecujes, zasto to sve ne sakrijes u imagerepository i da ovaj model bude potpuno nesvestan toga.
             @Override
             public void onSuccess(FetchUploadDataResponse uploadDataResponse) {
                 imageRepository.uploadImage(currentImageFile,uploadDataResponse,endUploadImageCallback);

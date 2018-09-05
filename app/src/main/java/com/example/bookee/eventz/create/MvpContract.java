@@ -4,12 +4,14 @@ import com.example.bookee.eventz.create.pojos.FetchUploadDataResponse;
 import com.example.bookee.eventz.data.callbacks.CreateTicketCallback;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 import com.example.bookee.eventz.data.callbacks.PublishEventCallback;
+import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.Logo;
 
 import java.io.File;
-
+import java.util.ArrayList;
+//todo ja volim da vidim komentare za svaku metodu. tu se cesto desi da dok pises komentar shvatis da mozda moze drugacije
 interface MvpContract {
     interface Model {
         void postEvent(EventWrapper postEvent, PostEventCallback callback);
@@ -33,6 +35,7 @@ interface MvpContract {
         void setCurrency(String currency);
 
         void setLogo(File imageFile);
+        void setHashMapWithShortNames(ArrayList<Category> categories);
 
         //String getCategoryId(String itemAtPosition);
     }

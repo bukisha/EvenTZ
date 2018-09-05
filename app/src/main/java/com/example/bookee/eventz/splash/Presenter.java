@@ -21,7 +21,7 @@ public class Presenter implements MvpContract.Presenter {
             @Override
             public void onSuccess(ArrayList<Category> list) {
 
-                EventApp.setGlobalCategoryIds(getCategoryIdShortNames(list));
+                EventApp.setGlobalCategoryIds(getCategoryIdShortNames(list));//todo i pazi ovo: model ti fecuje podaatke i umesto u modelu, ti u prezenteru manipulises sa njima i smestas ih u static promenljivu! Prezenter ne zna za podatke i za njihovu manipulaciju: prezenter uzme podatak i pripremi ga za View i NISTA VISE
                 EventApp.setGlobalListOfAllCategories(list);
                 view.passInitialCategories(list);
             }
