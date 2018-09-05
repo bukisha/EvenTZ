@@ -26,8 +26,7 @@ public class FollowedEventsActivity extends AppCompatActivity implements MvpCont
         listView = findViewById(R.id.followed_events);
         listView.setVisibility(View.INVISIBLE);
         progressBar = findViewById(R.id.progress_bar);
-        MvpContract.Model model = new Model(this);
-        presenter = new Presenter(model, this);
+        presenter = new Presenter(new Model(this), this);
     }
 
     @Override

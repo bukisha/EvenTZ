@@ -48,8 +48,6 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     private static final String TAG = "CreateActivity";
     private static final String EXTRA_CATEGORIES = "nameToIdHash";
     private static final String CURRENCY_EUR = "EUR";
-    private static final CharSequence CHOOSER_TITTLE = " Choose App";//todo charsequence? Isto kao i za ovo ispod
-    private static final String TOAST_NO_IMAGE_APP = "No app for image viewing";//todo Ne nikako! String ide u string.xml! Ako jos negde imas ovo OBAVEZNO ispravi
     private static final int PICK_IMAGE_REQUEST_CODE = 13;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
 
@@ -76,17 +74,14 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         eventName = findViewById(R.id.create_event_name);
         eventDescription = findViewById(R.id.create_event_info);
 
-        //todo Ono sto mozes da uradis je da napravis Factory koji ce da ima metodu createModel() i u tom factory odradis ovo. Na taj nacin Activity nema pojma kako se kreira model. To ga ni ne zanima
-        Retrofit retrofit = RetrofitFactory.buildRetrofit();
-        RetrofitEventsRepository eventsRepository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
-        RetrofitImageRepository imageRepository = new RetrofitImageRepository(retrofit.create(MediaUploadWebApi.class));
-        MvpContract.Model model = new Model(eventsRepository, imageRepository);
-
-        presenter = new Presenter(model, this);
+        presenter = new Presenter(ModelFactory.create(), this);
         ArrayList<Category> categories = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORIES);
         if (categories != null) {
             presenter.setHashMapWithShortNames(categories);
-        }//todo a sta je sa else kaluzulom? Sta ako greskom ne prosledis kategorije? Sta ce se prikazati?
+        } else {
+            //todo a sta je sa else kaluzulom? Sta ako greskom ne prosledis kategorije? Sta ce se prikazati?
+            //TODO show some kind of dialog that informs user that categories are not fetched,aldo this error might have been catched somewhere upstream in code so u do not have too
+        }
         setListeners();
         setSpinnerAdapter();
     }
@@ -203,11 +198,11 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_PICK);
         intent.setType("image/*");
-        Intent pickerIntent = Intent.createChooser(intent, CHOOSER_TITTLE);
+        Intent pickerIntent = Intent.createChooser(intent, getResources().getString(R.string.create_image_chooser_tittle));
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(pickerIntent, PICK_IMAGE_REQUEST_CODE);
         } else {
-            Toast.makeText(this, TOAST_NO_IMAGE_APP, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_no_image_picking_app, Toast.LENGTH_SHORT).show();
         }
     }
 

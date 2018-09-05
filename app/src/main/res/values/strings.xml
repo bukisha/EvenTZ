@@ -13,4 +13,6 @@
     <string name="followedEvents">Following</string>
     <string name="sortByDistance">Sort by distance</string>
     <string name="sortByTime">Sort by time</string>
+    <string name="create_image_chooser_tittle">Choose App</string>
+    <string name="toast_no_image_picking_app">No app for image picking</string>
 </resources>

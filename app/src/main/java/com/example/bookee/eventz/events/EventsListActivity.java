@@ -47,11 +47,9 @@ public class EventsListActivity extends AppCompatActivity implements MvpContract
         setupRecyclerView(recyclerView);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Retrofit retrofit = RetrofitFactory.buildRetrofit();
-        RetrofitEventsRepository repository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));
-        MvpContract.Model model = new Model(repository);
 
-        presenter = new Presenter(this, model);
+
+        presenter = new Presenter(this, ModelFactory.create());
 
     }
 

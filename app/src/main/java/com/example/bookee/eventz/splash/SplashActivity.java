@@ -21,10 +21,7 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Retrofit retrofit = RetrofitFactory.buildRetrofit();
-        RetrofitCategoryRepository repository = new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
-        Model model = new Model(repository);
-        presenter = new Presenter(this, model);
+        presenter = new Presenter(this, ModelFactory.create());
         presenter.fetchInitialCategories();
     }
 

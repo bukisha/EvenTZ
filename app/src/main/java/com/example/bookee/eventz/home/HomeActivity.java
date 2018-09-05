@@ -55,12 +55,10 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Retrofit retrofit = RetrofitFactory.buildRetrofit();
-        RetrofitCategoryRepository repository = new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));
-        MvpContract.Model model = new Model(repository);
+
 
             Log.d(TAG, "onCreate: creating home presenter");
-            presenter = new Presenter(this, model);
+            presenter = new Presenter(this, ModelFactory.create());
                 }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
