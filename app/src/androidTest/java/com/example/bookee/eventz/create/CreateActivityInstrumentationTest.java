@@ -3,7 +3,7 @@ package com.example.bookee.eventz.create;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import com.example.bookee.eventz.EventApp;
+
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.home.HomeActivity;
@@ -18,8 +18,6 @@ import static android.support.test.espresso.assertion.PositionAssertions.isCompl
 import static android.support.test.espresso.assertion.PositionAssertions.isCompletelyBelow;
 import static android.support.test.espresso.assertion.PositionAssertions.isCompletelyLeftOf;
 import static android.support.test.espresso.assertion.PositionAssertions.isCompletelyRightOf;
-import static android.support.test.espresso.assertion.PositionAssertions.isLeftAlignedWith;
-import static android.support.test.espresso.assertion.PositionAssertions.isRightAlignedWith;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -47,7 +45,8 @@ public class CreateActivityInstrumentationTest {
             c.setId(String.valueOf(i + 100));
             categories.add(c);
         }
-        EventApp.setGlobalCategoryIds(shortNames);
+        //TODO replace this with new constructs from globalDataOeprator
+        //EventApp.setGlobalCategoryIds(shortNames);
         startIntent = new Intent();
         startIntent.putExtra(HomeActivity.EXTRA_CATEGORY_LIST, categories);
 

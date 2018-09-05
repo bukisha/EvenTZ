@@ -112,9 +112,9 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         presenter.detachView();
     }
 
-    public static void launch(ArrayList<Category> list, Context context) {
+    public static void launch(Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
-        intent.putExtra(EXTRA_CATEGORY_LIST,list);
+        //intent.putExtra(EXTRA_CATEGORY_LIST,list);
         context.startActivity(intent);
     }
 
@@ -135,7 +135,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     @Override
     public void launchCreateEventActivity() {
-        CreateActivity.launch(this,initialCategoryList);
+        CreateActivity.launch(this);
     }
 
     @Override

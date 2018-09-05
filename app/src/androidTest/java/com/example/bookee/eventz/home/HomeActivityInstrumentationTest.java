@@ -3,7 +3,7 @@ package com.example.bookee.eventz.home;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import com.example.bookee.eventz.EventApp;
+
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.pojos.Category;
 import org.junit.Before;
@@ -40,7 +40,8 @@ public class HomeActivityInstrumentationTest {
             c.setId(String.valueOf(i + 100));
             categories.add(c);
         }
-        EventApp.setGlobalCategoryIds(shortNames);
+        //TODO replace this with new constructs from globalDataOeprator
+        //EventApp.setGlobalCategoryIds(shortNames);
         testLaunchIntent = new Intent();
         testLaunchIntent.putExtra(HomeActivity.EXTRA_CATEGORY_LIST, categories);
     }

@@ -25,7 +25,7 @@ interface MvpContract  {
         void updateCategories(ArrayList<Category> categoryList);
         void displayListOfEvents(String categoryId);
         void launchCreateEventActivity();
-        void displayErrorMessage(String message);
+        void displayErrorMessage(String message);//TODO display message to user if some error happened during init
         void launchFollowedEventsActivity();
 
     }

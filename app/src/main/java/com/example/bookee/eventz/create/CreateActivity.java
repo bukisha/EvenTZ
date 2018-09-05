@@ -31,22 +31,19 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import com.example.bookee.eventz.EventApp;
+
 import com.example.bookee.eventz.R;
-import com.example.bookee.eventz.data.EventsWebApi;
-import com.example.bookee.eventz.data.RetrofitEventsRepository;
-import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.details.DetailsActivity;
+import com.example.bookee.eventz.util.GlobalDataOperator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import retrofit2.Retrofit;
 
 public class CreateActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "CreateActivity";
-    private static final String EXTRA_CATEGORIES = "nameToIdHash";
+    //private static final String EXTRA_CATEGORIES = "nameToIdHash";
     private static final int PICK_IMAGE_REQUEST_CODE = 13;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
 
@@ -74,7 +71,8 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         eventDescription = findViewById(R.id.create_event_info);
 
         presenter = new Presenter(ModelFactory.create(), this);
-        ArrayList<Category> categories = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORIES);
+        //ArrayList<Category> categories = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORIES);
+        ArrayList<Category> categories = GlobalDataOperator.getGlobalCategoryList(getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
         if (categories != null) {
             presenter.setHashMapWithShortNames(categories);
         } else {
@@ -87,7 +85,9 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
 
     private void setSpinnerAdapter() {
         Log.d(TAG, "setSpinnerAdapter: ");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, EventApp.getGlobalCategoryIds());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1,
+                GlobalDataOperator.getCategoriesShortNames(getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE)));
         spinnerChoseCategory.setAdapter(adapter);
     }
 
@@ -238,9 +238,8 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         buttonSelectImage.setImageBitmap(imgBitmap);
     }
 
-    public static void launch(Context context, ArrayList<Category> categories) {
+    public static void launch(Context context) {
         Intent intent = new Intent(context, CreateActivity.class);
-        intent.putExtra(EXTRA_CATEGORIES, categories);
         context.startActivity(intent);
     }
 

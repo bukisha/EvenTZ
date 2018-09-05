@@ -35,7 +35,16 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
     @Override
     public void passInitialCategories(ArrayList<Category> categoryList) {
         GlobalDataOperator.storeGlobalCategoryList(categoryList,getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
-        HomeActivity.launch(categoryList, this);
+        GlobalDataOperator.storeCategoriesShortIds(getCategoryIdShortNames(categoryList),getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
+        HomeActivity.launch(this);
         finish();
+    }
+
+    private ArrayList<String> getCategoryIdShortNames(ArrayList<Category> list) {
+        ArrayList<String> CategoryIds=new ArrayList<>();
+        for(Category c : list) {
+            CategoryIds.add(c.getShortName());
+        }
+        return CategoryIds;
     }
   }
