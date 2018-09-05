@@ -21,6 +21,7 @@ import java.util.HashMap;
 
 class Presenter implements MvpContract.Presenter {
     private static final String TAG = "Presenter";
+    private static final String CURRENCY_EUR = "EUR";
     private MvpContract.Model model;
     private MvpContract.View view;
     private EventWrapper currentWrapper;//todo ako vec imas ovaj wrapper, zasto ne bi samo wrapperu prosledio event i posle toga 100% tvog rada se vrti oko wrappera. Event vise ni ne dodirnes
@@ -134,6 +135,7 @@ class Presenter implements MvpContract.Presenter {
         //currentEvent.setOnlineEvent(true);
         currentEvent.setListed(true);
         currentEvent.setCapacity((long) 100);
+        currentEvent.setCurrency(CURRENCY_EUR);
     }
 
     private void prepareEventDateAndTime() {

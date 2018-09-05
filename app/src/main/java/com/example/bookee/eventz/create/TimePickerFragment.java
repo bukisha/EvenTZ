@@ -9,10 +9,10 @@ import android.text.format.DateFormat;
 import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment {
-    private TimePickerDialog.OnTimeSetListener listener;//todo unused?
+    private TimePickerDialog.OnTimeSetListener listener;
 
     public void setListener(TimePickerDialog.OnTimeSetListener listener) {
-        this.listener = listener;
+       this.listener = listener;
     }
 
     @NonNull
@@ -25,6 +25,6 @@ public class TimePickerFragment extends DialogFragment {
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int min = c.get(Calendar.MINUTE);
         // Create a new instance of TimePickerFragment and return it
-        return new TimePickerDialog(getActivity(), null, hour, min, DateFormat.is24HourFormat(getActivity()));
+        return new TimePickerDialog(getActivity(), listener, hour, min, DateFormat.is24HourFormat(getActivity()));
     }
 }

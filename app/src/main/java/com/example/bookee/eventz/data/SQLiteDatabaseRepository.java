@@ -121,8 +121,4 @@ public class SQLiteDatabaseRepository implements EventDataStorage {
         databaseHelper.getReadableDatabase().delete(EventsDatabaseHelper.TABLE_NAME, selection, selectionArgs);
         //databaseHelper.deleteRowWithId(id);
     }
-
-    public SQLiteDatabase getDatabase() {
-        return database;
-    }
 }

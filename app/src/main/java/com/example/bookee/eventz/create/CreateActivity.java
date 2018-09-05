@@ -47,7 +47,6 @@ import retrofit2.Retrofit;
 public class CreateActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "CreateActivity";
     private static final String EXTRA_CATEGORIES = "nameToIdHash";
-    private static final String CURRENCY_EUR = "EUR";
     private static final int PICK_IMAGE_REQUEST_CODE = 13;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
 
@@ -116,8 +115,6 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
             public void onClick(View view) {
                 presenter.setName(eventName.getText().toString());
                 presenter.setDescription(eventDescription.getText().toString());
-                //Hardcoded currency because i am to lazy to extract currency code from location atm :D
-                presenter.setCurrency(CURRENCY_EUR);//todo onda ga smesti u Model i nemoj ni da koristis setCurrency()
                 presenter.postEvent();
             }
         });

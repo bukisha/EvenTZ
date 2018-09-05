@@ -2,7 +2,7 @@ package com.example.bookee.eventz.data;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import com.example.bookee.eventz.create.TicketCreator;
+
 import com.example.bookee.eventz.create.pojos.PublishResponse;
 import com.example.bookee.eventz.data.callbacks.CreateTicketCallback;
 import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;

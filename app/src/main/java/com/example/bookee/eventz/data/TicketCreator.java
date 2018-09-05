@@ -1,17 +1,16 @@
-package com.example.bookee.eventz.create;
+package com.example.bookee.eventz.data;
 
 import android.support.annotation.NonNull;
 import com.example.bookee.eventz.create.pojos.PaginatedTickets;
 import com.example.bookee.eventz.create.pojos.Ticket;
 import com.example.bookee.eventz.create.pojos.TicketWrapper;
-import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.data.callbacks.CreateTicketCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TicketCreator  {//todo zasto public
+ class TicketCreator  {
     private static final String FREE_TICKET_NAME ="Free ticket" ;
     private static final int NUMBER_OF_TICKETS = 100 ;
     private static TicketCreator instance;

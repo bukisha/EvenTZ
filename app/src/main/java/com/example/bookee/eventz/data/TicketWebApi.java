@@ -1,4 +1,4 @@
-package com.example.bookee.eventz.create;
+package com.example.bookee.eventz.data;
 
 import com.example.bookee.eventz.create.pojos.PaginatedTickets;
 import com.example.bookee.eventz.create.pojos.TicketWrapper;

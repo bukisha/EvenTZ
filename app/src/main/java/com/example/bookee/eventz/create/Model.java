@@ -40,9 +40,9 @@ class Model implements MvpContract.Model {
         eventsRepository.postNewEvent(postEvent, postEventCallback);
     }
 
-    @SuppressWarnings("UnnecessaryLocalVariable")//todo ovoaj warning nije dzaba. on ti kaze da nema potrebe da pravis promenljivu jer mozes ovo da uradis inline. Ako mislis da je ovako citljivije, onda pored ove anotacije dodaj i komentar da se zna zasto si odlucio da prekrsis Lint warning.
+
     private CreateTicketCallback prepareCreateEventCallback(final PostEventCallback callback) {
-        final CreateTicketCallback createTicketsCallback = new CreateTicketCallback() {
+       return new CreateTicketCallback() {
             @Override
             public void onSuccess(String eventId) {
                 Log.d(TAG, "onSuccess: before publishing event with id "+eventId);
@@ -54,12 +54,11 @@ class Model implements MvpContract.Model {
                 callback.onFailure(t);
             }
         };
-        return createTicketsCallback;
     }
 
-    @SuppressWarnings("UnnecessaryLocalVariable")
+
     private PublishEventCallback preparePublishEventCallback(final PostEventCallback callback) {
-        final PublishEventCallback publishEventCallback = new PublishEventCallback() {
+        return new PublishEventCallback() {
             @Override
             public void onSuccess(String eventId) {
                 Log.d(TAG, "onSuccess: published event with id " + eventId);
@@ -71,7 +70,6 @@ class Model implements MvpContract.Model {
                 callback.onFailure(t);
             }
         };
-        return publishEventCallback;
     }
 
     @Override
@@ -89,9 +87,9 @@ class Model implements MvpContract.Model {
     public void uploadLogo(final File currentImageFile, final MvpContract.EndUploadImageCallback endUploadImageCallback) {
 
         imageRepository.fetchUploadData(new MvpContract.FetchUploadDataCallback() {//todo ako ti za upload podataka treba da nesto fecujes, zasto to sve ne sakrijes u imagerepository i da ovaj model bude potpuno nesvestan toga.
-            @Override
-            public void onSuccess(FetchUploadDataResponse uploadDataResponse) {
-                imageRepository.uploadImage(currentImageFile,uploadDataResponse,endUploadImageCallback);
+            @Override                                                                   //zato sto imam u modelu 2 razlicita repo jedan pravi karte i sam event a drugi se bavi problematikom uploada slike,model je taj koji
+            public void onSuccess(FetchUploadDataResponse uploadDataResponse) {            //ih povezuje da zajedno odrade nesto smisleno,jedino je resenje da pravim eventRepository koji ce da se bavi i uploadom slike , a to smo rekli
+                imageRepository.uploadImage(currentImageFile,uploadDataResponse,endUploadImageCallback);       //da je onda narusavanje SRP patterna...zar ne? :D
             }
 
             @Override
