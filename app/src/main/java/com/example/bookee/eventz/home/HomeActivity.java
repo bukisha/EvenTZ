@@ -21,6 +21,8 @@ import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.events.EventsListActivity;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
 import com.example.bookee.eventz.splash.CategoryWebApi;
+import com.example.bookee.eventz.util.GlobalDataOperator;
+
 import java.util.ArrayList;
 
 import retrofit2.Retrofit;
@@ -99,7 +101,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         Log.d(TAG, "onResume: ");
         super.onResume();
         presenter.attachView(this);
-        initialCategoryList = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORY_LIST);
+        initialCategoryList= GlobalDataOperator.getGlobalCategoryList(getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
         presenter.populateNameList(initialCategoryList);
     }
 
@@ -112,7 +114,6 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     public static void launch(ArrayList<Category> list, Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
-        //initialCategoryList=list;
         intent.putExtra(EXTRA_CATEGORY_LIST,list);
         context.startActivity(intent);
     }

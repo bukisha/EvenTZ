@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.RetrofitCategoryRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.home.HomeActivity;
+import com.example.bookee.eventz.util.GlobalDataOperator;
 
 import java.util.ArrayList;
 
@@ -28,11 +30,11 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
     @Override
     public void buildAndShowErrorFragment() {
         DialogFragment errorFragment=new DialogFragment();
-
     }
 
     @Override
     public void passInitialCategories(ArrayList<Category> categoryList) {
+        GlobalDataOperator.storeGlobalCategoryList(categoryList,getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
         HomeActivity.launch(categoryList, this);
         finish();
     }
