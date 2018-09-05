@@ -1,7 +1,6 @@
 package com.example.bookee.eventz.create;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -10,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.hardware.input.InputManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,13 +18,12 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -34,7 +31,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.example.bookee.eventz.EventApp;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.EventsWebApi;
@@ -43,11 +39,9 @@ import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.details.DetailsActivity;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import retrofit2.Retrofit;
 
 public class CreateActivity extends AppCompatActivity implements MvpContract.View {
@@ -59,8 +53,8 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     private static final int PICK_IMAGE_REQUEST_CODE = 13;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
     private Presenter presenter;
-    private AppCompatButton buttonSetDate;
-    private AppCompatButton buttonSetTime;
+    private Button buttonSetDate;
+    private Button buttonSetTime;
     private ImageButton buttonSelectImage;
     private Spinner spinnerChoseCategory;
     private ImageView buttonCreateEvent;

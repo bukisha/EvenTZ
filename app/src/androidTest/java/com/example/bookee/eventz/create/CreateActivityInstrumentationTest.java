@@ -14,10 +14,16 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.assertion.PositionAssertions.isCompletelyAbove;
 import static android.support.test.espresso.assertion.PositionAssertions.isCompletelyBelow;
+import static android.support.test.espresso.assertion.PositionAssertions.isCompletelyLeftOf;
+import static android.support.test.espresso.assertion.PositionAssertions.isCompletelyRightOf;
+import static android.support.test.espresso.assertion.PositionAssertions.isLeftAlignedWith;
+import static android.support.test.espresso.assertion.PositionAssertions.isRightAlignedWith;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class CreateActivityInstrumentationTest {
@@ -52,15 +58,15 @@ public class CreateActivityInstrumentationTest {
         //When
         createActivityActivityTestRule.launchActivity(startIntent);
         //Then
-        onView(withId(R.id.spinner_category_chose)).perform(scrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.event_chose_category_label)).perform(scrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.event_name_label)).perform(scrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.create_event_name)).perform(scrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.event_description_label)).perform(scrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.spinner_category_chose)).perform(scrollTo()).check(matches(isDisplayed())).check(isCompletelyAbove(withId(R.id.event_name_label)));
+        onView(withId(R.id.event_chose_category_label)).perform(scrollTo()).check(matches(isDisplayed())).check(isCompletelyAbove(withId(R.id.spinner_category_chose)));
+        onView(withId(R.id.event_name_label)).perform(scrollTo()).check(matches(isDisplayed())).check(isCompletelyAbove(withId(R.id.create_event_name)));
+        onView(withId(R.id.create_event_name)).perform(scrollTo()).check(matches(isDisplayed())).check(isCompletelyAbove(withId(R.id.event_description_label)));
+        onView(withId(R.id.event_description_label)).perform(scrollTo()).check(matches(isDisplayed())).check(isCompletelyAbove(withId(R.id.create_event_info)));
         onView(withId(R.id.create_event_info)).perform(scrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.set_date_button)).perform(scrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.set_time_button)).perform(scrollTo()).check(matches(isDisplayed()));
-        onView(withId(R.id.button_set_image)).perform(scrollTo()).check(matches(isDisplayed())).check(isCompletelyBelow(withId(R.id.set_time_button)));
+        onView(withId(R.id.set_date_button)).perform(scrollTo()).check(matches(isDisplayed())).check(isCompletelyLeftOf(withId(R.id.set_time_button)));
+        onView(withId(R.id.set_time_button)).perform(scrollTo()).check(matches(isDisplayed())).check(isCompletelyRightOf(withText(R.string.buttonSetDate)));
+        onView(withId(R.id.button_set_image)).perform(scrollTo()).check(matches(isDisplayed())).check(isCompletelyBelow(withId(R.id.button_label)));
     }
 
 }
