@@ -2,14 +2,10 @@ package com.example.bookee.eventz.splash;
 
 import android.content.Context;
 
-import com.example.bookee.eventz.data.pojos.Category;
-
-import java.util.ArrayList;
-
 interface MvpContract {
 
     interface Model {
-        void fetchInitialCategories(FetchCategoriesCallback callback,Context context);
+        void fetchInitialCategories(FetchAndStoreCategoriesCallback callback, Context context);
     }
     interface Presenter {
         void fetchInitialCategories(Context context);
@@ -19,8 +15,8 @@ interface MvpContract {
         void buildAndShowErrorFragment();
         void launchHomeActivity();
     }
-    interface FetchCategoriesCallback {
-        void onSuccess(ArrayList<Category> list);
+    interface FetchAndStoreCategoriesCallback {
+        void onSuccess();
         void onFailure(Throwable t);
 
     }

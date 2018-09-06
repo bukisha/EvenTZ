@@ -4,7 +4,10 @@ import android.util.Log;
 
 import com.example.bookee.eventz.create.pojos.FetchUploadDataResponse;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
+import com.example.bookee.eventz.data.RetrofitImageRepository;
 import com.example.bookee.eventz.data.callbacks.CreateTicketCallback;
+import com.example.bookee.eventz.data.callbacks.EndUploadImageCallback;
+import com.example.bookee.eventz.data.callbacks.FetchUploadDataCallback;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 import com.example.bookee.eventz.data.callbacks.PublishEventCallback;
 import com.example.bookee.eventz.data.pojos.EventWrapper;
@@ -84,9 +87,9 @@ class Model implements MvpContract.Model {
     }
 
     @Override
-    public void uploadLogo(final File currentImageFile, final MvpContract.EndUploadImageCallback endUploadImageCallback) {
+    public void uploadLogo(final File currentImageFile, final EndUploadImageCallback endUploadImageCallback) {
 
-        imageRepository.fetchUploadData(new MvpContract.FetchUploadDataCallback() {//todo ako ti za upload podataka treba da nesto fecujes, zasto to sve ne sakrijes u imagerepository i da ovaj model bude potpuno nesvestan toga.
+        imageRepository.fetchUploadData(new FetchUploadDataCallback() {//todo ako ti za upload podataka treba da nesto fecujes, zasto to sve ne sakrijes u imagerepository i da ovaj model bude potpuno nesvestan toga.
             @Override                                                                   //zato sto imam u modelu 2 razlicita repo jedan pravi karte i sam event a drugi se bavi problematikom uploada slike,model je taj koji
             public void onSuccess(FetchUploadDataResponse uploadDataResponse) {            //ih povezuje da zajedno odrade nesto smisleno,jedino je resenje da pravim eventRepository koji ce da se bavi i uploadom slike , a to smo rekli
                 imageRepository.uploadImage(currentImageFile,uploadDataResponse,endUploadImageCallback);       //da je onda narusavanje SRP patterna...zar ne? :D

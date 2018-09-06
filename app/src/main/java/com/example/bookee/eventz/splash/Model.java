@@ -11,14 +11,14 @@ import java.util.ArrayList;
 
 class Model implements MvpContract.Model {
     private RetrofitCategoryRepository repository;
-    private MvpContract.FetchCategoriesCallback callbackFromPresenter;
+    private MvpContract.FetchAndStoreCategoriesCallback callbackFromPresenter;
 
     Model(RetrofitCategoryRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public void fetchInitialCategories(MvpContract.FetchCategoriesCallback callback, final Context context) {
+    public void fetchInitialCategories(MvpContract.FetchAndStoreCategoriesCallback callback, final Context context) {
         callbackFromPresenter = callback;
 
         FetchCategoriesCallback callbackForRepository = new FetchCategoriesCallback() {
@@ -29,7 +29,7 @@ class Model implements MvpContract.Model {
                 preferencesCategoriesRepository.storeGlobalCategoryList(list);
                 preferencesCategoriesRepository.storeCategoriesShortIds(getCategoryIdShortNames(list));
 
-                callbackFromPresenter.onSuccess(list);
+                callbackFromPresenter.onSuccess();
             }
 
             @Override

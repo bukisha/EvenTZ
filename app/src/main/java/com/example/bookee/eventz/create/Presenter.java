@@ -2,6 +2,7 @@ package com.example.bookee.eventz.create;
 
 import android.util.Log;
 
+import com.example.bookee.eventz.data.callbacks.EndUploadImageCallback;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Description;
@@ -103,7 +104,7 @@ class Presenter implements MvpContract.Presenter {
     }
 
     private void uploadEventLogo() {
-        model.uploadLogo(currentImageFile, new MvpContract.EndUploadImageCallback() {
+        model.uploadLogo(currentImageFile, new EndUploadImageCallback() {
             @Override
             public void onSuccess(Logo logo) {
                 currentEvent.setLogoId(logo.getId());

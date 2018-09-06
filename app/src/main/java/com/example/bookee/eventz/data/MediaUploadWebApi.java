@@ -1,4 +1,4 @@
-package com.example.bookee.eventz.create;
+package com.example.bookee.eventz.data;
 
 import com.example.bookee.eventz.create.pojos.FetchUploadDataResponse;
 import com.example.bookee.eventz.data.pojos.Logo;
@@ -14,8 +14,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
-//todo bolje je da imas jedan package, recimo "data" i u njega stavis i ovo i Repository... I naravno, expozujes samo Repository a ovo ostane lokalno za package
-interface MediaUploadWebApi {
+
+public interface MediaUploadWebApi {
 
     @GET("media/upload")
     Call<FetchUploadDataResponse> requestUpload(@Query("token") String token, @Query("type") String logoType);

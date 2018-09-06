@@ -3,6 +3,7 @@ package com.example.bookee.eventz.create;
 import com.example.bookee.eventz.data.EventsWebApi;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.RetrofitFactory;
+import com.example.bookee.eventz.data.RetrofitImageRepository;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 import com.example.bookee.eventz.data.pojos.Description;
 import com.example.bookee.eventz.data.pojos.End;

@@ -1,14 +1,12 @@
-package com.example.bookee.eventz.create;
+package com.example.bookee.eventz.data;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.example.bookee.eventz.create.pojos.FetchUploadDataResponse;
-import com.example.bookee.eventz.data.RetrofitFactory;
+import com.example.bookee.eventz.data.callbacks.EndUploadImageCallback;
+import com.example.bookee.eventz.data.callbacks.FetchUploadDataCallback;
 import com.example.bookee.eventz.data.pojos.Logo;
-
 import java.io.File;
-
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -16,17 +14,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RetrofitImageRepository {//todo zasto public?
+public class RetrofitImageRepository {
     private static final String TAG = "RetrofitImageRepository";
     private static final String LOGO_TYPE_QUERY_PARAMETER = "image-event-logo-preserve-quality";
     private static final String MEDIA_TYPE_IMAGE = "image/*";
     private MediaUploadWebApi api;
 
-    RetrofitImageRepository(MediaUploadWebApi api) {
+    public RetrofitImageRepository(MediaUploadWebApi api) {
         this.api = api;
     }
 
-    public void fetchUploadData(final MvpContract.FetchUploadDataCallback fetchUploadDataCallback) {
+    public void fetchUploadData(final FetchUploadDataCallback fetchUploadDataCallback) {
         Call<FetchUploadDataResponse> call = api.requestUpload(RetrofitFactory.getAuthTokenPersonal(), LOGO_TYPE_QUERY_PARAMETER);
 
         Callback<FetchUploadDataResponse> callback = new Callback<FetchUploadDataResponse>() {
@@ -45,7 +43,7 @@ public class RetrofitImageRepository {//todo zasto public?
         call.enqueue(callback);
     }
 
-    public void uploadImage(File currentImageFile, final FetchUploadDataResponse fetchUploadDataResponse, final MvpContract.EndUploadImageCallback endUploadImageCallback) {
+    public void uploadImage(File currentImageFile, final FetchUploadDataResponse fetchUploadDataResponse, final EndUploadImageCallback endUploadImageCallback) {
         Log.d(TAG, "uploadImage: ");
         RequestBody requestBody = RequestBody.create(MediaType.parse(MEDIA_TYPE_IMAGE), currentImageFile);
        MultipartBody.Part filePart = MultipartBody.Part.createFormData("file",currentImageFile.getName(),requestBody);
@@ -81,7 +79,7 @@ public class RetrofitImageRepository {//todo zasto public?
         return RequestBody.create(okhttp3.MultipartBody.FORM, fieldName);
     }
 
-    private void signalEndOfUpload(String uploadToken, final MvpContract.EndUploadImageCallback endUploadImageCallback) {
+    private void signalEndOfUpload(String uploadToken, final EndUploadImageCallback endUploadImageCallback) {
         Log.d(TAG, "signalEndOfUpload: ");
         Call<Logo> call = api.uploadEndToken(uploadToken,RetrofitFactory.getAuthTokenPersonal());
 

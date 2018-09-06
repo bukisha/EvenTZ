@@ -2,6 +2,7 @@ package com.example.bookee.eventz.create;
 
 import com.example.bookee.eventz.create.pojos.FetchUploadDataResponse;
 import com.example.bookee.eventz.data.callbacks.CreateTicketCallback;
+import com.example.bookee.eventz.data.callbacks.EndUploadImageCallback;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
 import com.example.bookee.eventz.data.callbacks.PublishEventCallback;
 import com.example.bookee.eventz.data.pojos.Category;
@@ -48,14 +49,5 @@ interface MvpContract {
         void displayError();
 
         void pickImage();
-    }
-    interface EndUploadImageCallback {
-        void onSuccess(Logo logo);
-        void onFailure(Throwable t);
-    }
-
-    interface FetchUploadDataCallback {
-        void onSuccess(FetchUploadDataResponse uploadData);
-        void onFailure(Throwable t);
     }
 }

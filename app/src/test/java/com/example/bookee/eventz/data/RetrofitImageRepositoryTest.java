@@ -1,7 +1,11 @@
-package com.example.bookee.eventz.create;
+package com.example.bookee.eventz.data;
 
 import com.example.bookee.eventz.create.pojos.FetchUploadDataResponse;
+import com.example.bookee.eventz.data.MediaUploadWebApi;
 import com.example.bookee.eventz.data.RetrofitFactory;
+import com.example.bookee.eventz.data.RetrofitImageRepository;
+import com.example.bookee.eventz.data.callbacks.EndUploadImageCallback;
+import com.example.bookee.eventz.data.callbacks.FetchUploadDataCallback;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,12 +19,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class RetrofitImageRepositoryTest {
 
@@ -29,9 +29,9 @@ public class RetrofitImageRepositoryTest {
     private URI testUri;
     private File testFile;
     @Mock
-    private MvpContract.FetchUploadDataCallback fetchUploadDataCallbackMock;
+    private FetchUploadDataCallback fetchUploadDataCallbackMock;
     @Mock
-    private MvpContract.EndUploadImageCallback endUploadImageCallbackMock;
+    private EndUploadImageCallback endUploadImageCallbackMock;
 
     @Before
     public void setUp() throws URISyntaxException {
@@ -60,7 +60,7 @@ public class RetrofitImageRepositoryTest {
     @Test
     public void uploadImage() {
         //Given
-        MvpContract.FetchUploadDataCallback testCallback = new MvpContract.FetchUploadDataCallback() {
+        FetchUploadDataCallback testCallback = new FetchUploadDataCallback() {
             @Override
             public void onSuccess(FetchUploadDataResponse uploadData) {
                 repository.uploadImage(testFile, uploadData, endUploadImageCallbackMock);

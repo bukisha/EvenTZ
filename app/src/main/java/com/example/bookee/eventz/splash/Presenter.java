@@ -1,8 +1,6 @@
 package com.example.bookee.eventz.splash;
 
 import android.content.Context;
-import com.example.bookee.eventz.data.pojos.Category;
-import java.util.ArrayList;
 
 public class Presenter implements MvpContract.Presenter {
     private MvpContract.Model model;
@@ -15,9 +13,9 @@ public class Presenter implements MvpContract.Presenter {
 
     @Override
     public void fetchInitialCategories(Context context) {
-        MvpContract.FetchCategoriesCallback presenterCallback = new MvpContract.FetchCategoriesCallback() {
+        MvpContract.FetchAndStoreCategoriesCallback presenterCallback = new MvpContract.FetchAndStoreCategoriesCallback() {
             @Override
-            public void onSuccess(ArrayList<Category> list) {
+            public void onSuccess() {
                 view.launchHomeActivity();
             }
 

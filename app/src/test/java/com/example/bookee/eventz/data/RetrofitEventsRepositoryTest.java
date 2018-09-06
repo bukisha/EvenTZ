@@ -87,18 +87,6 @@ public class RetrofitEventsRepositoryTest {
         verify(postEventCallbackMock, timeout(5000)).onSuccess(anyString());
     }
 
-    @Test
-    public void testTimezoneCreation() {
-        //Given
-        DateTimeZone dateTimeZone=DateTime.now().getZone();
-        //When
-
-        //Then
-        System.out.println("Current time zone is :" +dateTimeZone.toString());
-
-
-    }
-
     private Event createTestEvent(String eventName, String eventDescription, String logoUrl) {
         System.out.println("creating test Event....");
         Name name = new Name();
