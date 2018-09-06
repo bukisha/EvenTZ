@@ -36,7 +36,7 @@ import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.details.DetailsActivity;
-import com.example.bookee.eventz.util.PreferencesCategoriesRepository;
+import com.example.bookee.eventz.data.PreferencesCategoriesRepository;
 
 import java.io.File;
 import java.io.IOException;

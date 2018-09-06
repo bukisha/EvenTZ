@@ -8,7 +8,6 @@ public class Presenter implements MvpContract.Presenter {
     private MvpContract.Model model;
     private MvpContract.View view;
 
-
     public Presenter(MvpContract.View view, Model model) {
         this.model = model;
         this.view = view;
@@ -19,7 +18,7 @@ public class Presenter implements MvpContract.Presenter {
         MvpContract.FetchCategoriesCallback presenterCallback = new MvpContract.FetchCategoriesCallback() {
             @Override
             public void onSuccess(ArrayList<Category> list) {
-                view.passInitialCategories(list);
+                view.launchHomeActivity();
             }
 
             @Override

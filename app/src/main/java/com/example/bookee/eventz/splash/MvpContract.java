@@ -17,7 +17,7 @@ interface MvpContract {
     }
     interface View {
         void buildAndShowErrorFragment();
-        void passInitialCategories(ArrayList<Category> list);
+        void launchHomeActivity();
     }
     interface FetchCategoriesCallback {
         void onSuccess(ArrayList<Category> list);

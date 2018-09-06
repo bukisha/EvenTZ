@@ -5,7 +5,7 @@ import android.content.Context;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.RetrofitCategoryRepository;
 import com.example.bookee.eventz.data.callbacks.FetchCategoriesCallback;
-import com.example.bookee.eventz.util.PreferencesCategoriesRepository;
+import com.example.bookee.eventz.data.PreferencesCategoriesRepository;
 
 import java.util.ArrayList;
 

@@ -6,7 +6,6 @@ import retrofit2.Retrofit;
 
 class ModelFactory {
 
-
     public static Model create() {
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
         RetrofitCategoryRepository repository = new RetrofitCategoryRepository(retrofit.create(CategoryWebApi.class));

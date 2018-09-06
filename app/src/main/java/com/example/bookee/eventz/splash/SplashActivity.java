@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.home.HomeActivity;
-import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity implements MvpContract.View {
     private MvpContract.Presenter presenter;
@@ -25,9 +23,7 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     @Override
-    public void passInitialCategories(ArrayList<Category> categoryList) {
-       // GlobalDataManipulator.storeGlobalCategoryList(categoryList,getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
-       // GlobalDataManipulator.storeCategoriesShortIds(getCategoryIdShortNames(categoryList),getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
+    public void launchHomeActivity() {
         HomeActivity.launch(this);
         finish();
     }

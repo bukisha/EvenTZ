@@ -18,7 +18,7 @@ import com.example.bookee.eventz.create.CreateActivity;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.events.EventsListActivity;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
-import com.example.bookee.eventz.util.PreferencesCategoriesRepository;
+import com.example.bookee.eventz.data.PreferencesCategoriesRepository;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity implements MvpContract.View {
