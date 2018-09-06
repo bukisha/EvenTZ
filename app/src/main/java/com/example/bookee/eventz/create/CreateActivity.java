@@ -36,7 +36,8 @@ import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.details.DetailsActivity;
-import com.example.bookee.eventz.util.GlobalDataOperator;
+import com.example.bookee.eventz.util.PreferencesCategoriesRepository;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,8 +72,9 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         eventDescription = findViewById(R.id.create_event_info);
 
         presenter = new Presenter(ModelFactory.create(), this);
-        //ArrayList<Category> categories = (ArrayList<Category>) getIntent().getSerializableExtra(EXTRA_CATEGORIES);
-        ArrayList<Category> categories = GlobalDataOperator.getGlobalCategoryList(getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
+        PreferencesCategoriesRepository sharedPreferencesRepository=new PreferencesCategoriesRepository(this.getSharedPreferences(PreferencesCategoriesRepository.GLOBAL_CATEGORY_LIST,MODE_PRIVATE));
+        ArrayList<Category> categories = sharedPreferencesRepository.getGlobalCategoryList();
+
         if (categories != null) {
             presenter.setHashMapWithShortNames(categories);
         } else {
@@ -80,14 +82,17 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
             //TODO show some kind of dialog that informs user that categories are not fetched,aldo this error might have been catched somewhere upstream in code so u do not have too
         }
         setListeners();
-        setSpinnerAdapter();
+        setSpinnerAdapter(sharedPreferencesRepository);
     }
 
-    private void setSpinnerAdapter() {
+    private void setSpinnerAdapter(PreferencesCategoriesRepository preferencesCategoriesRepository) {
         Log.d(TAG, "setSpinnerAdapter: ");
+//
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
-                GlobalDataOperator.getCategoriesShortNames(getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE)));
+                preferencesCategoriesRepository.getCategoriesShortNames()
+                );
+
         spinnerChoseCategory.setAdapter(adapter);
     }
 

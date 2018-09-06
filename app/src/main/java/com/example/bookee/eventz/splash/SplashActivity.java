@@ -4,17 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-
-import com.example.bookee.eventz.R;
-import com.example.bookee.eventz.data.RetrofitCategoryRepository;
-import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.home.HomeActivity;
-import com.example.bookee.eventz.util.GlobalDataOperator;
-
 import java.util.ArrayList;
-
-import retrofit2.Retrofit;
 
 public class SplashActivity extends AppCompatActivity implements MvpContract.View {
     private MvpContract.Presenter presenter;
@@ -24,7 +16,7 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
         super.onCreate(savedInstanceState);
 
         presenter = new Presenter(this, ModelFactory.create());
-        presenter.fetchInitialCategories();
+        presenter.fetchInitialCategories(this);
     }
 
     @Override
@@ -34,17 +26,9 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
 
     @Override
     public void passInitialCategories(ArrayList<Category> categoryList) {
-        GlobalDataOperator.storeGlobalCategoryList(categoryList,getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
-        GlobalDataOperator.storeCategoriesShortIds(getCategoryIdShortNames(categoryList),getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
+       // GlobalDataManipulator.storeGlobalCategoryList(categoryList,getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
+       // GlobalDataManipulator.storeCategoriesShortIds(getCategoryIdShortNames(categoryList),getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
         HomeActivity.launch(this);
         finish();
-    }
-
-    private ArrayList<String> getCategoryIdShortNames(ArrayList<Category> list) {
-        ArrayList<String> CategoryIds=new ArrayList<>();
-        for(Category c : list) {
-            CategoryIds.add(c.getShortName());
-        }
-        return CategoryIds;
     }
   }

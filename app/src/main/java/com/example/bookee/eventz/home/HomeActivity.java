@@ -15,17 +15,11 @@ import android.view.View;
 import android.widget.Toast;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.create.CreateActivity;
-import com.example.bookee.eventz.data.RetrofitCategoryRepository;
-import com.example.bookee.eventz.data.RetrofitFactory;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.events.EventsListActivity;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
-import com.example.bookee.eventz.splash.CategoryWebApi;
-import com.example.bookee.eventz.util.GlobalDataOperator;
-
+import com.example.bookee.eventz.util.PreferencesCategoriesRepository;
 import java.util.ArrayList;
-
-import retrofit2.Retrofit;
 
 public class HomeActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "HomeActivity";
@@ -101,7 +95,8 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         Log.d(TAG, "onResume: ");
         super.onResume();
         presenter.attachView(this);
-        initialCategoryList= GlobalDataOperator.getGlobalCategoryList(getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
+        //initialCategoryList= GlobalDataManipulator.getGlobalCategoryList(getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
+        initialCategoryList=new PreferencesCategoriesRepository(this.getSharedPreferences(PreferencesCategoriesRepository.GLOBAL_CATEGORY_LIST,MODE_PRIVATE)).getGlobalCategoryList();
         presenter.populateNameList(initialCategoryList);
     }
 
@@ -114,7 +109,6 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     public static void launch(Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
-        //intent.putExtra(EXTRA_CATEGORY_LIST,list);
         context.startActivity(intent);
     }
 

@@ -1,5 +1,7 @@
 package com.example.bookee.eventz.splash;
 
+import android.content.Context;
+
 import com.example.bookee.eventz.data.pojos.Category;
 
 import java.util.ArrayList;
@@ -7,10 +9,10 @@ import java.util.ArrayList;
 interface MvpContract {
 
     interface Model {
-        void fetchInitialCategories(FetchCategoriesCallback callback);
+        void fetchInitialCategories(FetchCategoriesCallback callback,Context context);
     }
     interface Presenter {
-        void fetchInitialCategories();
+        void fetchInitialCategories(Context context);
 
     }
     interface View {

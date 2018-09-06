@@ -1,7 +1,7 @@
 package com.example.bookee.eventz.splash;
 
+import android.content.Context;
 import com.example.bookee.eventz.data.pojos.Category;
-
 import java.util.ArrayList;
 
 public class Presenter implements MvpContract.Presenter {
@@ -15,13 +15,10 @@ public class Presenter implements MvpContract.Presenter {
     }
 
     @Override
-    public void fetchInitialCategories() {
+    public void fetchInitialCategories(Context context) {
         MvpContract.FetchCategoriesCallback presenterCallback = new MvpContract.FetchCategoriesCallback() {
             @Override
             public void onSuccess(ArrayList<Category> list) {
-
-               // EventApp.setGlobalCategoryIds(getCategoryIdShortNames(list));//todo i pazi ovo: model ti fecuje podaatke i umesto u modelu, ti u prezenteru manipulises sa njima i smestas ih u static promenljivu! Prezenter ne zna za podatke i za njihovu manipulaciju: prezenter uzme podatak i pripremi ga za View i NISTA VISE
-                //EventApp.setGlobalListOfAllCategories(list);
                 view.passInitialCategories(list);
             }
 
@@ -32,6 +29,6 @@ public class Presenter implements MvpContract.Presenter {
                 }
             }
         };
-        model.fetchInitialCategories(presenterCallback);
+        model.fetchInitialCategories(presenterCallback,context);
     }
 }
