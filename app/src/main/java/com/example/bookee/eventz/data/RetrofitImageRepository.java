@@ -2,11 +2,14 @@ package com.example.bookee.eventz.data;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+
 import com.example.bookee.eventz.create.pojos.FetchUploadDataResponse;
 import com.example.bookee.eventz.data.callbacks.EndUploadImageCallback;
 import com.example.bookee.eventz.data.callbacks.FetchUploadDataCallback;
 import com.example.bookee.eventz.data.pojos.Logo;
+
 import java.io.File;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -43,36 +46,45 @@ public class RetrofitImageRepository {
         call.enqueue(callback);
     }
 
-    public void uploadImage(File currentImageFile, final FetchUploadDataResponse fetchUploadDataResponse, final EndUploadImageCallback endUploadImageCallback) {
-        Log.d(TAG, "uploadImage: ");
-        RequestBody requestBody = RequestBody.create(MediaType.parse(MEDIA_TYPE_IMAGE), currentImageFile);
-       MultipartBody.Part filePart = MultipartBody.Part.createFormData("file",currentImageFile.getName(),requestBody);
-        Log.d(TAG, "uploadImage: "+currentImageFile.getPath());
+    public void uploadImage(final File currentImageFile, final EndUploadImageCallback endUploadImageCallback) {
 
-     // RequestBody fileMultipart= RequestBody.create(MediaType.parse(MEDIA_TYPE_IMAGE), currentImageFile);
-
-       Call<Void> call = api.uploadImage(fetchUploadDataResponse.getUploadUrl(),
-                createPartFromString(fetchUploadDataResponse.getUploadData().getAWSAccessKeyId()),
-                createPartFromString(fetchUploadDataResponse.getUploadData().getAcl()),
-                createPartFromString(fetchUploadDataResponse.getUploadData().getBucket()),
-                createPartFromString(fetchUploadDataResponse.getUploadData().getKey()),
-                createPartFromString(fetchUploadDataResponse.getUploadData().getPolicy()),
-                createPartFromString(fetchUploadDataResponse.getUploadData().getSignature()),
-                filePart);
-
-        Callback<Void> callback = new Callback<Void>() {
+        this.fetchUploadData(new FetchUploadDataCallback() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                Log.d(TAG, "onResponse: image has been uploaded i guess....");
-                signalEndOfUpload(fetchUploadDataResponse.getUploadToken(), endUploadImageCallback);
+            public void onSuccess(final FetchUploadDataResponse fetchUploadDataResponse) {
+                Log.d(TAG, "uploadImage: ");
+                RequestBody requestBody = RequestBody.create(MediaType.parse(MEDIA_TYPE_IMAGE), currentImageFile);
+                MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", currentImageFile.getName(), requestBody);
+                Log.d(TAG, "uploadImage: " + currentImageFile.getPath());
+
+                Call<Void> call = api.uploadImage(fetchUploadDataResponse.getUploadUrl(),
+                        createPartFromString(fetchUploadDataResponse.getUploadData().getAWSAccessKeyId()),
+                        createPartFromString(fetchUploadDataResponse.getUploadData().getAcl()),
+                        createPartFromString(fetchUploadDataResponse.getUploadData().getBucket()),
+                        createPartFromString(fetchUploadDataResponse.getUploadData().getKey()),
+                        createPartFromString(fetchUploadDataResponse.getUploadData().getPolicy()),
+                        createPartFromString(fetchUploadDataResponse.getUploadData().getSignature()),
+                        filePart);
+
+                Callback<Void> callback = new Callback<Void>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                        Log.d(TAG, "onResponse: image has been uploaded i guess....");
+                        signalEndOfUpload(fetchUploadDataResponse.getUploadToken(), endUploadImageCallback);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                        //TODO if signaling of end of upload failed
+                    }
+                };
+                call.enqueue(callback);
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                //TODO
+            public void onFailure(Throwable t) {
+            //TODO  if fetching of upload data failed
             }
-        };
-        call.enqueue(callback);
+        });
     }
 
     private RequestBody createPartFromString(String fieldName) {
@@ -81,7 +93,7 @@ public class RetrofitImageRepository {
 
     private void signalEndOfUpload(String uploadToken, final EndUploadImageCallback endUploadImageCallback) {
         Log.d(TAG, "signalEndOfUpload: ");
-        Call<Logo> call = api.uploadEndToken(uploadToken,RetrofitFactory.getAuthTokenPersonal());
+        Call<Logo> call = api.uploadEndToken(uploadToken, RetrofitFactory.getAuthTokenPersonal());
 
         Callback<Logo> callback = new Callback<Logo>() {
             @Override

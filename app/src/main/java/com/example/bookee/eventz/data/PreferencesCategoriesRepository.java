@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class PreferencesCategoriesRepository implements GlobalDataOperator {
     public static final String GLOBAL_CATEGORY_LIST = "globalCategoryList";
-    public static final String CATEGORIES_SHORT_NAMES ="shortNamesOfCategories" ;
+    private static final String CATEGORIES_SHORT_NAMES ="shortNamesOfCategories" ;
 
     private SharedPreferences sharedPreferences;
 

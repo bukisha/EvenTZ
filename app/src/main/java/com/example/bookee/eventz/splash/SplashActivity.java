@@ -18,6 +18,11 @@ public class SplashActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void buildAndShowErrorFragment() {
         DialogFragment errorFragment=new DialogFragment();
     }

@@ -32,7 +32,6 @@ class Model implements MvpContract.Model {
             @Override
             public void onSuccess(final String eventId) {
                 createTickets(eventId,prepareCreateEventCallback(callback));
-                //callback.onSuccess(e);
             }
 
             @Override
@@ -88,18 +87,6 @@ class Model implements MvpContract.Model {
 
     @Override
     public void uploadLogo(final File currentImageFile, final EndUploadImageCallback endUploadImageCallback) {
-
-        imageRepository.fetchUploadData(new FetchUploadDataCallback() {//todo ako ti za upload podataka treba da nesto fecujes, zasto to sve ne sakrijes u imagerepository i da ovaj model bude potpuno nesvestan toga.
-            @Override                                                                   //zato sto imam u modelu 2 razlicita repo jedan pravi karte i sam event a drugi se bavi problematikom uploada slike,model je taj koji
-            public void onSuccess(FetchUploadDataResponse uploadDataResponse) {            //ih povezuje da zajedno odrade nesto smisleno,jedino je resenje da pravim eventRepository koji ce da se bavi i uploadom slike , a to smo rekli
-                imageRepository.uploadImage(currentImageFile,uploadDataResponse,endUploadImageCallback);       //da je onda narusavanje SRP patterna...zar ne? :D
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                //TODO
-            }
-        });
-
+        imageRepository.uploadImage(currentImageFile,endUploadImageCallback);
     }
 }

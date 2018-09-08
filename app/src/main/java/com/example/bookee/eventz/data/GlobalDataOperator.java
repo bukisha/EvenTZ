@@ -1,6 +1,5 @@
 package com.example.bookee.eventz.data;
 
-import android.content.SharedPreferences;
 import com.example.bookee.eventz.data.pojos.Category;
 import java.util.ArrayList;
 
