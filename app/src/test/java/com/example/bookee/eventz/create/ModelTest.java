@@ -40,30 +40,30 @@ public class ModelTest {
     @Test
     public void postEvent() {
         //Given
-        class ServerAnswerWrapper implements PostEventCallback {
-
-            @Override
-            public void onSuccess(String eventId) {
-                System.out.println("SUCCESS-FULL CALLBACK!!!!");
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                System.out.println("FAILED CALLBACK!!!!");
-            }
-        }
-        ServerAnswerWrapper answer = new ServerAnswerWrapper();
-
-        Event event = createTestEvent("Will this work or not",
-                "test description of event",
-                TEST_URL);
-
-        EventWrapper eventWrapper = new EventWrapper();
-        eventWrapper.setEvent(event);
-        System.out.println("Event wrapper contains event " + eventWrapper.getEvent());
-        //When
-        model.postEvent(eventWrapper, answer);
-        //Then
+//        class ServerAnswerWrapper implements PostEventCallback {
+//
+//            @Override
+//            public void onSuccess(String eventId) {
+//                System.out.println("SUCCESS-FULL CALLBACK!!!!");
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                System.out.println("FAILED CALLBACK!!!!");
+//            }
+//        }
+//        ServerAnswerWrapper answer = new ServerAnswerWrapper();
+//
+//        Event event = createTestEvent("Will this work or not",
+//                "test description of event",
+//                TEST_URL);
+//
+//        EventWrapper eventWrapper = new EventWrapper();
+//        eventWrapper.setEvent(event);
+//        System.out.println("Event wrapper contains event " + eventWrapper.getEvent());
+//        //When
+//        model.postEvent(eventWrapper, answer);
+//        //Then
 
     }
 

@@ -2,7 +2,6 @@ package com.example.bookee.eventz.data;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.example.bookee.eventz.create.pojos.PublishResponse;
 import com.example.bookee.eventz.data.callbacks.CreateTicketCallback;
 import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
@@ -13,7 +12,6 @@ import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.PaginatedEvents;
 import com.example.bookee.eventz.data.callbacks.FetchEventsForQueryCallback;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,7 +57,6 @@ public class RetrofitEventsRepository {
                 modelCallback.onFailure(t);
             }
         };
-
         call.enqueue(callback);
     }
 
@@ -82,36 +79,38 @@ public class RetrofitEventsRepository {
         call.enqueue(callback);
     }
 
-    public void postNewEvent(EventWrapper event, final PostEventCallback postCallback) {
-        Call<Event> call = api.createNewEvent(event,RetrofitFactory.getAuthTokenPersonal());
+    public void postNewEvent(EventWrapper event, final PostEventCallback presenterCallback) {
+        Call<Event> call = api.createNewEvent(event, RetrofitFactory.getAuthTokenPersonal());
 
         Callback<Event> callback = new Callback<Event>() {
             @Override
             public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
                 Event e = response.body();
                 if (e != null) {
-                    postCallback.onSuccess(e.getId());
+                    createTicketsForEvent(e.getId(),
+                            prepareCreateTicketCallback(preparePublishEventCallback(presenterCallback)));
+                  //  presenterCallback.onSuccess(e.getId());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
                 Log.d(TAG, "onFailure: " + t.toString());
-                postCallback.onFailure(t);
+                presenterCallback.onFailure(t);
             }
         };
         call.enqueue(callback);
     }
 
     public void publishEvent(final String eventId, final PublishEventCallback callback) {
-        Log.d(TAG, "publishEvent: repository is publishing event with id "+eventId);
-        Call<PublishResponse> call = api.publishEvent(eventId,RetrofitFactory.getAuthTokenPersonal());
+        Log.d(TAG, "publishEvent: repository is publishing event with id " + eventId);
+        Call<PublishResponse> call = api.publishEvent(eventId, RetrofitFactory.getAuthTokenPersonal());
 
         call.enqueue(new Callback<PublishResponse>() {
             @Override
             public void onResponse(@NonNull Call<PublishResponse> call, @NonNull Response<PublishResponse> response) {
                 //noinspection ConstantConditions
-                Log.d(TAG, "onResponse: repository published event with back code "+response.body().getPublished());
+                Log.d(TAG, "onResponse: repository published event with back code " + response.body().getPublished());
                 callback.onSuccess(eventId);
             }
 
@@ -122,7 +121,37 @@ public class RetrofitEventsRepository {
         });
     }
 
-    public void createTicketsForEvent(String eventId,final CreateTicketCallback callback) {
-        TicketCreator.getInstance().createTicketForEvent(eventId,callback);
+    public void createTicketsForEvent(String eventId, final CreateTicketCallback callback) {
+        TicketCreator.getInstance().createTicketForEvent(eventId, callback);
+    }
+
+    private CreateTicketCallback prepareCreateTicketCallback(final PublishEventCallback callback) {
+        return new CreateTicketCallback() {
+            @Override
+            public void onSuccess(String eventId) {
+                Log.d(TAG, "onSuccess: before publishing event with id " + eventId);
+                publishEvent(eventId, callback);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onFailure(t);
+            }
+        };
+    }
+
+    private PublishEventCallback preparePublishEventCallback(final PostEventCallback callback) {
+        return new PublishEventCallback() {
+            @Override
+            public void onSuccess(String eventId) {
+                Log.d(TAG, "onSuccess: published event with id " + eventId);
+                callback.onSuccess(eventId);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onFailure(t);
+            }
+        };
     }
 }
