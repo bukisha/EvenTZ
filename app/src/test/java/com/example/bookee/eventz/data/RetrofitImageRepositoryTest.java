@@ -63,7 +63,7 @@ public class RetrofitImageRepositoryTest {
         FetchUploadDataCallback testCallback = new FetchUploadDataCallback() {
             @Override
             public void onSuccess(FetchUploadDataResponse uploadData) {
-                repository.uploadImage(testFile, uploadData, endUploadImageCallbackMock);
+               // repository.uploadImage(testFile, uploadData, endUploadImageCallbackMock);
             }
 
             @Override
