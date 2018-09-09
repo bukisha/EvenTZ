@@ -53,7 +53,7 @@ class Presenter implements MvpContract.Presenter {
             @Override
             public void onSuccess(String id) {
                 if(viewNotExist()) return;
-                view.launchDisplayActivity(id);
+                view.launchDetailsActivity(id);
             }
 
             @Override

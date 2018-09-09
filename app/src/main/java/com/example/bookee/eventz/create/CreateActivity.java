@@ -150,11 +150,6 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
     }
 
     @Override
-    public void showCreatedEvent(Event event) {//todo a di ga koristis, rodjo?
-        DetailsActivity.launch(event.getId(), this);
-    }
-
-    @Override
     public void showDateChooser() {
         DatePickerFragment datePicker = new DatePickerFragment();
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {

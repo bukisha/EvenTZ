@@ -102,7 +102,7 @@ public class RetrofitEventsRepository {
         call.enqueue(callback);
     }
 
-    public void publishEvent(final String eventId, final PublishEventCallback callback) {
+    private void publishEvent(final String eventId, final PublishEventCallback callback) {
         Log.d(TAG, "publishEvent: repository is publishing event with id " + eventId);
         Call<PublishResponse> call = api.publishEvent(eventId, RetrofitFactory.getAuthTokenPersonal());
 
@@ -121,7 +121,7 @@ public class RetrofitEventsRepository {
         });
     }
 
-    public void createTicketsForEvent(String eventId, final CreateTicketCallback callback) {
+    private void createTicketsForEvent(String eventId, final CreateTicketCallback callback) {
         TicketCreator.getInstance().createTicketForEvent(eventId, callback);
     }
 

@@ -69,7 +69,7 @@ public class FollowedEventsActivity extends AppCompatActivity implements MvpCont
     }
 
     @Override
-    public void launchDisplayActivity(String id) {
+    public void launchDetailsActivity(String id) {
         DetailsActivity.launch(id,this);
     }
 }

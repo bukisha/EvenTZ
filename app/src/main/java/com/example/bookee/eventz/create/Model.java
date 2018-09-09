@@ -1,15 +1,10 @@
 package com.example.bookee.eventz.create;
 
 import android.util.Log;
-
-import com.example.bookee.eventz.create.pojos.FetchUploadDataResponse;
 import com.example.bookee.eventz.data.RetrofitEventsRepository;
 import com.example.bookee.eventz.data.RetrofitImageRepository;
-import com.example.bookee.eventz.data.callbacks.CreateTicketCallback;
 import com.example.bookee.eventz.data.callbacks.EndUploadImageCallback;
-import com.example.bookee.eventz.data.callbacks.FetchUploadDataCallback;
 import com.example.bookee.eventz.data.callbacks.PostEventCallback;
-import com.example.bookee.eventz.data.callbacks.PublishEventCallback;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.data.pojos.Description;
 import com.example.bookee.eventz.data.pojos.End;
@@ -18,12 +13,10 @@ import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.Logo;
 import com.example.bookee.eventz.data.pojos.Name;
 import com.example.bookee.eventz.data.pojos.Start;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,11 +56,6 @@ class Model implements MvpContract.Model {
         Description currentDescription = new Description();
         currentDescription.setHtml(description);
         currentEvent.setDescription(currentDescription);
-    }
-
-    @Override
-    public void setCurrency(String currency) {
-        currentEvent.setCurrency(CURRENCY_EUR);
     }
 
     @Override
@@ -182,17 +170,6 @@ class Model implements MvpContract.Model {
 
         }
     }
-
-//    @Override
-//    public void createTickets(String eventId, final CreateTicketCallback callback) {
-//        Log.d(TAG, "createTickets: create Model ");
-//        eventsRepository.createTicketsForEvent(eventId, callback);
-//    }
-
-//    @Override
-//    public void publishEvent(String eventId, final PublishEventCallback callback) {
-//        eventsRepository.publishEvent(eventId, callback);
-//    }
 
     @Override
     public void uploadLogo(final File currentImageFile, final EndUploadImageCallback endUploadImageCallback) {

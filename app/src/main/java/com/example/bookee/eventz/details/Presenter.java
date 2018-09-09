@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 
 import com.example.bookee.eventz.data.pojos.*;
 
@@ -80,8 +81,8 @@ class Presenter implements MvpContract.Presenter {
         return title;
     }
 
-    public void attachView(DetailsActivity detailsActivity) {
-        this.view = detailsActivity;
+    public void attachView(MvpContract.View view) {
+        this.view = view;
     }
 
     public void detachView() {
@@ -105,11 +106,6 @@ class Presenter implements MvpContract.Presenter {
     public void launchFollowedEventsActivity() {
         if (notViewExists()) return;
         view.launchFollowedEventActivity();
-    }
-
-    @Override
-    public void removeRowWithId(String id) {
-        model.removeEventWithId(id);
     }
 
     @Override

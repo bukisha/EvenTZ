@@ -53,6 +53,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: ");
         presenter.closeDataSource();
+        presenter.detachView();
         super.onDestroy();
     }
 

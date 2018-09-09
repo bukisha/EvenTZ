@@ -46,8 +46,8 @@ class Presenter implements MvpContract.Presenter {
     }
 
     @Override
-    public void attachView(EventsListActivity eventsListActivity) {
-        this.view = eventsListActivity;
+    public void attachView(MvpContract.View view) {
+        this.view = view;
     }
 
     @Override

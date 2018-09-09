@@ -32,11 +32,6 @@ class Presenter implements MvpContract.Presenter {
     }
 
     @Override
-    public void setCurrency(String currency) {
-        model.setCurrency(currency);
-    }
-
-    @Override
     public void setLogo(File imageFile) {
         model.setLogo(imageFile);
     }

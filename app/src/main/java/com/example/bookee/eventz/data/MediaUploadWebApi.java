@@ -30,17 +30,6 @@ public interface MediaUploadWebApi {
                            @Part("policy") RequestBody policy,
                            @Part("signature") RequestBody signature,
                            @Part MultipartBody.Part imageFile);
-//    @FormUrlEncoded
-//    @Headers("Content-Type: application/x-www-form-urlencoded")
-//    @POST
-//    Call<Void> uploadImage(@Url String uploadUrl,
-//                           @Field("AWSAccessKeyId") String AWSAccessKeyId,
-//                           @Field("acl") String acl,
-//                           @Field("bucket") String bucket,
-//                           @Field("key") String key,
-//                           @Field("policy") String policy,
-//                           @Field("signature") String signature,
-//                           @Field("file") File imageFile);
 
     @FormUrlEncoded
     @POST("media/upload/")
