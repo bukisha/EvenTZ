@@ -44,7 +44,6 @@ import java.util.ArrayList;
 
 public class CreateActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "CreateActivity";
-    //private static final String EXTRA_CATEGORIES = "nameToIdHash";
     private static final int PICK_IMAGE_REQUEST_CODE = 13;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 23;
 

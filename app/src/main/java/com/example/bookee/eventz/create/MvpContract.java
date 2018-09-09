@@ -15,10 +15,32 @@ import java.util.ArrayList;
 //todo ja volim da vidim komentare za svaku metodu. tu se cesto desi da dok pises komentar shvatis da mozda moze drugacije
 interface MvpContract {
     interface Model {
-        void postEvent(EventWrapper postEvent, PostEventCallback callback);
+        void postEvent(PostEventCallback callback);
         void createTickets(String eventId,CreateTicketCallback callback);
         void publishEvent(String eventId, PublishEventCallback callback);
         void uploadLogo(File currentImageFile,EndUploadImageCallback callback);
+
+        void setName(String name);
+
+        void setDescription(String description);
+
+        void setCurrency(String currency);
+
+        void setLogo(File imageFile);
+
+        String getCategoryId(String categoryShortName);
+
+        void setAdditionalEventProperties();
+
+        void prepareEventDateAndTime();
+
+        void setTime(int hour, int min);
+
+        void setDate(int year, int month, int day);
+
+        void setHashMapWithShortNames(ArrayList<Category> categories);
+
+        void setCategoryId(String categoryId);
     }
 
     interface Presenter {
