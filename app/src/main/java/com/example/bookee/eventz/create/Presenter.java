@@ -61,35 +61,6 @@ class Presenter implements MvpContract.Presenter {
         model.postEvent(callback);
     }
 
-//    private void uploadEventLogo() {
-//        model.uploadLogo(currentImageFile, new EndUploadImageCallback() {
-//            @Override
-//            public void onSuccess(Logo logo) {
-//                currentEvent.setLogoId(logo.getId());
-//                currentWrapper.setEvent(currentEvent);
-//                PostEventCallback callback = new PostEventCallback() {
-//                    @Override
-//                    public void onSuccess(String eventId) {
-//                        Log.d(TAG, "onSuccess: before creating tickets");
-//                        view.displayNewEvent(eventId);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Throwable t) {
-//                        if (notViewExists()) return;
-//                        view.displayError();
-//                    }
-//                };
-//                model.postEvent(currentWrapper, callback);
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                //TODO inform view(user) that image did not upload
-//            }
-//        });
-//    }
-
     private void setAdditionalEventProperties() {
         model.setAdditionalEventProperties();
     }

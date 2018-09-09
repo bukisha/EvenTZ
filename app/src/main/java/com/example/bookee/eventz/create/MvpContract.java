@@ -16,8 +16,8 @@ import java.util.ArrayList;
 interface MvpContract {
     interface Model {
         void postEvent(PostEventCallback callback);
-        void createTickets(String eventId,CreateTicketCallback callback);
-        void publishEvent(String eventId, PublishEventCallback callback);
+        //void createTickets(String eventId,CreateTicketCallback callback);
+       // void publishEvent(String eventId, PublishEventCallback callback);
         void uploadLogo(File currentImageFile,EndUploadImageCallback callback);
 
         void setName(String name);

@@ -2,7 +2,6 @@ package com.example.bookee.eventz.data;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.example.bookee.eventz.create.pojos.PublishResponse;
 import com.example.bookee.eventz.data.callbacks.CreateTicketCallback;
 import com.example.bookee.eventz.data.callbacks.FetchEventForIdCallback;
@@ -13,7 +12,6 @@ import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.pojos.EventWrapper;
 import com.example.bookee.eventz.data.pojos.PaginatedEvents;
 import com.example.bookee.eventz.data.callbacks.FetchEventsForQueryCallback;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,7 +57,6 @@ public class RetrofitEventsRepository {
                 modelCallback.onFailure(t);
             }
         };
-
         call.enqueue(callback);
     }
 
@@ -141,7 +138,6 @@ public class RetrofitEventsRepository {
                 callback.onFailure(t);
             }
         };
-
     }
 
     private PublishEventCallback preparePublishEventCallback(final PostEventCallback callback) {

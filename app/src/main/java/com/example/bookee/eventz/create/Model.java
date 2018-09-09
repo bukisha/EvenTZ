@@ -15,6 +15,7 @@ import com.example.bookee.eventz.data.pojos.Description;
 import com.example.bookee.eventz.data.pojos.End;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.data.pojos.EventWrapper;
+import com.example.bookee.eventz.data.pojos.Logo;
 import com.example.bookee.eventz.data.pojos.Name;
 import com.example.bookee.eventz.data.pojos.Start;
 
@@ -140,8 +141,30 @@ class Model implements MvpContract.Model {
         prepareEventDateAndTime();
         setAdditionalEventProperties();
         if (currentImageFile != null) {
-            //TODO include and refactor this latter when u start doing image upload
-           // uploadEventLogo();
+           uploadLogo(currentImageFile, new EndUploadImageCallback() {
+               @Override
+               public void onSuccess(Logo logo) {
+                   currentEvent.setLogoId(logo.getId());
+                   EventWrapper wrapperForSending=new EventWrapper();
+                   wrapperForSending.setEvent(currentEvent);
+                   eventsRepository.postNewEvent(wrapperForSending, new PostEventCallback() {
+                       @Override
+                       public void onSuccess(String eventId) {
+                           callback.onSuccess(eventId);
+                       }
+
+                       @Override
+                       public void onFailure(Throwable t) {
+                           callback.onFailure(t);
+                       }
+                   });
+               }
+
+               @Override
+               public void onFailure(Throwable t) {
+                  //TODO signal that image upload failed
+               }
+           });
         } else {
             EventWrapper wrapperForSending=new EventWrapper();
             wrapperForSending.setEvent(currentEvent);
@@ -158,63 +181,18 @@ class Model implements MvpContract.Model {
             });
 
         }
-
-//        PostEventCallback postEventCallback = new PostEventCallback() {
-//            @Override
-//            public void onSuccess(final String eventId) {
-//                createTickets(eventId,prepareCreateEventCallback(callback));
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                callback.onFailure(t);
-//            }
-//        };
-//        eventsRepository.postNewEvent(postEvent, postEventCallback);
     }
 
-
-//    private CreateTicketCallback prepareCreateEventCallback(final PostEventCallback callback) {
-//        return new CreateTicketCallback() {
-//            @Override
-//            public void onSuccess(String eventId) {
-//                Log.d(TAG, "onSuccess: before publishing event with id " + eventId);
-//                publishEvent(eventId, preparePublishEventCallback(callback));
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                callback.onFailure(t);
-//            }
-//        };
+//    @Override
+//    public void createTickets(String eventId, final CreateTicketCallback callback) {
+//        Log.d(TAG, "createTickets: create Model ");
+//        eventsRepository.createTicketsForEvent(eventId, callback);
 //    }
 
-
-    private PublishEventCallback preparePublishEventCallback(final PostEventCallback callback) {
-        return new PublishEventCallback() {
-            @Override
-            public void onSuccess(String eventId) {
-                Log.d(TAG, "onSuccess: published event with id " + eventId);
-                callback.onSuccess(eventId);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                callback.onFailure(t);
-            }
-        };
-    }
-
-    @Override
-    public void createTickets(String eventId, final CreateTicketCallback callback) {
-        Log.d(TAG, "createTickets: create Model ");
-        eventsRepository.createTicketsForEvent(eventId, callback);
-    }
-
-    @Override
-    public void publishEvent(String eventId, final PublishEventCallback callback) {
-        eventsRepository.publishEvent(eventId, callback);
-    }
+//    @Override
+//    public void publishEvent(String eventId, final PublishEventCallback callback) {
+//        eventsRepository.publishEvent(eventId, callback);
+//    }
 
     @Override
     public void uploadLogo(final File currentImageFile, final EndUploadImageCallback endUploadImageCallback) {
