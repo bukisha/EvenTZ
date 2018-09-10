@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -23,7 +24,6 @@ import com.bumptech.glide.request.target.Target;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.pojos.Event;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
-
 
 public class DetailsActivity extends AppCompatActivity implements MvpContract.View {
     private static final String TAG = "DetailsActivity";
@@ -45,8 +45,7 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         setContentView(R.layout.activity_event_details);
         initUI();
 
-            presenter = new Presenter(ModelFactory.create(this), this);
-
+        presenter = new Presenter(ModelFactory.create(this), this);
     }
 
     @Override
@@ -102,7 +101,6 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-
 
     @Override
     protected void onResume() {
@@ -181,14 +179,13 @@ public class DetailsActivity extends AppCompatActivity implements MvpContract.Vi
     @Override
     public void setFollowUncheck(Event uncheckedEvent) {
         buttonFollow.setImageResource(R.drawable.ic_follow_unchecked);
-       // presenter.removeRowWithId(uncheckedEvent.getId());
-        presenter.stopFollowingEvent(uncheckedEvent,this.getApplicationContext());
+        presenter.stopFollowingEvent(uncheckedEvent, this.getApplicationContext());
     }
 
     @Override
     public void setFollowChecked(Event checkedEvent) {
         buttonFollow.setImageResource(R.drawable.ic_follow_checked);
-        presenter.startFollowingEvent(checkedEvent,this.getApplicationContext());
+        presenter.startFollowingEvent(checkedEvent, this.getApplicationContext());
     }
 
     @Override

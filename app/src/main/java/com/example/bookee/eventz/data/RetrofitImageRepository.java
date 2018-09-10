@@ -33,9 +33,9 @@ public class RetrofitImageRepository {
         Callback<FetchUploadDataResponse> callback = new Callback<FetchUploadDataResponse>() {
             @Override
             public void onResponse(@NonNull Call<FetchUploadDataResponse> call, @NonNull Response<FetchUploadDataResponse> response) {
-                if (response.body() != null) {
+               if (response.body() != null) {
                     fetchUploadDataCallback.onSuccess(response.body());
-                }
+               }
             }
 
             @Override
@@ -82,7 +82,7 @@ public class RetrofitImageRepository {
 
             @Override
             public void onFailure(Throwable t) {
-            //TODO  if fetching of upload data failed
+                //TODO  if fetching of upload data failed
             }
         });
     }
