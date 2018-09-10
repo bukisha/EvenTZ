@@ -48,8 +48,6 @@ public class RetrofitImageRepositoryTest {
     private FetchUploadDataResponse fetchUploadDataResponseMock;
     @Mock
     private UploadData uploadDataMock;
-    @Mock
-    private File fileMock;
 
     @Before
     public void setUp() throws URISyntaxException {
