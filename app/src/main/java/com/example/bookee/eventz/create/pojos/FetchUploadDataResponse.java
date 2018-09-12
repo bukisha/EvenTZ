@@ -2,7 +2,7 @@ package com.example.bookee.eventz.create.pojos;
 
 import com.google.gson.annotations.SerializedName;
 
-
+//todo generalno je bolje da ovaj package nazoves "entities" jer cim dodas neku i najmanju logiku u neko od ovih klasa, one vise nisu pojo
 public class FetchUploadDataResponse {
 
     @SerializedName("file_parameter_name")

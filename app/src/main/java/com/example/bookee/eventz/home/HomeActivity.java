@@ -13,12 +13,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.create.CreateActivity;
 import com.example.bookee.eventz.data.pojos.Category;
 import com.example.bookee.eventz.events.EventsListActivity;
 import com.example.bookee.eventz.followed.FollowedEventsActivity;
 import com.example.bookee.eventz.data.PreferencesCategoriesRepository;
+
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity implements MvpContract.View {
@@ -52,10 +54,9 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         setSupportActionBar(toolbar);
 
 
-
-            Log.d(TAG, "onCreate: creating home presenter");
-            presenter = new Presenter(this, ModelFactory.create());
-                }
+        Log.d(TAG, "onCreate: creating home presenter");
+        presenter = new Presenter(this, ModelFactory.create());
+    }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -86,7 +87,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
 
     @Override
     public void launchFollowedEventsActivity() {
-        Intent intent=new Intent(this, FollowedEventsActivity.class);
+        Intent intent = new Intent(this, FollowedEventsActivity.class);
         startActivity(intent);
     }
 
@@ -96,7 +97,7 @@ public class HomeActivity extends AppCompatActivity implements MvpContract.View 
         super.onResume();
         presenter.attachView(this);
         //initialCategoryList= GlobalDataManipulator.getGlobalCategoryList(getSharedPreferences(getResources().getString(R.string.shared_preferences),MODE_PRIVATE));
-        initialCategoryList=new PreferencesCategoriesRepository(this.getSharedPreferences(PreferencesCategoriesRepository.GLOBAL_CATEGORY_LIST,MODE_PRIVATE)).getGlobalCategoryList();
+        initialCategoryList = new PreferencesCategoriesRepository(this.getSharedPreferences(PreferencesCategoriesRepository.GLOBAL_CATEGORY_LIST, MODE_PRIVATE)).getGlobalCategoryList();
         presenter.populateNameList(initialCategoryList);
     }
 

@@ -3,7 +3,7 @@ package com.example.bookee.eventz.data;
 import com.example.bookee.eventz.data.pojos.Category;
 import java.util.ArrayList;
 
-interface GlobalDataOperator {
+interface GlobalDataOperator {//todo woooow....ala je ovo neodredjeno ime!!!
     void storeGlobalCategoryList(ArrayList<Category> categories);
 
     ArrayList<Category> getGlobalCategoryList();

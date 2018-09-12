@@ -28,7 +28,7 @@ public class EventsListActivityInstrumentationTest {
     @Before
     public void setUp() {
         launchIntent = new Intent();
-        launchIntent.putExtra(HomeActivity.CATEGORY_ID_KEY, CATEGORY_ID);
+        launchIntent.putExtra(HomeActivity.CATEGORY_ID_KEY, CATEGORY_ID);//todo sta ce se desiti kada ovo okines? launchovace se activity sa caat ID i sta onda? Hoce li tvoja app da povlaci podatke iz baze, sa servera....?
         eventsRule.launchActivity(launchIntent);
     }
 

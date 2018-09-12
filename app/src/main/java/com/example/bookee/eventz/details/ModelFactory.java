@@ -9,7 +9,7 @@ import com.example.bookee.eventz.data.SQLiteDatabaseRepository;
 import retrofit2.Retrofit;
 
 class ModelFactory {
-
+//todo kako ces da mockujes static metodu? Ako ne mozes da je mockujes, ne mozes da injectujes mock model u prezenter...
     public static Model create(Context context) {
         Retrofit retrofit = RetrofitFactory.buildRetrofit();
         RetrofitEventsRepository eventsRepository = new RetrofitEventsRepository(retrofit.create(EventsWebApi.class));

@@ -155,6 +155,6 @@ interface MvpContract {
     }
 
     interface CheckFollowedStatusCallback {
-        void onSuccess(Boolean status);
+        void onSuccess(Boolean status);//todo sta se zbilo sa onFailure()?
     }
 }

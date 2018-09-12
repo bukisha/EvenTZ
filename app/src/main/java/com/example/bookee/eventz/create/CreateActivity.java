@@ -77,7 +77,6 @@ public class CreateActivity extends AppCompatActivity implements MvpContract.Vie
         if (categories != null) {
             presenter.setHashMapWithShortNames(categories);
         } else {
-            //todo a sta je sa else kaluzulom? Sta ako greskom ne prosledis kategorije? Sta ce se prikazati?
             //TODO show some kind of dialog that informs user that categories are not fetched,aldo this error might have been catched somewhere upstream in code so u do not have too
         }
         setListeners();
