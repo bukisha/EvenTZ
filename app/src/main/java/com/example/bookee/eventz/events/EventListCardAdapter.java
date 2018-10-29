@@ -9,16 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.bookee.eventz.R;
 import com.example.bookee.eventz.data.pojos.Event;
-
 import java.util.ArrayList;
-
 
 class EventListCardAdapter extends RecyclerView.Adapter<EventListCardAdapter.EventViewHolder> {
     private ArrayList<Event> events;
@@ -72,7 +69,7 @@ class EventListCardAdapter extends RecyclerView.Adapter<EventListCardAdapter.Eve
         return events.size();
     }
 
-    public void setOnClickLister(RecyclerViewOnItemClickListener recyclerViewOnItemClickListener) {
+    void setOnClickLister(RecyclerViewOnItemClickListener recyclerViewOnItemClickListener) {
 
         this.recyclerViewOnItemClickListener = recyclerViewOnItemClickListener;
     }
